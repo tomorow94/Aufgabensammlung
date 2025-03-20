@@ -1,0 +1,156 @@
+# Aufgabe A04: Mehrspieler-Tic-Tac-Toe mit Threads – Einfache Parallelisierung
+
+## Ziel
+
+In dieser Aufgabe erweitern Sie das bestehende **Tic-Tac-Toe-Spiel** um eine **Mehrspieler-Funktionalität** mit **Threads**.  
+Dabei lernen Sie:
+- **Grundlagen der Parallelisierung** mit `Thread` in C#.
+- **Synchronisation zwischen Threads**, um Spielzüge koordiniert abzuwickeln.
+- **Asynchrone Eingabe** für zwei Spieler, die abwechselnd ziehen.
+
+---
+
+## Anforderungen
+
+1. **Tic-Tac-Toe-Logik erweitern**
+   - Nutzen Sie das bestehende **3x3-Array (`char[,] board`)** für das Spielfeld.
+   - Das Spiel erkennt weiterhin **Siege und Unentschieden**.
+
+2. **Mehrspieler-Threading**
+   - Jeder Spieler erhält **einen eigenen Thread**, der auf Benutzereingaben wartet.
+   - Der `MainThread` koordiniert den Ablauf und prüft, ob das Spiel beendet ist.
+   - **Threads sollen sich abwechseln**, sodass nur der aktuelle Spieler eingeben kann.
+
+3. **Synchronisation der Spielzüge**
+   - Nutzen Sie eine **gemeinsame Sperre (`lock`)**, um zu verhindern, dass beide Spieler gleichzeitig ziehen.
+   - Implementieren Sie eine **Wechselmechanik**, sodass ein Spieler erst ziehen kann, wenn der andere fertig ist.
+
+---
+
+## Hinweise
+
+- Nutzen Sie die Klasse **`Thread`** aus `System.Threading`, um parallele Prozesse zu erstellen.
+- Verwenden Sie eine **gemeinsam genutzte Variable**, um den aktuellen Spieler zu tracken.
+- Achten Sie darauf, dass **Threads sauber beendet werden**, wenn das Spiel vorbei ist.
+
+---
+
+## Erweiterungsmöglichkeiten
+
+- **Computergegner in separatem Thread:** Implementieren Sie eine einfache **KI**, die gegen den Spieler spielt.
+- **Netzwerk-Tic-Tac-Toe:** Nutzen Sie **Sockets**, um zwei Spieler über ein Netzwerk gegeneinander spielen zu lassen.
+- **Dynamische Spielfeldgröße:** Lassen Sie den Benutzer eine **andere Spielfeldgröße (4x4, 5x5)** wählen.
+
+---
+
+<details>
+<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+
+```csharp
+using System;
+using System.Threading;
+
+class TicTacToeMultiplayer
+{
+    static char[,] board = { { '1', '2', '3' }, { '4', '5', '6' }, { '7', '8', '9' } };
+    static char currentPlayer = 'X';
+    static object lockObject = new object();
+    static bool gameRunning = true;
+
+    static void Main()
+    {
+        Thread player1 = new Thread(() => PlayerMove('X'));
+        Thread player2 = new Thread(() => PlayerMove('O'));
+
+        player1.Start();
+        player2.Start();
+
+        player1.Join();
+        player2.Join();
+
+        Console.WriteLine("\nGame Over!");
+    }
+
+    static void PlayerMove(char player)
+    {
+        while (gameRunning)
+        {
+            lock (lockObject)
+            {
+                if (currentPlayer != player || !gameRunning)
+                    continue;
+
+                Console.Clear();
+                PrintBoard();
+                Console.WriteLine($"\nPlayer {player}, choose a field (1-9): ");
+
+                if (int.TryParse(Console.ReadLine(), out int choice) && choice >= 1 && choice <= 9)
+                {
+                    int row = (choice - 1) / 3;
+                    int col = (choice - 1) % 3;
+
+                    if (board[row, col] != 'X' && board[row, col] != 'O')
+                    {
+                        board[row, col] = player;
+                        if (CheckWin(player))
+                        {
+                            Console.Clear();
+                            PrintBoard();
+                            Console.WriteLine($"\nPlayer {player} wins!");
+                            gameRunning = false;
+                            return;
+                        }
+
+                        if (BoardFull())
+                        {
+                            Console.Clear();
+                            PrintBoard();
+                            Console.WriteLine("\nIt's a draw!");
+                            gameRunning = false;
+                            return;
+                        }
+
+                        currentPlayer = (player == 'X') ? 'O' : 'X';
+                    }
+                }
+            }
+        }
+    }
+
+    static void PrintBoard()
+    {
+        Console.WriteLine("\nTic Tac Toe Board:");
+        for (int i = 0; i < 3; i++)
+        {
+            Console.WriteLine($" {board[i, 0]} | {board[i, 1]} | {board[i, 2]} ");
+            if (i < 2) Console.WriteLine("---+---+---");
+        }
+    }
+
+    static bool CheckWin(char player)
+    {
+        for (int i = 0; i < 3; i++)
+        {
+            if ((board[i, 0] == player && board[i, 1] == player && board[i, 2] == player) ||
+                (board[0, i] == player && board[1, i] == player && board[2, i] == player))
+                return true;
+        }
+
+        if ((board[0, 0] == player && board[1, 1] == player && board[2, 2] == player) ||
+            (board[0, 2] == player && board[1, 1] == player && board[2, 0] == player))
+            return true;
+
+        return false;
+    }
+
+    static bool BoardFull()
+    {
+        foreach (var cell in board)
+        {
+            if (char.IsDigit(cell)) return false;
+        }
+        return true;
+    }
+}
+```
+</details>
