@@ -86,6 +86,6 @@ Entwickeln Sie ein C#-Programm, bei dem der Benutzer eine zufällig generierte Z
 
 ## Weiterführende Aufgaben
 
-- **Versuchszähler:** Begrenzen Sie die Anzahl der Versuche und informieren Sie den Benutzer über die verbleibenden Versuche.
+- **Versuchszähler:** Informieren Sie den Benutzer über die Anzahl der noch verbleibenden Versuche.
 - **Schwierigkeitsgrad:** Fügen Sie verschiedene Schwierigkeitsgrade hinzu, die den Zahlenbereich oder die Anzahl der Versuche beeinflussen.
 - **Highscore-Liste:** Implementieren Sie eine Highscore-Liste, die die besten Spieler mit der geringsten Anzahl von Versuchen speichert.
