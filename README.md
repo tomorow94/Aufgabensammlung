@@ -15,7 +15,7 @@ Jede Aufgabe ist als **Markdown-Datei** abgelegt und enthält:
 ### **🟢 Stufe 1: Grundlagen der Programmierung (C# Konsolenanwendungen)**
 1. [A01_HalloWelt.md](./Stufe1/A01_HalloWelt.md) – Erstes Programm, einfache Konsolenausgabe.
 2. [A02_Texteingabe.md](./Stufe1/A02_TexteingabeUndAusgabe.md) – Benutzer gibt seinen Namen ein, das Programm begrüßt ihn.
-3. [A03_Addition.md](./Stufe1/A03_Addition.md) – Zwei Zahlen addieren.
+3. [A03_Addition.md](./Stufe1/A03_Addieren.md) – Zwei Zahlen addieren.
 4. [A04_Subtraktion.md](./Stufe1/A04_Subtraktion.md) – Zwei Zahlen subtrahieren.
 5. [A05_Multiplikation.md](./Stufe1/A05_Multiplikation.md) – Zwei Zahlen multiplizieren.
 6. [A06_Division.md](./Stufe1/A06_Division.md) – Zwei Zahlen dividieren (inkl. Fehlerbehandlung für Division durch 0).
