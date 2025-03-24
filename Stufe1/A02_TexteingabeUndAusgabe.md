@@ -1,59 +1,117 @@
-# Aufgabe A02: Texteingabe und -ausgabe
+# 🟢 Aufgabe A02: Texteingabe und -ausgabe
 
-## Ziel
+## Ziel der Aufgabe
 
-Erstellen Sie ein C#-Programm, das den Benutzer nach seinem Namen fragt und anschließend eine personalisierte Begrüßung auf der Konsole ausgibt. Diese Aufgabe dient dazu, den Umgang mit Benutzereingaben und -ausgaben in C# zu erlernen.
+Du schreibst ein Programm, das eine **Benutzereingabe** abfragt und sie verwendet, um eine **personalisierte Begrüßung** auszugeben.
+Diese Aufgabe zeigt dir, wie du Eingaben über die Konsole entgegennehmen und weiterverarbeiten kannst.
 
-## Anleitung
+---
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen" aus.
-   - Wählen Sie unter den verfügbaren Projekttypen "Konsolenanwendung" aus.
-   - Geben Sie dem Projekt einen aussagekräftigen Namen, z. B. "TexteingabeAusgabe".
+## Was du lernst
 
-2. **Programmcode schreiben:**
-   - Ersetzen Sie den automatisch generierten Code durch folgenden Inhalt:
+- Wie man Texte in C# einliest (`Console.ReadLine()`)
+- Wie man Benutzereingaben speichert und ausgibt
+- Wie man mit **Zeichenketten-Interpolation** arbeitet
 
-     ```csharp
-     using System;
+---
 
-     namespace TexteingabeAusgabe
-     {
-         class Program
-         {
-             static void Main(string[] args)
-             {
-                 // Aufforderung zur Eingabe des Namens
-                 Console.Write("Bitte geben Sie Ihren Namen ein: ");
-                 
-                 // Einlesen der Benutzereingabe und Speichern in einer Variable
-                 string benutzerName = Console.ReadLine();
-                 
-                 // Ausgabe der personalisierten Begrüßung
-                 Console.WriteLine($"Hallo, {benutzerName}!");
-             }
-         }
-     }
-     ```
+## Schritt-für-Schritt-Anleitung
 
-     In diesem Programm wird der Benutzer aufgefordert, seinen Namen einzugeben. Die Eingabe wird mit `Console.ReadLine()` erfasst und in der Variable `benutzerName` gespeichert. Anschließend wird der Benutzer mit seinem Namen begrüßt.
+### 🔧 1. Projekt erstellen
 
-3. **Programm ausführen:**
-   - Speichern Sie alle Änderungen.
-   - Drücken Sie die Taste `F5` oder klicken Sie auf "Starten", um das Programm auszuführen.
-   - Geben Sie im Konsolenfenster Ihren Namen ein und überprüfen Sie, ob die personalisierte Begrüßung korrekt angezeigt wird.
+1. Starte Visual Studio.
+2. Klicke auf **„Neues Projekt erstellen“**.
+3. Wähle **„Konsolenanwendung“** (C#) aus.
+4. Projektname: z. B. `TexteingabeAusgabe`
+5. Klicke auf **„Erstellen“**.
 
-## Hinweise
+---
 
-- **Eingabeaufforderung:** Die Methode `Console.Write` wird verwendet, um eine Eingabeaufforderung ohne Zeilenumbruch anzuzeigen, sodass der Benutzer seine Eingabe direkt daneben tätigen kann.
-- **Zeichenketteninterpolation:** Mit `$"{variable}"` können Sie Variablen direkt in Zeichenketten einfügen, was den Code lesbarer macht.
-- **Ressourcen:** Weitere Informationen zur Benutzereingabe und -ausgabe in C# finden Sie in der offiziellen Microsoft-Dokumentation: [Ein-/Ausgabe in der Konsole](https://docs.microsoft.com/de-de/dotnet/csharp/programming-guide/concepts/linq/basic-console-i-o).
+### 💻 2. Code eingeben
 
-## Weiterführende Aufgaben
+```csharp
+using System;
 
-- Erweitern Sie das Programm, sodass es den Benutzer nach seinem Alter fragt und dieses ebenfalls ausgibt.
-- Lassen Sie das Programm den ersten Buchstaben des Namens in Großbuchstaben ausgeben, unabhängig davon, wie der Benutzer ihn eingegeben hat.
-- Implementieren Sie eine Schleife, die den Benutzer so lange nach seinem Namen fragt, bis er eine gültige Eingabe tätigt (d. h. die Eingabe sollte nicht leer sein).
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Bitte gib deinen Namen ein: ");
+        string name = Console.ReadLine();
+        Console.WriteLine($"Hallo, {name}!");
+    }
+}
+```
 
-Diese Aufgabe hilft Ihnen, den Umgang mit Benutzereingaben und -ausgaben in C# zu verstehen und bereitet Sie auf komplexere Interaktionen in zukünftigen Programmen vor.
+---
+
+### ▶️ 3. Ausführen
+
+- Drücke `F5` oder klicke auf **„Starten“**.
+- Gib im Konsolenfenster deinen Namen ein.
+- Du solltest sehen:  
+  **Hallo, [dein Name]!**
+
+---
+
+## 🔍 Erklärt
+
+| Code-Zeile | Bedeutung |
+|-----------|-----------|
+| `Console.Write(...)` | Gibt eine Zeile ohne Zeilenumbruch aus |
+| `Console.ReadLine()` | Liest die Eingabe von der Tastatur ein |
+| `$"Hallo, {name}!"` | Fügt den Wert der Variable `name` in den Text ein |
+
+---
+
+## 💡 Probiere selbst:
+
+- Ändere die Begrüßung in einen anderen Satz.
+- Füge eine zweite Frage hinzu (z. B. Alter) und gib diese auch aus:
+  ```csharp
+  Console.Write("Wie alt bist du? ");
+  string alter = Console.ReadLine();
+  Console.WriteLine($"Du bist {alter} Jahre alt.");
+  ```
+
+- Sorge dafür, dass leere Eingaben nicht akzeptiert werden:
+  ```csharp
+  while (string.IsNullOrWhiteSpace(name))
+  {
+      Console.Write("Name darf nicht leer sein. Bitte erneut eingeben: ");
+      name = Console.ReadLine();
+  }
+  ```
+
+---
+
+<details>
+<summary>💬 Lösungsvorschlag</summary>
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Bitte gib deinen Namen ein: ");
+        string name = Console.ReadLine();
+
+        while (string.IsNullOrWhiteSpace(name))
+        {
+            Console.Write("Name darf nicht leer sein. Bitte erneut eingeben: ");
+            name = Console.ReadLine();
+        }
+
+        Console.WriteLine($"Hallo, {name}!");
+    }
+}
+```
+
+</details>
+
+---
+
+> 🧠 Mit dieser Aufgabe verstehst du, wie Programme mit dem Benutzer "sprechen". Du wirst das bald für Menüführung, Formulare und Spielsteuerung brauchen!
+
