@@ -17,14 +17,14 @@ Eine Sammlung nützlicher Referenzen findet sich am Ende der Datei.
 ### **Für C#-Aufgaben (Stufe 1-5)**
 - **.NET SDK** installieren: [Download](https://dotnet.microsoft.com/en-us/download)
 - **Visual Studio 2022 Community Edition**: [Download](https://visualstudio.microsoft.com/de/vs/community/)
-- **GitHub Desktop (optional | für visuelles Git-Management)**: [Download](https://desktop.github.com/)
+- **GitHub Desktop** (optional | für visuelles Git-Management): [Download](https://desktop.github.com/)
 
 ### **Für Datenbanken (Stufe 5)**
 - **SQL Server Management Studio (SSMS)**: [Download](https://aka.ms/ssmsfullsetup)
   
 ### **Für Web-Entwicklung (Stufe 6)**
 - **Visual Studio Code**: [Download](https://code.visualstudio.com/)
-- **Node.js (für npm, falls benötigt)**: [Download](https://nodejs.org/)
+- **Node.js** (für npm, falls benötigt): [Download](https://nodejs.org/)
 - **Postman** zum Testen der API: [Download](https://www.postman.com/)
 
 ---
