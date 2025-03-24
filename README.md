@@ -10,6 +10,49 @@ Jede Aufgabe ist als **Markdown-Datei** abgelegt und enthält:
 
 ---
 
+## 📖 Aufbau & Ziel der Stufen
+
+Die Aufgabensammlung ist in **6 Stufen** gegliedert, die jeweils unterschiedliche Lernziele verfolgen und sich in **Komplexität und Selbstständigkeit** steigern:
+
+### 🟢 **Stufe 1: Grundlagen der Programmierung**
+- Fokus: **Verstehen durch Ausprobieren**
+- Jede Aufgabe behandelt ein **einzelnes Konzept** wie Ein-/Ausgabe, Variablen, Schleifen oder einfache Logik.
+- Ziel: Mit einem „Copy → F5 → Es läuft!“-Erlebnis **erste Erfolgsmomente schaffen**.
+- Charakter: Fast wie ein **interaktives Info-Kapitel**, ideal für Einsteiger ohne Vorwissen.
+
+### 🔵 **Stufe 2: Strukturierung & Methoden**
+- Ziel: Das in Stufe 1 Gelernte wird **angewendet**, **wiederverwendet** und in **Methoden strukturiert**.
+- Themen wie Datei-IO, Datenstrukturen oder Performance-Vergleiche werden erstmals angeschnitten.
+- Der Schwierigkeitsgrad steigt, aber die Aufgaben bleiben mit dem Wissen aus Stufe 1 **vollständig lösbar**.
+
+### 🟠 **Stufe 3: Objektorientierte Programmierung (OOP)**
+- Einführung von **Klassen, Objekten und Enums**.
+- Alle vorherigen Programme werden in ein **geordnetes Menüprojekt** überführt.
+- Hier zeigt sich der praktische Nutzen von **Ordnerstruktur, Code-Aufteilung und Wiederverwendbarkeit**.
+- Diese Stufe markiert den **Übergang zu echten Softwareprojekten**.
+
+### 🟡 **Stufe 4: Komplexe Anwendungen & Spielmechanik**
+- Spielerische Aufgaben mit echten Herausforderungen.
+- Einsatz von **Entscheidungslogik, Arrays und sogar Threads**.
+- Projekte wie **Tic Tac Toe** oder ein **Bankkonto-System** vertiefen Verständnis für Zustände, Abläufe und Parallelität.
+
+### 🟣 **Stufe 5: Datenbankanbindung & moderne Entwicklung**
+- Erste Berührung mit **SQL, SSMS und ORM** (inkl. LINQ).
+- Aufgaben zeigen, wie man **strukturiert mit echten Daten arbeitet**.
+- Ziel ist es, Programm und Datenhaltung zu verbinden – wie es in der Praxis üblich ist.
+
+### 🔴 **Stufe 6: API, Webentwicklung & Abschlussprojekt**
+- Die vorher entwickelten Funktionen werden über eine **REST-API bereitgestellt**.
+- Eine eigenständige **Webseite greift per JavaScript auf die API zu**.
+- Hier steht die **Selbstständigkeit im Vordergrund**:
+  - Weniger Erklärungen, mehr Eigenrecherche.
+  - Fokus auf Zusammenspiel aller bisherigen Kenntnisse.
+  - Inklusive **Testing, GitHub-Verwaltung, CI/CD und Deployment**.
+
+> ✅ **Ziel:** Nach Abschluss aller Stufen kann ein vollständiges Softwareprojekt **von Grund auf umgesetzt, getestet, dokumentiert und bereitgestellt** werden – inklusive Versionskontrolle und Webanbindung.
+
+---
+
 ## 📌 Inhaltsverzeichnis
 
 ### **🟢 Stufe 1: Grundlagen der Programmierung (C# Konsolenanwendungen)**
