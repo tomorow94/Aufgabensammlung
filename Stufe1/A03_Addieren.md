@@ -88,32 +88,5 @@ if (!double.TryParse(Console.ReadLine(), out double zahl))
 
 ---
 
-<details>
-<summary>💬 Lösungsvorschlag</summary>
-
-```csharp
-using System;
-
-class Program
-{
-    static void Main(string[] args)
-    {
-        Console.Write("Bitte gib die erste Zahl ein: ");
-        double zahl1 = Convert.ToDouble(Console.ReadLine());
-
-        Console.Write("Bitte gib die zweite Zahl ein: ");
-        double zahl2 = Convert.ToDouble(Console.ReadLine());
-
-        double summe = zahl1 + zahl2;
-
-        Console.WriteLine($"Die Summe von {zahl1} und {zahl2} ist {summe}.");
-    }
-}
-```
-
-</details>
-
----
-
 > 🧠 Diese Aufgabe ist ein wichtiger Baustein für alles, was mit Berechnungen zu tun hat. Du wirst das Prinzip bald für viele weitere Operationen nutzen!
 
