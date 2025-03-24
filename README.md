@@ -8,6 +8,25 @@ Jede Aufgabe ist als **Markdown-Datei** abgelegt und enthält:
 - Theoretische **Einführungen in Konzepte**.
 - Eine **optionale Lösung** in einer ausklappbaren Sektion.
 
+Eine Sammlung nützlicher Referenzen findet sich am Ende der Datei.
+
+---
+
+## 🛠 Technische Voraussetzungen
+
+### **Für C#-Aufgaben (Stufe 1-5)**
+- **.NET SDK** installieren: [Download](https://dotnet.microsoft.com/en-us/download)
+- **Visual Studio 2022 Community Edition**: [Download](https://visualstudio.microsoft.com/de/vs/community/)
+- **GitHub Desktop (für visuelles Git-Management)**: [Download](https://desktop.github.com/)
+
+### **Für Datenbanken (Stufe 5)**
+- **SQL Server Management Studio (SSMS)**: [Download](https://aka.ms/ssmsfullsetup)
+  
+### **Für Web-Entwicklung (Stufe 6)**
+- **Visual Studio Code**: [Download](https://code.visualstudio.com/)
+- **Node.js (für npm, falls benötigt)**: [Download](https://nodejs.org/)
+- **Postman** zum Testen der API: [Download](https://www.postman.com/)
+
 ---
 
 ## 📖 Aufbau & Ziel der Stufen
@@ -100,24 +119,8 @@ Die Aufgabensammlung ist in **6 Stufen** gegliedert, die jeweils unterschiedlich
 
 ---
 
-## 🛠 Technische Voraussetzungen
-
-### **Für C#-Aufgaben (Stufe 1-5)**
-- **.NET SDK** installieren: [Download](https://dotnet.microsoft.com/en-us/download)
-- **Visual Studio 2022 Community Edition**: [Download](https://visualstudio.microsoft.com/de/vs/community/)
-- **GitHub Desktop (für visuelles Git-Management)**: [Download](https://desktop.github.com/)
-
-### **Für Datenbanken (Stufe 5)**
-- **SQL Server Management Studio (SSMS)**: [Download](https://aka.ms/ssmsfullsetup)
-  
-### **Für Web-Entwicklung (Stufe 6)**
-- **Visual Studio Code**: [Download](https://code.visualstudio.com/)
-- **Node.js (für npm, falls benötigt)**: [Download](https://nodejs.org/)
-- **Postman** zum Testen der API: [Download](https://www.postman.com/)
-
----
-
 ## 💡 Nützliche Links
+- [C# - Ceate Sheet](./Referenzen/CheatSheet_CSharp.md)
 - [Microsoft C# Dokumentation](https://learn.microsoft.com/en-us/dotnet/csharp/)
 - [ASP.NET Core Tutorial](https://learn.microsoft.com/en-us/aspnet/core/)
 - [HTML & CSS Grundlagen](https://developer.mozilla.org/de/docs/Web/HTML)
