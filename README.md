@@ -10,26 +10,6 @@ Jede Aufgabe ist als **Markdown-Datei** abgelegt und enthält:
 
 ---
 
-# 📖 Inhaltsverzeichnis
-
-- [📚 Aufgabensammlung – Einleitung](#programmier-aufgabensammlung)
-- [🧬 Aufbau & Ziel der Stufen](#aufbau--ziel-der-stufen)
-- [📌 Aufgabenübersicht](#aufgaben)
-  - [🟢 Stufe 1 – Grundlagen](#stufe-1-grundlagen-der-programmierung-c-konsolenanwendungen)
-  - [🔵 Stufe 2 – Strukturierung & Datenstrukturen](#stufe-2-strukturierte-programme--datenstrukturen)
-  - [🟠 Stufe 3 – OOP](#stufe-3-objektorientierte-programmierung-oop)
-  - [🟡 Stufe 4 – Komplexe Projekte](#stufe-4-komplexe-projekte)
-  - [🔸 Stufe 5 – Datenbanken](#stufe-5-fortgeschrittene-themen--datenbanken)
-  - [🔴 Stufe 6 – API & Webentwicklung](#stufe-6-api--webentwicklung)
-- [🛠️ Technische Voraussetzungen](#technische-voraussetzungen)
-  - [C#-Umgebung](#für-c-aufgaben-stufe-1-5)
-  - [Datenbankwerkzeuge](#für-datenbanken-stufe-5)
-  - [Webentwicklung](#für-web-entwicklung-stufe-6)
-- [💡 Nützliche Links](#nützliche-links)
-- [🎯 Fazit & Weiteres](#fazit--weiteres)
-
----
-
 ## 📖 Aufbau & Ziel der Stufen
 
 Die Aufgabensammlung ist in **6 Stufen** gegliedert, die jeweils unterschiedliche Lernziele verfolgen und sich in **Komplexität und Selbstständigkeit** steigern:
