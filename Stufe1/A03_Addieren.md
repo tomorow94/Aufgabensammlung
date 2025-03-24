@@ -1,58 +1,119 @@
-# Aufgabe A03: Addieren
+# 🟢 Aufgabe A03: Addieren
 
-## Ziel
+## Ziel der Aufgabe
 
-Erstellen Sie ein C#-Programm, das zwei Zahlen vom Benutzer einliest, ihre Summe berechnet und das Ergebnis auf der Konsole ausgibt. Diese Aufgabe dient dazu, den Umgang mit numerischen Datentypen und grundlegenden mathematischen Operationen in C# zu üben.
+In dieser Aufgabe wirst du zwei Zahlen vom Benutzer einlesen, ihre **Summe berechnen** und auf der Konsole ausgeben.  
+Dabei lernst du, wie man **Zahlen als Eingabe verarbeitet**, um damit **Rechnungen durchzuführen**.
 
-## Anleitung
+---
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen" aus.
-   - Wählen Sie unter den verfügbaren Projekttypen "Konsolenanwendung" aus.
-   - Geben Sie dem Projekt einen aussagekräftigen Namen, z. B. "Addition".
+## Was du lernst
 
-2. **Programmcode schreiben:**
-   - Ersetzen Sie den automatisch generierten Code durch folgenden Inhalt:
+- Wie man mit `Convert.ToDouble` Zahlen von der Konsole einliest
+- Wie man zwei Werte addiert
+- Wie man das Ergebnis formatiert ausgibt
 
-     ```csharp
-     using System;
+---
 
-     namespace Addition
-     {
-         class Program
-         {
-             static void Main(string[] args)
-             {
-                 // Aufforderung zur Eingabe der ersten Zahl
-                 Console.Write("Bitte geben Sie die erste Zahl ein: ");
-                 double zahl1 = Convert.ToDouble(Console.ReadLine());
+## Schritt-für-Schritt-Anleitung
 
-                 // Aufforderung zur Eingabe der zweiten Zahl
-                 Console.Write("Bitte geben Sie die zweite Zahl ein: ");
-                 double zahl2 = Convert.ToDouble(Console.ReadLine());
+### 🔧 1. Projekt erstellen
 
-                 // Berechnung der Summe
-                 double summe = zahl1 + zahl2;
+1. Starte Visual Studio.
+2. Klicke auf **„Neues Projekt erstellen“**.
+3. Wähle **„Konsolenanwendung“** (C#) aus.
+4. Projektname: z. B. `Addition`
+5. Klicke auf **„Erstellen“**.
 
-                 // Ausgabe des Ergebnisses
-                 Console.WriteLine($"Die Summe von {zahl1} und {zahl2} ist {summe}.");
-             }
-         }
-     }
-     ```
+---
 
-3. **Programm ausführen:**
-   - Speichern Sie alle Änderungen.
-   - Drücken Sie die Taste `F5` oder klicken Sie auf "Starten", um das Programm auszuführen.
-   - Geben Sie zwei Zahlen ein und überprüfen Sie, ob die korrekte Summe angezeigt wird.
+### 💻 2. Code eingeben
 
-## Hinweise
+```csharp
+using System;
 
-- **Datentypen:** Verwenden Sie `double` für die Zahlen, um auch Dezimalzahlen verarbeiten zu können.
-- **Eingabevalidierung:** Implementieren Sie eine Fehlerbehandlung, um ungültige Eingaben abzufangen.
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Bitte gib die erste Zahl ein: ");
+        double zahl1 = Convert.ToDouble(Console.ReadLine());
 
-## Weiterführende Aufgaben
+        Console.Write("Bitte gib die zweite Zahl ein: ");
+        double zahl2 = Convert.ToDouble(Console.ReadLine());
 
-- Erweitern Sie das Programm, sodass es mehrere Zahlen addieren kann.
-- Implementieren Sie eine Schleife, die den Benutzer wiederholt Zahlen eingeben lässt, bis er das Programm beendet.
+        double summe = zahl1 + zahl2;
+
+        Console.WriteLine($"Die Summe von {zahl1} und {zahl2} ist {summe}.");
+    }
+}
+```
+
+---
+
+### ▶️ 3. Ausführen
+
+- Drücke `F5` oder klicke auf **„Starten“**.
+- Gib zwei Zahlen ein (z. B. 4 und 5,5).
+- Du solltest sehen:  
+  **Die Summe von 4 und 5,5 ist 9,5.**
+
+---
+
+## 🔍 Erklärt
+
+| Code-Zeile | Bedeutung |
+|-----------|-----------|
+| `Convert.ToDouble(...)` | Wandelt die Eingabe (Text) in eine Zahl um |
+| `zahl1 + zahl2` | Addiert beide Zahlen |
+| `Console.WriteLine(...)` | Gibt das Ergebnis formatiert aus |
+
+---
+
+## 💡 Probiere selbst:
+
+- Gib andere Werte ein: ganze Zahlen, Kommazahlen oder negative Zahlen.
+- Tausche `double` gegen `int` aus – was passiert mit Kommazahlen?
+- Baue eine Fehlerbehandlung ein:
+
+```csharp
+if (!double.TryParse(Console.ReadLine(), out double zahl))
+{
+    Console.WriteLine("Ungültige Eingabe!");
+    return;
+}
+```
+
+- Lasse den Benutzer in einer **Schleife** beliebig viele Zahlen eingeben und am Ende die Gesamtsumme anzeigen.
+
+---
+
+<details>
+<summary>💬 Lösungsvorschlag</summary>
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Bitte gib die erste Zahl ein: ");
+        double zahl1 = Convert.ToDouble(Console.ReadLine());
+
+        Console.Write("Bitte gib die zweite Zahl ein: ");
+        double zahl2 = Convert.ToDouble(Console.ReadLine());
+
+        double summe = zahl1 + zahl2;
+
+        Console.WriteLine($"Die Summe von {zahl1} und {zahl2} ist {summe}.");
+    }
+}
+```
+
+</details>
+
+---
+
+> 🧠 Diese Aufgabe ist ein wichtiger Baustein für alles, was mit Berechnungen zu tun hat. Du wirst das Prinzip bald für viele weitere Operationen nutzen!
+
