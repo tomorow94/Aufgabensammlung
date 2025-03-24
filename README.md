@@ -17,7 +17,7 @@ Eine Sammlung nützlicher Referenzen findet sich am Ende der Datei.
 ### **Für C#-Aufgaben (Stufe 1-5)**
 - **.NET SDK** installieren: [Download](https://dotnet.microsoft.com/en-us/download)
 - **Visual Studio 2022 Community Edition**: [Download](https://visualstudio.microsoft.com/de/vs/community/)
-- **GitHub Desktop (für visuelles Git-Management)**: [Download](https://desktop.github.com/)
+- **GitHub Desktop (optional | für visuelles Git-Management)**: [Download](https://desktop.github.com/)
 
 ### **Für Datenbanken (Stufe 5)**
 - **SQL Server Management Studio (SSMS)**: [Download](https://aka.ms/ssmsfullsetup)
