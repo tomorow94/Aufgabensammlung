@@ -1,96 +1,112 @@
-# Aufgabe A01: Umrechnung von Einheiten
+# 🔵 Aufgabe A01: Umrechnung von Einheiten
 
-## Ziel
+## Ziel der Aufgabe
 
-Entwickeln Sie ein C#-Programm, das verschiedene Einheiten umrechnet. Beispiele hierfür sind:
+In dieser Aufgabe wirst du ein Programm erstellen, das verschiedene Einheiten umrechnen kann, z. B. **Celsius in Fahrenheit** oder **Kilometer in Meilen**. Dabei vertiefst du dein Wissen über **Benutzereingaben**, **mathematische Formeln** und die Strukturierung von Programmen in **Methoden**.
 
-- Celsius zu Fahrenheit
-- Kilometer zu Meilen
+Diese Aufgabe ist bewusst so gestaltet, dass du **nicht einfach Copy+Paste verwenden kannst**, sondern selbst aktiv nachdenken oder recherchieren musst, wie die Formeln und Methoden aussehen. Das fördert das Verständnis für eigenständiges Arbeiten und strukturiertes Vorgehen.
 
-## Anleitung
+Für den Anfang könntest du dir überlegen, wie dein Programm aussehen soll, und dies stichpunktartig festhalten, z. B. als **Kommentare** direkt in deinem neuen Projekt. 
+So kannst du die Aufgabe in kleinere Einzelschritte aufteilen und sicherstellen, dass du keine wichtigen Schritte vergisst.
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen" aus.
-   - Wählen Sie den Projekttyp "Konsolenanwendung" aus.
-   - Geben Sie dem Projekt einen aussagekräftigen Namen, z. B. "EinheitenUmrechner".
-
-2. **Programmstruktur:**
-   - Das Programm sollte den Benutzer fragen, welche Umrechnung durchgeführt werden soll.
-   - Basierend auf der Auswahl des Benutzers sollte das Programm die entsprechende Umrechnung durchführen und das Ergebnis anzeigen.
-
-3. **Beispielhafte Umrechnungen:**
-   - **Celsius zu Fahrenheit:** Die Formel lautet: `F = (C * 9/5) + 32`
-   - **Kilometer zu Meilen:** Die Umrechnung erfolgt mit dem Faktor 1 Kilometer = 0,621371 Meilen.
-
-4. **Benutzereingaben:**
-   - Verwenden Sie `Console.ReadLine()`, um Eingaben vom Benutzer zu erhalten.
-   - Validieren Sie die Eingaben und behandeln Sie ungültige Eingaben entsprechend.
-
-<details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
-
+**Beispiel:**
 ```csharp
-using System;
+// Benutzer nach Umrechnung fragen
 
-namespace EinheitenUmrechner
-{
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            Console.WriteLine("Wählen Sie die Umrechnung:");
-            Console.WriteLine("1: Celsius zu Fahrenheit");
-            Console.WriteLine("2: Kilometer zu Meilen");
-            Console.Write("Ihre Auswahl: ");
-            string auswahl = Console.ReadLine();
+// Eingabewert einlesen
 
-            switch (auswahl)
-            {
-                case "1":
-                    Console.Write("Geben Sie die Temperatur in Celsius ein: ");
-                    if (double.TryParse(Console.ReadLine(), out double celsius))
-                    {
-                        double fahrenheit = (celsius * 9 / 5) + 32;
-                        Console.WriteLine($"{celsius}°C entsprechen {fahrenheit}°F.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ungültige Eingabe.");
-                    }
-                    break;
-                case "2":
-                    Console.Write("Geben Sie die Entfernung in Kilometern ein: ");
-                    if (double.TryParse(Console.ReadLine(), out double kilometer))
-                    {
-                        double meilen = kilometer * 0.621371;
-                        Console.WriteLine($"{kilometer} km entsprechen {meilen} Meilen.");
-                    }
-                    else
-                    {
-                        Console.WriteLine("Ungültige Eingabe.");
-                    }
-                    break;
-                default:
-                    Console.WriteLine("Ungültige Auswahl.");
-                    break;
-            }
-        }
-    }
-}
+// Umrechnungsformel anwenden
+
+// Ergebnis ausgeben
+
+// Wiederholung anbieten
 ```
-</details>
+
+In C# schreibst du Kommentare mit zwei Schrägstrichen `//` – alles, was rechts davon steht, wird vom Programm ignoriert und dient nur zur Erklärung oder Planung.
+
+---
+
+## Was du lernst
+
+- Wie du mit Methoden deinen Code strukturierst
+- Wie man mathematische Umrechnungen in Code übersetzt
+- Wie man mehrere Funktionen in einem einfachen Konsolenprogramm anbietet
+
+---
+
+## Beispielaufgabe
+
+### Dein Programm soll Folgendes können:
+
+1. Den Benutzer fragen, welche Umrechnung gewünscht ist (z. B. Celsius zu Fahrenheit)
+2. Die Eingabewerte vom Benutzer einlesen
+3. Das Ergebnis berechnen und anzeigen
+4. Wieder von vorn anfangen oder bei Wunsch das Programm beenden
+
+Du kannst mit den folgenden Umrechnungen starten:
+
+- Celsius → Fahrenheit:  `F = C * 9/5 + 32`
+- Kilometer → Meilen:   `mi = km * 0.621371`
+
+Optional kannst du später weitere Umrechnungen ergänzen (siehe unten).
+
+---
 
 ## Hinweise
 
-- **Fehlerbehandlung:** Stellen Sie sicher, dass das Programm ungültige Eingaben erkennt und den Benutzer entsprechend informiert. Verwenden Sie hierfür die `try-catch`-Struktur, um Ausnahmen abzufangen und geeignete Fehlermeldungen auszugeben.
+- Erstelle **für jede Umrechnung eine eigene Methode**.
+- Nutze ein **einfaches Textmenü**, damit der Benutzer zwischen den Umrechnungen wählen kann.
+- Verwende eine **Schleife**, damit der Benutzer mehrere Umrechnungen nacheinander machen kann.
 
-- **Modularität:** Erstellen Sie für jede Umrechnung eine eigene Methode, um den Code übersichtlicher und wartbarer zu gestalten. Methoden ermöglichen es, bestimmte Aktionen zu kapseln und bei Bedarf mehrfach aufzurufen.
+---
 
-## Weiterführende Aufgaben
+## 🔍 Erklärt
 
-- **Weitere Umrechnungen hinzufügen:** Erweitern Sie das Programm um zusätzliche Umrechnungen, wie zum Beispiel:
-  - Kilogramm zu Pfund
-  - Liter zu Gallonen
+| Konzept    | Beschreibung |
+|------------|--------------|
+| Methoden   | Ermöglichen es, Code logisch in Funktionen zu trennen. So wird der Code übersichtlicher und wiederverwendbar. |
+| Benutzereingabe | Mit `Console.ReadLine()` wird ein Wert eingegeben, der dann verarbeitet wird. |
+| `switch` oder `if` | Damit kannst du je nach Auswahl des Benutzers unterschiedliche Aktionen ausführen lassen. |
 
-- **Menü implementieren:** Entwickeln Sie ein Menü, das dem Benutzer ermöglicht, zwischen verschiedenen Umrechnungen zu wählen, ohne das Programm neu zu starten. Dies verbessert die Benutzerfreundlichkeit und Flexibilität des Programms.
+---
+
+## 💡 Probiere selbst
+
+- Füge weitere Umrechnungen hinzu, z. B.:
+  - Kilogramm → Pfund (`kg * 2.20462`)
+  - Liter → Gallonen (`l * 0.264172`)
+- Sorge dafür, dass dein Menü sich wiederholt, bis der Benutzer "Beenden" auswählt
+- Gib eine Fehlermeldung aus, wenn eine ungültige Option eingegeben wurde
+
+---
+
+<details>
+<summary>📘 Tipp zur Struktur</summary>
+
+Ein einfaches Menü könnte so aussehen:
+
+```csharp
+while (weiter)
+{
+    Console.WriteLine("Was möchtest du umrechnen?");
+    Console.WriteLine("1 = Celsius zu Fahrenheit");
+    Console.WriteLine("2 = Kilometer zu Meilen");
+    Console.WriteLine("0 = Beenden");
+    
+    string auswahl = Console.ReadLine();
+    switch (auswahl)
+    {
+        case "1": CelsiusZuFahrenheit(); break;
+        case "2": KilometerZuMeilen(); break;
+        case "0": weiter = false; break;
+        default: Console.WriteLine("Ungültige Auswahl!"); break;
+    }
+}
+```
+
+</details>
+
+---
+
+> 🧠 Diese Aufgabe trainiert dein Verständnis für mathematische Zusammenhänge und Methodenstruktur – wichtig für wartbaren und gut organisierten Code!
+

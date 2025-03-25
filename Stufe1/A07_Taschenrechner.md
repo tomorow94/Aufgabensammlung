@@ -1,116 +1,222 @@
-# Aufgabe A07: Taschenrechner
+# 🟢 Aufgabe A07: Taschenrechner
 
-## Ziel
+## Ziel der Aufgabe
 
-Erstellen Sie ein C#-Programm, das als einfacher Taschenrechner fungiert. Der Benutzer soll zwei Zahlen und eine Rechenoperation (+, -, *, /) eingeben können. Das Programm führt die entsprechende Berechnung durch und gibt das Ergebnis auf der Konsole aus. Diese Aufgabe dient dazu, den Umgang mit Benutzereingaben, Kontrollstrukturen und grundlegenden mathematischen Operationen in C# zu vertiefen.
+In dieser Aufgabe erstellst du einen einfachen **Taschenrechner**, der zwei Zahlen verarbeiten kann. Der Benutzer wählt eine Rechenoperation (+, -, *, /), und das Programm führt die Berechnung durch.
 
-## Anleitung
+Dabei übst du den Umgang mit **Benutzereingaben**, **Kontrollstrukturen** (`switch`, `if`) und **Schleifen**.
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen" aus.
-   - Wählen Sie unter den verfügbaren Projekttypen "Konsolenanwendung" aus.
-   - Geben Sie dem Projekt einen aussagekräftigen Namen, z. B. "Taschenrechner".
+---
 
-2. **Programmcode schreiben:**
-   - Ersetzen Sie den automatisch generierten Code durch folgenden Inhalt:
+## Was du lernst
 
-     ```csharp
-     using System;
+- Wie man Benutzereingaben liest und interpretiert
+- Wie man mit `switch` zwischen mehreren Fällen unterscheidet
+- Wie man Schleifen für wiederholte Berechnungen nutzt
 
-     namespace Taschenrechner
-     {
-         class Program
-         {
-             static void Main(string[] args)
-             {
-                 bool weiterRechnen = true;
+---
 
-                 while (weiterRechnen)
-                 {
-                     try
-                     {
-                         // Eingabe der ersten Zahl
-                         Console.Write("Bitte geben Sie die erste Zahl ein: ");
-                         double zahl1 = Convert.ToDouble(Console.ReadLine());
+## Schritt-für-Schritt-Anleitung
 
-                         // Eingabe der zweiten Zahl
-                         Console.Write("Bitte geben Sie die zweite Zahl ein: ");
-                         double zahl2 = Convert.ToDouble(Console.ReadLine());
+### 🔧 1. Projekt erstellen
 
-                         // Auswahl der Rechenoperation
-                         Console.WriteLine("Wählen Sie eine Rechenoperation:");
-                         Console.WriteLine("\t+ : Addition");
-                         Console.WriteLine("\t- : Subtraktion");
-                         Console.WriteLine("\t* : Multiplikation");
-                         Console.WriteLine("\t/ : Division");
-                         Console.Write("Ihre Auswahl: ");
-                         string operation = Console.ReadLine();
+1. Starte Visual Studio.
+2. Neues Projekt: **Konsolenanwendung (C#)**.
+3. Projektname: z. B. `Taschenrechner`
 
-                         double ergebnis = 0;
+---
 
-                         // Ausführung der gewählten Rechenoperation
-                         switch (operation)
-                         {
-                             case "+":
-                                 ergebnis = zahl1 + zahl2;
-                                 Console.WriteLine($"Ergebnis: {zahl1} + {zahl2} = {ergebnis}");
-                                 break;
-                             case "-":
-                                 ergebnis = zahl1 - zahl2;
-                                 Console.WriteLine($"Ergebnis: {zahl1} - {zahl2} = {ergebnis}");
-                                 break;
-                             case "*":
-                                 ergebnis = zahl1 * zahl2;
-                                 Console.WriteLine($"Ergebnis: {zahl1} * {zahl2} = {ergebnis}");
-                                 break;
-                             case "/":
-                                 if (zahl2 != 0)
-                                 {
-                                     ergebnis = zahl1 / zahl2;
-                                     Console.WriteLine($"Ergebnis: {zahl1} / {zahl2} = {ergebnis}");
-                                 }
-                                 else
-                                 {
-                                     Console.WriteLine("Fehler: Division durch Null ist nicht erlaubt.");
-                                 }
-                                 break;
-                             default:
-                                 Console.WriteLine("Ungültige Operation. Bitte wählen Sie +, -, * oder /.");
-                                 break;
-                         }
-                     }
-                     catch (FormatException)
-                     {
-                         Console.WriteLine("Fehler: Bitte geben Sie eine gültige Zahl ein.");
-                     }
+### 💻 2. Code eingeben
 
-                     // Abfrage, ob der Benutzer eine weitere Berechnung durchführen möchte
-                     Console.Write("Möchten Sie eine weitere Berechnung durchführen? (j/n): ");
-                     string weiter = Console.ReadLine();
-                     if (weiter.ToLower() != "j")
-                     {
-                         weiterRechnen = false;
-                     }
-                 }
-             }
-         }
-     }
-     ```
+```csharp
+using System;
 
-3. **Programm ausführen:**
-   - Speichern Sie alle Änderungen.
-   - Drücken Sie die Taste `F5` oder klicken Sie auf "Starten", um das Programm auszuführen.
-   - Folgen Sie den Anweisungen im Konsolenfenster, um Berechnungen durchzuführen.
+class Program
+{
+    static void Main(string[] args)
+    {
+        bool weiterRechnen = true;
 
-## Hinweise
+        while (weiterRechnen)
+        {
+            try
+            {
+                Console.Write("Erste Zahl: ");
+                double a = Convert.ToDouble(Console.ReadLine());
 
-- **Fehlerbehandlung:** Das Programm verwendet `try-catch`, um ungültige Eingaben abzufangen und entsprechende Fehlermeldungen auszugeben.
-- **Schleifen:** Eine `while`-Schleife ermöglicht es dem Benutzer, mehrere Berechnungen hintereinander durchzuführen, bis er das Programm beendet.
-- **Eingabevalidierung:** Das Programm überprüft die Eingaben auf Gültigkeit und behandelt spezielle Fälle, wie z. B. die Division durch Null.
+                Console.Write("Zweite Zahl: ");
+                double b = Convert.ToDouble(Console.ReadLine());
 
-## Weiterführende Aufgaben
+                Console.WriteLine("Rechenoperation wählen (+, -, *, /): ");
+                string op = Console.ReadLine();
 
-- **Erweiterung der Funktionen:** Fügen Sie weitere mathematische Operationen hinzu, wie z. B. Potenzierung oder Wurzelberechnung.
-- **Modulare Struktur:** Lagern Sie die Berechnungslogik in separate Methoden aus, um den Code übersichtlicher zu gestalten.
-- **Grafische Benutzeroberfläche:** Entwickeln Sie eine einfache grafische Benutzeroberfläche für den Taschenrechner mithilfe von Windows Forms oder WPF.
+                double ergebnis;
+                switch (op)
+                {
+                    case "+":
+                        ergebnis = a + b;
+                        Console.WriteLine($"Ergebnis: {a} + {b} = {ergebnis}");
+                        break;
+                    case "-":
+                        ergebnis = a - b;
+                        Console.WriteLine($"Ergebnis: {a} - {b} = {ergebnis}");
+                        break;
+                    case "*":
+                        ergebnis = a * b;
+                        Console.WriteLine($"Ergebnis: {a} * {b} = {ergebnis}");
+                        break;
+                    case "/":
+                        if (b == 0)
+                        {
+                            Console.WriteLine("Fehler: Division durch 0 nicht erlaubt.");
+                        }
+                        else
+                        {
+                            ergebnis = a / b;
+                            Console.WriteLine($"Ergebnis: {a} / {b} = {ergebnis}");
+                        }
+                        break;
+                    default:
+                        Console.WriteLine("Ungültige Operation. Bitte +, -, * oder / eingeben.");
+                        break;
+                }
+            }
+            catch (FormatException)
+            {
+                Console.WriteLine("Ungültige Eingabe! Bitte Zahlen verwenden.");
+            }
+
+            Console.Write("Weitere Berechnung? (j/n): ");
+            string eingabe = Console.ReadLine();
+            if (eingabe.ToLower() != "j")
+            {
+                weiterRechnen = false;
+            }
+        }
+    }
+}
+```
+
+---
+
+### ▶️ 3. Ausführen
+
+- Starte das Programm mit `F5`.
+- Teste mehrere Rechenarten hintereinander.
+- Achte auf die Fehlerbehandlung bei falscher Eingabe oder Division durch 0.
+
+---
+
+## 🔍 Erklärt
+
+| Konzept         | Beschreibung |
+|----------------|--------------|
+| `switch`       | Mit `switch` wählst du gezielt aus, welche Anweisung für eine bestimmte Eingabe ausgeführt werden soll. In diesem Fall: +, -, * oder /. Jede `case`-Anweisung übernimmt die passende Rechenart. |
+| `try-catch`    | Mit `try` wird ein blockweise geschützter Bereich erstellt. Tritt ein Fehler auf (z. B. ungültige Eingabe wie Buchstaben statt Zahlen), springt das Programm direkt in den `catch`-Block und gibt eine Fehlermeldung aus, statt abzustürzen. |
+| `while`        | Die `while`-Schleife läuft so lange, wie `weiterRechnen` true ist. Das bedeutet: Solange der Benutzer nach jeder Berechnung mit "j" bestätigt, wird der Rechner nicht beendet. |
+| `Convert.ToDouble()` | Wandelt eine Texteingabe (string) in eine Gleitkommazahl um. Das ist nötig, da `Console.ReadLine()` standardmäßig Text liefert. |
+| `ToLower()`    | Wandelt Benutzereingabe wie "J", "j", "Ja" in Kleinbuchstaben um, um einfache Vergleiche wie `== "j"` zu ermöglichen. |
+
+---
+
+## 💡 Probiere selbst:
+
+- Erweitere den Rechner um **Potenz** oder **Wurzel**.
+- Trenne Berechnungslogik in eine eigene Methode und verwende diese um für mehr Übersichtlichkeit im Code zu sorgen, z. B.:
+  ```csharp
+  static double Berechne(double a, double b, string op)
+  ```
+  Eine Methode ist ein Codeblock, der eine Reihe von Anweisungen enthält.
+  Ein Programm bewirkt die Ausführung der Anweisungen, indem die Methode aufgerufen wird und alle erforderlichen Methodenargumente angegeben werden.  
+  Beim Beispiel `Berechne()`, von oben, sind `a`, `b` und `op`, die zu übergebenden Argumente (Parameter), und das `double`, vor dem Methodennamen, `Berechne` beschreibt den Typ der Ausgabe der Methode, hier also eine Kommazahl.
+- Baue ein **einfaches Textmenü** zur Auswahl der Operation.
+
+---
+
+<details><summary>Lösungssvorschlag - Eigene "Berechne" Methode</summary>
+
+```csharp
+using System;
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        bool weiterRechnen = true;
+
+        while (weiterRechnen)
+        {
+            try
+            {
+                Console.Write("Erste Zahl: ");
+                double a = Convert.ToDouble(Console.ReadLine());
+
+                Console.Write("Zweite Zahl: ");
+                double b = Convert.ToDouble(Console.ReadLine());
+
+                Console.WriteLine("Rechenoperation wählen (+, -, *, /): ");
+                string op = Console.ReadLine();
+
+                // Die neue Methode "Berechne" wird benutzt um das ergebnis zu berechnen und wirft einen Fehler, wenn die Eingabe nicht verarbeitet werden kann
+                double ergebnis = Berechne(a, b, op);
+
+                Console.WriteLine($"Ergebnis: {a} {op} {b} = {ergebnis}");
+            }
+            catch (Exception e)
+            {
+                // Fehler, beim Ausführen des Codes, werden abgefangen und dem Nutzer in der Konsole angezeigt.
+                if (e is FormatException fe)
+                {
+                    // Hier wird ein spezieller Text angezeigt, der meist auftritt, wenn statt einer Zahl beispielsweise ein Buchstabe übergeben wird.
+                    Console.WriteLine("Ungültige Eingabe! Bitte Zahlen verwenden.");
+                }
+                else
+                {
+                    // Hier werden alle anderen Fehler-nachrichten ausgegeben.
+                    Console.WriteLine(e.Message);
+                }
+            }
+
+            Console.Write("Weitere Berechnung? (j/n): ");
+            string eingabe = Console.ReadLine();
+            if (eingabe.ToLower() != "j")
+            {
+                weiterRechnen = false;
+            }
+        }
+    }
+
+    static double Berechne(double a, double b, string op)
+    {
+        switch (op)
+        {
+            case "+":
+                // Die Rechenoperation wird durchgeführt und das ergebnis wirdzurückgegeben.
+                return a + b;
+            case "-":
+                return a - b;
+            case "*":
+                return a * b;
+            case "/":
+                if (b == 0)
+                {
+                    // Anstelle eines ergebnisses wird ein Fehler geworfen mit einer selbst geschriebenen Nachricht.
+                    throw new ArgumentException("Fehler: Division durch 0 nicht erlaubt.");
+                }
+                else
+                {
+                    return a / b;
+                }
+            default:
+                throw new ArgumentException("Ungültige Operation. Bitte +, -, * oder / eingeben.");
+        }
+    }
+}
+```
+
+</details>
+
+---
+
+> 🧠 Mit dieser Aufgabe kombinierst du viele Grundelemente: Eingabe, Verzweigung, Schleifen und Fehlerbehandlung – und bekommst ein richtiges Mini-Programm!
+

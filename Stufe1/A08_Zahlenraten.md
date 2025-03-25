@@ -1,91 +1,120 @@
-# Aufgabe A08: Zahlenraten
+# 🟢 Aufgabe A08: Zahlenraten
 
-## Ziel
+## Ziel der Aufgabe
 
-Entwickeln Sie ein C#-Programm, bei dem der Benutzer eine zufällig generierte Zahl zwischen 1 und 100 erraten muss. Nach jedem Rateversuch erhält der Benutzer einen Hinweis, ob die gesuchte Zahl größer oder kleiner ist als die eingegebene Zahl. Das Spiel endet, wenn die Zahl erraten wurde oder die maximale Anzahl von Versuchen erreicht ist.
+In dieser Aufgabe programmierst du ein kleines Spiel: Der Computer denkt sich eine Zahl zwischen 1 und 100 aus, und du musst sie erraten. Nach jedem Versuch bekommst du einen Hinweis, ob du zu hoch oder zu niedrig liegst. Du hast maximal 10 Versuche.
 
-## Anleitung
+Dabei lernst du, wie man mit **Zufallszahlen**, **Schleifen**, **Vergleichen** und **Benutzereingaben** arbeitet.
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen" aus.
-   - Wählen Sie unter den verfügbaren Projekttypen "Konsolenanwendung" aus.
-   - Geben Sie dem Projekt einen aussagekräftigen Namen, z. B. "Zahlenraten".
+---
 
-2. **Programmcode schreiben:**
-   - Ersetzen Sie den automatisch generierten Code durch folgenden Inhalt:
+## Was du lernst
 
-     ```csharp
-     using System;
+- Wie man mit der Klasse `Random` Zufallszahlen erzeugt
+- Wie man eine Schleife nutzt, um wiederholt Benutzereingaben zu verarbeiten
+- Wie man mit `if`-Bedingungen reagiert und Feedback gibt
+- Wie man mit `int.TryParse()` Eingaben sicher verarbeitet
 
-     namespace Zahlenraten
-     {
-         class Program
-         {
-             static void Main(string[] args)
-             {
-                 // Zufallszahlengenerator initialisieren
-                 Random zufall = new Random();
-                 int geheimeZahl = zufall.Next(1, 101); // Zahl zwischen 1 und 100
-                 int versuche = 0;
-                 int maximaleVersuche = 10;
-                 bool zahlErraten = false;
+---
 
-                 Console.WriteLine("Willkommen zum Zahlenratespiel!");
-                 Console.WriteLine($"Ich habe mir eine Zahl zwischen 1 und 100 ausgedacht. Sie haben {maximaleVersuche} Versuche, um sie zu erraten.");
+## Schritt-für-Schritt-Anleitung
 
-                 while (versuche < maximaleVersuche && !zahlErraten)
-                 {
-                     Console.Write("Bitte geben Sie Ihren Tipp ein: ");
-                     string eingabe = Console.ReadLine();
+### 🔧 1. Projekt erstellen
 
-                     if (int.TryParse(eingabe, out int tipp))
-                     {
-                         versuche++;
-                         if (tipp < geheimeZahl)
-                         {
-                             Console.WriteLine("Die gesuchte Zahl ist größer.");
-                         }
-                         else if (tipp > geheimeZahl)
-                         {
-                             Console.WriteLine("Die gesuchte Zahl ist kleiner.");
-                         }
-                         else
-                         {
-                             zahlErraten = true;
-                             Console.WriteLine($"Herzlichen Glückwunsch! Sie haben die Zahl {geheimeZahl} in {versuche} Versuchen erraten.");
-                         }
-                     }
-                     else
-                     {
-                         Console.WriteLine("Ungültige Eingabe. Bitte geben Sie eine ganze Zahl ein.");
-                     }
-                 }
+1. Starte Visual Studio.
+2. Neues Projekt: **Konsolenanwendung (C#)**.
+3. Projektname: z. B. `Zahlenraten`
 
-                 if (!zahlErraten)
-                 {
-                     Console.WriteLine($"Leider haben Sie die Zahl nicht erraten. Die gesuchte Zahl war {geheimeZahl}.");
-                 }
+---
 
-                 Console.WriteLine("Danke fürs Spielen!");
-             }
-         }
-     }
-     ```
+### 💻 2. Code eingeben
 
-3. **Programm ausführen:**
-   - Speichern Sie alle Änderungen.
-   - Drücken Sie die Taste `F5` oder klicken Sie auf "Starten", um das Programm auszuführen.
-   - Folgen Sie den Anweisungen im Konsolenfenster, um das Spiel zu spielen.
+```csharp
+using System;
 
-## Hinweise
+class Program
+{
+    static void Main(string[] args)
+    {
+        Random zufall = new Random();
+        int geheimzahl = zufall.Next(1, 101); // Zahl von 1 bis 100
 
-- **Zufallszahl:** Die Klasse `Random` wird verwendet, um eine zufällige Zahl zwischen 1 und 100 zu generieren.
-- **Eingabevalidierung:** Mit `int.TryParse` wird überprüft, ob die Benutzereingabe eine gültige ganze Zahl ist.
-- **Schleifen und Bedingungen:** Eine `while`-Schleife ermöglicht mehrere Rateversuche, und `if`-Bedingungen geben Hinweise, ob die gesuchte Zahl größer oder kleiner ist.
+        int versuche = 0;
+        int maxVersuche = 10;
+        bool erraten = false;
 
-## Weiterführende Aufgaben
+        Console.WriteLine("Ich habe eine Zahl zwischen 1 und 100 im Kopf.");
+        Console.WriteLine($"Du hast {maxVersuche} Versuche. Viel Glück!\n");
 
-- **Versuchszähler:** Informieren Sie den Benutzer über die Anzahl der noch verbleibenden Versuche.
-- **Schwierigkeitsgrad:** Fügen Sie verschiedene Schwierigkeitsgrade hinzu, die den Zahlenbereich oder die Anzahl der Versuche beeinflussen.
-- **Highscore-Liste:** Implementieren Sie eine Highscore-Liste, die die besten Spieler mit der geringsten Anzahl von Versuchen speichert.
+        while (versuche < maxVersuche && !erraten)
+        {
+            Console.Write($"Versuch {versuche + 1}: Deine Zahl? ");
+            string eingabe = Console.ReadLine();
+
+            if (int.TryParse(eingabe, out int tipp))
+            {
+                versuche++;
+
+                if (tipp < geheimzahl)
+                {
+                    Console.WriteLine("Zu niedrig!");
+                }
+                else if (tipp > geheimzahl)
+                {
+                    Console.WriteLine("Zu hoch!");
+                }
+                else
+                {
+                    erraten = true;
+                    Console.WriteLine($"Richtig! Die Zahl war {geheimzahl}.");
+                    Console.WriteLine($"Du hast {versuche} Versuch(e) gebraucht.");
+                }
+            }
+            else
+            {
+                Console.WriteLine("Bitte gib eine gültige Zahl ein.");
+            }
+        }
+
+        if (!erraten)
+        {
+            Console.WriteLine($"Leider verloren. Die Zahl war {geheimzahl}.");
+        }
+
+        Console.WriteLine("\nSpiel beendet. Danke fürs Mitmachen!");
+    }
+}
+```
+
+---
+
+### ▶️ 3. Ausführen
+
+- Starte das Spiel mit `F5`.
+- Gib verschiedene Zahlen ein und beachte die Hinweise.
+- Probiere aus, was passiert, wenn du ungültige Eingaben machst (z. B. Buchstaben).
+
+---
+
+## 🔍 Erklärt
+
+| Konzept             | Beschreibung |
+|---------------------|--------------|
+| `Random`            | Erstellt eine Zufallszahl mit `Next(1, 101)` für Bereich 1–100 |
+| `TryParse()`        | Verhindert Programmabsturz bei ungültiger Eingabe (z. B. "abc") |
+| `while`             | Wiederholt den Spielablauf, solange Versuche < max und nicht erraten |
+| `bool`              | Der Typ für Wahr/Falsch-Werte (z. B. `bool erraten = false`) |
+| `if / else if`      | Unterscheidet verschiedene Bedingungen: zu hoch, zu niedrig, richtig |
+
+---
+
+## 💡 Probiere selbst:
+
+- Zeige an, **wie viele Versuche übrig sind**.
+- Erlaube dem Benutzer, den **Schwierigkeitsgrad** zu wählen (z. B. Zahlenbereich und Versuche).
+- Speichere den **Bestwert (wenigste Versuche)** in einer Datei oder als Highscore-Liste.
+
+---
+
+> 🧠 Dieses Spiel verbindet Benutzereingabe, Logik, Schleifen und Bedingungen zu einem kleinen, unterhaltsamen Projekt!
+

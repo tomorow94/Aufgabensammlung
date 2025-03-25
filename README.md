@@ -42,7 +42,7 @@ Die Aufgabensammlung ist in **6 Stufen** gegliedert, die jeweils unterschiedlich
 ### 🔵 **Stufe 2: Strukturierung & Methoden**
 - Ziel: Das in Stufe 1 Gelernte wird **angewendet**, **wiederverwendet** und in **Methoden strukturiert**.
 - Themen wie Datei-IO, Datenstrukturen oder Performance-Vergleiche werden erstmals angeschnitten.
-- Der Schwierigkeitsgrad steigt, aber die Aufgaben bleiben mit dem Wissen aus Stufe 1 **vollständig lösbar**.
+- Der Schwierigkeitsgrad steigt, aber die Aufgaben bleiben mit dem Wissen aus Stufe 1 und etwas Internet recherche lösbar.
 
 ### 🟠 **Stufe 3: Objektorientierte Programmierung (OOP)**
 - Einführung von **Klassen, Objekten und Enums**.

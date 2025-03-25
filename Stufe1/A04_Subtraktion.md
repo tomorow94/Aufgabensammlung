@@ -1,56 +1,78 @@
-# Aufgabe A04: Subtraktion
+# 🟢 Aufgabe A04: Subtraktion
 
-## Ziel
+## Ziel der Aufgabe
 
-Erstellen Sie ein C#-Programm, das zwei Zahlen vom Benutzer einliest, die Differenz berechnet und das Ergebnis auf der Konsole ausgibt. Diese Aufgabe dient dazu, den Umgang mit der Subtraktionsoperation in C# zu üben.
+Dieses Programm liest zwei Zahlen ein und berechnet ihre **Differenz** (erste minus zweite Zahl).  
+Du lernst dabei, wie du einfache mathematische Operationen mit Benutzereingaben kombinierst.
 
-## Anleitung
+---
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen" aus.
-   - Wählen Sie unter den verfügbaren Projekttypen "Konsolenanwendung" aus.
-   - Geben Sie dem Projekt einen aussagekräftigen Namen, z. B. "Subtraktion".
+## Was du lernst
 
-2. **Programmcode schreiben:**
-   - Ersetzen Sie den automatisch generierten Code durch folgenden Inhalt:
+- Wie man Eingaben als `double` einliest
+- Wie man eine Subtraktion durchführt
+- Wie man das Ergebnis ausgibt
 
-     ```csharp
-     using System;
+---
 
-     namespace Subtraktion
-     {
-         class Program
-         {
-             static void Main(string[] args)
-             {
-                 // Aufforderung zur Eingabe der ersten Zahl
-                 Console.Write("Bitte geben Sie die erste Zahl ein: ");
-                 double zahl1 = Convert.ToDouble(Console.ReadLine());
+## Schritt-für-Schritt-Anleitung
 
-                 // Aufforderung zur Eingabe der zweiten Zahl
-                 Console.Write("Bitte geben Sie die zweite Zahl ein: ");
-                 double zahl2 = Convert.ToDouble(Console.ReadLine());
+### 🔧 1. Projekt erstellen
 
-                 // Berechnung der Differenz
-                 double differenz = zahl1 - zahl2;
+1. Starte Visual Studio.
+2. Erstelle ein neues Projekt vom Typ **Konsolenanwendung**.
+3. Projektname: z. B. `Subtraktion`
 
-                 // Ausgabe des Ergebnisses
-                 Console.WriteLine($"Die Differenz zwischen {zahl1} und {zahl2} ist {differenz}.");
-             }
-         }
-     }
-     ```
+---
 
-3. **Programm ausführen:**
-   - Speichern Sie alle Änderungen.
-   - Führen Sie das Programm aus und testen Sie es mit verschiedenen Zahlen.
+### 💻 2. Code eingeben
 
-## Hinweise
+```csharp
+using System;
 
-- **Datentypen:** Verwenden Sie `double`, um auch mit Dezimalzahlen arbeiten zu können.
-- **Eingabevalidierung:** Stellen Sie sicher, dass der Benutzer gültige Zahlen eingibt.
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Erste Zahl: ");
+        double a = Convert.ToDouble(Console.ReadLine());
 
-## Weiterführende Aufgaben
+        Console.Write("Zweite Zahl: ");
+        double b = Convert.ToDouble(Console.ReadLine());
 
-- Erweitern Sie das Programm, um die Reihenfolge der Zahlen zu berücksichtigen und negative Ergebnisse entsprechend zu behandeln.
+        double differenz = a - b;
+
+        Console.WriteLine($"{a} minus {b} ergibt {differenz}.");
+    }
+}
+```
+
+---
+
+### ▶️ 3. Ausführen
+
+- Starte das Programm mit `F5`.
+- Gib z. B. `10` und `4` ein.
+- Erwartete Ausgabe: `10 minus 4 ergibt 6.`
+
+---
+
+## 🔍 Erklärt
+
+| Code-Zeile | Bedeutung |
+|-----------|-----------|
+| `a - b` | Subtrahiert zwei Zahlen |
+| `Convert.ToDouble(...)` | Wandelt Eingabe-Text in Zahl um |
+
+---
+
+## 💡 Probiere selbst:
+
+- Was passiert, wenn du zuerst eine kleinere und dann eine größere Zahl eingibst?
+- Kannst du die Reihenfolge umkehren (zweite minus erste)?
+- Baue eine Wiederholung mit Schleife ein, z. B. um mehrfach zu rechnen.
+
+---
+
+> 🧠 Diese Aufgabe zeigt dir: Rechnen mit Benutzereingaben ist einfach – und du kannst mit jeder neuen Rechenart dein Programm erweitern!
+

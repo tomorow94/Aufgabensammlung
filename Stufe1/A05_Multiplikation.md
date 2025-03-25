@@ -1,56 +1,78 @@
-# Aufgabe A05: Multiplikation
+# 🟢 Aufgabe A05: Multiplikation
 
-## Ziel
+## Ziel der Aufgabe
 
-Erstellen Sie ein C#-Programm, das zwei Zahlen vom Benutzer einliest, ihr Produkt berechnet und das Ergebnis auf der Konsole ausgibt. Diese Aufgabe dient dazu, den Umgang mit der Multiplikationsoperation in C# zu üben.
+Dieses Programm liest zwei Zahlen ein und berechnet ihr **Produkt** (also die Multiplikation).  
+Du lernst, wie man zwei Zahlen miteinander multipliziert und das Ergebnis auf der Konsole ausgibt.
 
-## Anleitung
+---
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen" aus.
-   - Wählen Sie unter den verfügbaren Projekttypen "Konsolenanwendung" aus.
-   - Geben Sie dem Projekt einen aussagekräftigen Namen, z. B. "Multiplikation".
+## Was du lernst
 
-2. **Programmcode schreiben:**
-   - Ersetzen Sie den automatisch generierten Code durch folgenden Inhalt:
+- Wie man Benutzereingaben verarbeitet
+- Wie man zwei Zahlen multipliziert
+- Wie man Ergebnisse formatiert ausgibt
 
-     ```csharp
-     using System;
+---
 
-     namespace Multiplikation
-     {
-         class Program
-         {
-             static void Main(string[] args)
-             {
-                 // Aufforderung zur Eingabe der ersten Zahl
-                 Console.Write("Bitte geben Sie die erste Zahl ein: ");
-                 double zahl1 = Convert.ToDouble(Console.ReadLine());
+## Schritt-für-Schritt-Anleitung
 
-                 // Aufforderung zur Eingabe der zweiten Zahl
-                 Console.Write("Bitte geben Sie die zweite Zahl ein: ");
-                 double zahl2 = Convert.ToDouble(Console.ReadLine());
+### 🔧 1. Projekt erstellen
 
-                 // Berechnung des Produkts
-                 double produkt = zahl1 * zahl2;
+1. Starte Visual Studio.
+2. Neues Projekt: **Konsolenanwendung (C#)**.
+3. Projektname: z. B. `Multiplikation`
 
-                 // Ausgabe des Ergebnisses
-                 Console.WriteLine($"Das Produkt von {zahl1} und {zahl2} ist {produkt}.");
-             }
-         }
-     }
-     ```
+---
 
-3. **Programm ausführen:**
-   - Speichern Sie alle Änderungen.
-   - Führen Sie das Programm aus und testen Sie es mit verschiedenen Zahlen.
+### 💻 2. Code eingeben
 
-## Hinweise
+```csharp
+using System;
 
-- **Datentypen:** Verwenden Sie `double`, um auch mit Dezimalzahlen arbeiten zu können.
-- **Eingabevalidierung:** Stellen Sie sicher, dass der Benutzer gültige Zahlen eingibt.
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.Write("Erste Zahl: ");
+        double a = Convert.ToDouble(Console.ReadLine());
 
-## Weiterführende Aufgaben
+        Console.Write("Zweite Zahl: ");
+        double b = Convert.ToDouble(Console.ReadLine());
 
-- Erweitern Sie das Programm, um mehrere Zahlen nacheinander zu multiplizieren.
+        double produkt = a * b;
+
+        Console.WriteLine($"{a} mal {b} ergibt {produkt}.");
+    }
+}
+```
+
+---
+
+### ▶️ 3. Ausführen
+
+- Starte das Programm mit `F5`.
+- Gib z. B. `3` und `4` ein.
+- Ausgabe: `3 mal 4 ergibt 12.`
+
+---
+
+## 🔍 Erklärt
+
+| Code-Zeile | Bedeutung |
+|-----------|-----------|
+| `a * b` | Multipliziert zwei Zahlen |
+| `Console.WriteLine(...)` | Gibt das Ergebnis formatiert aus |
+
+---
+
+## 💡 Probiere selbst:
+
+- Was passiert mit negativen Zahlen?
+- Was passiert, wenn eine Zahl 0 ist?
+- Was passiert bei Kommazahlen?
+
+---
+
+> 🧠 Die Multiplikation ist die nächste Grundoperation – mit wenigen Änderungen kannst du bald auch Rechenmaschinen oder Taschenrechner bauen!
+
