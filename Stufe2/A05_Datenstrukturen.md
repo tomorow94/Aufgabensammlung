@@ -92,20 +92,21 @@ Console.WriteLine(set.Contains(3));
 Console.WriteLine(woerterbuch["Berlin"]);
 ```
 
-💡 Zufallszahlen erzeugen
+---
 
+### 2. Performance-Vergleich: List vs. HashSet
+
+Erzeuge 1 Million zufällige Zahlen in **List** und **HashSet**. Wähle eine davon aus der Mitte und miss die Zeit für `Contains()` mit der `Stopwatch`-Klasse:
+
+<details>
+<summary>💡 Zufallszahlen erzeugen</summary>
 Nutze `Random`, um Zufallszahlen zu generieren – z. B. für spätere Tests mit großen Datenmengen:
 
 ```csharp
 Random zufall = new Random();
 int zahl = zufall.Next(1, 100); // Zahl zwischen 1 und 99
 ```
-
----
-
-### 2. Performance-Vergleich: List vs. HashSet
-
-Erzeuge 1 Million zufällige Zahlen in **List** und **HashSet**. Wähle eine davon aus der Mitte und miss die Zeit für `Contains()` mit der `Stopwatch`-Klasse:
+</details>
 
 ```csharp
 Stopwatch sw = Stopwatch.StartNew();
