@@ -1,41 +1,106 @@
-# Aufgabe A04: Stoppuhr
+# 🔵 Aufgabe A04: Stoppuhr
 
-## Ziel
+## Ziel der Aufgabe
 
-Entwickeln Sie eine C#-Konsolenanwendung, die eine Stoppuhr simuliert. Der Benutzer soll die Möglichkeit haben, die Zeitmessung zu starten, zu stoppen, sich die verstrichene Zeit anzeigen zu lassen und die Stoppuhr zurückzusetzen. Diese Aufgabe dient dazu, die Arbeit mit Zeitmessungen in C# mithilfe der `Stopwatch`-Klasse aus dem `System.Diagnostics`-Namespace zu üben.
+Erstelle ein einfaches Konsolenprogramm, das wie eine **Stoppuhr** funktioniert. Du lernst, wie du mit **Zeitmessung**, **Menüsteuerung** und **Methoden** arbeitest.
 
-## Anforderungen
+Diese Aufgabe verlangt, dass du den Code **selbst schreibst**. Orientiere dich an bekannten Mustern oder recherchiere gezielt nach passenden Befehlen in C#.
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen".
-   - Wählen Sie als Projekttyp "Konsolenanwendung".
-   - Geben Sie dem Projekt den Namen `Stoppuhr`.
+Das Programm soll dem Benutzer folgende Optionen bieten:
 
-2. **Funktionen der Stoppuhr:**
-   - **Starten der Zeitmessung**: Der Benutzer kann die Stoppuhr starten.
-   - **Stoppen der Zeitmessung**: Die Stoppuhr kann angehalten werden.
-   - **Anzeige der verstrichenen Zeit**: Die verstrichene Zeit soll formatiert auf der Konsole angezeigt werden.
-   - **Zurücksetzen der Stoppuhr**: Die gemessene Zeit kann auf null gesetzt werden.
-   - **Menüsteuerung**: Die Anwendung soll ein Menü mit den genannten Optionen bereitstellen.
+1. Stoppuhr starten
+2. Stoppuhr stoppen
+3. Verstrichene Zeit anzeigen
+4. Stoppuhr zurücksetzen
+5. Programm beenden
 
-3. **Technische Umsetzung:**
-   - Verwenden Sie die `Stopwatch`-Klasse für die Zeitmessung.
-   - Nutzen Sie eine `while`-Schleife, um das Menü solange anzuzeigen, bis der Benutzer das Programm beendet.
-   - Verwenden Sie `if`- oder `switch`-Anweisungen, um die Benutzereingaben zu verarbeiten.
-   - Formatieren Sie die Zeitausgabe im Format `hh:mm:ss.fff`.
+Die Auswahl erfolgt über eine Menüführung mit `switch` und wird in einer Schleife so lange wiederholt, bis der Benutzer das Programm beendet.
 
-## Hinweise zur Implementierung
+---
 
-- **Fehlerbehandlung**: Stellen Sie sicher, dass ungültige Eingaben abgefangen werden.
-- **Statusprüfung**: Überprüfen Sie, ob die Stoppuhr bereits läuft oder gestoppt ist, bevor Sie Aktionen ausführen.
-- **Nutzerführung**: Das Programm soll dem Benutzer klar kommunizieren, welche Aktionen verfügbar sind.
+## Was du lernst
 
-## Erweiterungen (Optional)
+* Wie du mit der Klasse `Stopwatch` eine Zeitmessung implementierst
+* Wie du eine einfache **Menüführung** mit Benutzerinteraktion aufbaust
+* Wie du durch Methoden deinen Code **strukturiert und wiederverwendbar** machst
+* Wie man **Zustände prüft**, z. B. ob eine Stoppuhr läuft
 
-- **Rundenzeiten**: Der Benutzer kann Zwischenzeiten erfassen, die separat gespeichert werden.
-- **Speicherung der Zeiten**: Gespeicherte Zeiten werden in einer Datei abgelegt und können später erneut geladen werden.
-- **Grafische Oberfläche**: Optional kann eine einfache GUI mit `Windows Forms` oder `WPF` erstellt werden.
+💡 Die Stopwatch-Klasse eignet sich auch hervorragend zur Performance-Messung einzelner Programmabschnitte. Wenn du z. B. herausfinden möchtest, warum dein Programm langsam ist oder ob eine Optimierung tatsächlich einen Unterschied macht, kannst du gezielt Zeitmessungen einbauen und die Ergebnisse in Log-Dateien schreiben.
+
+---
+
+## Vorgehen & Tipps
+
+1. **Plane dein Programm zuerst in Stichpunkten.** Das hilft dir, den Überblick zu behalten.
+
+   Beispiel:
+
+   ```csharp
+   // Menü anzeigen
+   // Benutzereingabe verarbeiten
+   // Option 1: Stoppuhr starten
+   // Option 2: Stoppuhr stoppen
+   // Option 3: Zeit anzeigen
+   // Option 4: Stoppuhr zurücksetzen
+   // Option 5: Programm beenden
+   ```
+
+2. **Nutze die Klasse `Stopwatch`:**
+
+   ```csharp
+   Stopwatch sw = new Stopwatch();
+   sw.Start();
+   sw.Stop();
+   Console.WriteLine(sw.Elapsed);
+   sw.Reset();
+   ```
+
+3. **Formatierte Zeitausgabe:**
+
+   ```csharp
+   Console.WriteLine($"Verstrichene Zeit: {sw.Elapsed:hh\\:mm\\:ss\\.fff}");
+   ```
+
+   Alternativ geht auch:
+
+   ```csharp
+   Console.WriteLine("Verstrichene Zeit: " + sw.Elapsed.ToString(@"hh\:mm\:ss\.fff"));
+   ```
+
+   🔎 **Hinweis:** Beispiel 1 verwendet einen Intrpolierten Format-String, was funktioniert, da es sich bei der `Elapsed` time von `Stopwatch` um den Datentyp `TimeSpan` handelt. Beispiel 2 verwendet eine weiter verbreitete Lösung, die die Methode `ToString()` aufruft, der ein Format-String übergeben werden muss. Der Format-String bestimmt, wie die Zeit dargestellt wird. Eine andere Formatierung wäre beispielsweise `"hh\:mm\:ss"`.
+
+4. **Zustand prüfen:**
+
+   ```csharp
+   if (sw.IsRunning)
+   {
+       Console.WriteLine("Die Stoppuhr läuft.");
+   }
+   else
+   {
+       Console.WriteLine("Die Stoppuhr ist gestoppt.");
+   }
+   ```
+
+5. **Strukturiere deinen Code in Methoden:**
+
+   * `StarteStoppuhr()`
+   * `StoppeStoppuhr()`
+   * `ZeigeZeit()`
+   * `Zuruecksetzen()`
+
+---
+
+## Weiterführende Ideen
+
+
+* Gib dem Benutzer die Möglichkeit **Zwischenzeiten** zu erfassen, die separat in einer Liste gespeichert werden
+* Gib dem Benutzer die Möglichkeit, die **Zwischenzeiten** einzusehen
+* Ermögliche das Speichern der Zeitwerte in einer Datei
+* Implementiere eine Funktion, die nach einer gewissen Zeit automatisch stoppt (Timer)
+* Baue eine einfache **GUI** mit **Windows Forms** oder **WPF**
+
+---
 
 <details>
 <summary><strong>Lösungsvorschlag anzeigen</strong></summary>

@@ -1,45 +1,113 @@
-# Aufgabe A03: Kleiner Text-Editor
+# 🔵 Aufgabe A03: Kleiner Text-Editor
 
-## Ziel
+## Ziel der Aufgabe
 
-Entwickeln Sie eine C#-Konsolenanwendung, die es dem Benutzer ermöglicht, Texte einzugeben, diese in einer Datei zu speichern und gespeicherte Texte wieder zu laden. Diese Aufgabe fördert den Umgang mit Dateioperationen und die Implementierung einer einfachen Benutzerführung in C#.
+Erstelle ein einfaches Konsolenprogramm, das Texte in eine Datei speichert und wieder laden kann. Du vertiefst dabei das Arbeiten mit **Dateien**, **Benutzereingaben** und **einfacher Menüführung**.
 
-## Anleitung
+Diese Aufgabe verlangt, dass du den Code **selbst schreibst**, orientiere dich dabei an bekannten Mustern oder recherchiere bei Bedarf gezielt nach passenden C#-Befehlen.
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen" aus.
-   - Wählen Sie den Projekttyp "Konsolenanwendung" aus.
-   - Geben Sie dem Projekt einen aussagekräftigen Namen, z. B. "KleinerTextEditor".
+- Das Programm sollte dem Benutzer ein Menü mit folgenden Optionen bieten:
+  
+1. Neuen Text schreiben und speichern.
+2. Gespeicherten Text laden und anzeigen.
+3. Programm beenden.
 
-2. **Programmstruktur:**
-   - Das Programm sollte dem Benutzer ein Menü mit folgenden Optionen bieten:
-     1. Neuen Text schreiben und speichern.
-     2. Gespeicherten Text laden und anzeigen.
-     3. Programm beenden.
-   - Basierend auf der Auswahl des Benutzers sollte das Programm die entsprechende Funktion ausführen.
+- Basierend auf der Auswahl des Benutzers sollte das Programm die entsprechende Funktion ausführen.
 
-3. **Funktionen im Detail:**
-   - **Neuen Text schreiben und speichern:**
-     - Fordern Sie den Benutzer auf, den gewünschten Text einzugeben.
-     - Speichern Sie den eingegebenen Text in einer Datei. Verwenden Sie hierfür die `System.IO`-Klassen wie `StreamWriter`.
-   - **Gespeicherten Text laden und anzeigen:**
-     - Laden Sie den Inhalt der zuvor gespeicherten Datei. Verwenden Sie hierfür Klassen wie `StreamReader`.
-     - Geben Sie den geladenen Text in der Konsole aus.
+---
 
-4. **Hinweise zur Implementierung:**
-   - **Fehlerbehandlung:** Stellen Sie sicher, dass das Programm ungültige Eingaben erkennt und den Benutzer entsprechend informiert.
-   - **Dateipfade:** Speichern Sie die Datei im Arbeitsverzeichnis der Anwendung oder fragen Sie den Benutzer nach einem spezifischen Dateipfad.
-   - **Encoding:** Achten Sie darauf, beim Lesen und Schreiben der Datei das gleiche Encoding zu verwenden, um Zeichenkodierungsprobleme zu vermeiden.
+## Was du lernst
 
-## Weiterführende Aufgaben
+* Wie man Text **in Dateien schreibt** und **aus ihnen liest**
+* Wie man ein einfaches **Menü mit Benutzerauswahl** umsetzt
+* Wie man **Fehlerbehandlung** für Dateizugriffe einsetzt
+* Wie man mit Schleifen einfache Programme strukturiert
 
-- **Dateiauswahl:** Erweitern Sie das Programm so, dass der Benutzer den Namen der Datei angeben kann, in der der Text gespeichert oder aus der der Text geladen werden soll.
-- **Textbearbeitung:** Fügen Sie Funktionen hinzu, die es dem Benutzer ermöglichen, einen geladenen Text zu bearbeiten und die Änderungen zu speichern.
-- **Formatierung:** Ermöglichen Sie dem Benutzer, einfache Formatierungen wie Zeilenumbrüche oder Absätze einzufügen.
+---
+
+## Vorgehen & Tipps
+
+1. **Plane dein Programm zuerst in Stichpunkten.** Das hilft dir, den Überblick zu behalten.
+
+   Beispiel:
+
+   ```csharp
+   // Menü anzeigen
+   // Benutzereingabe auswerten
+   // Option 1: Text schreiben → speichern
+   // Option 2: Dateiinhalt anzeigen
+   // Option 3: Programm beenden
+   ```
+
+2. **So speicherst du Text in eine Datei:**
+
+   ```csharp
+   File.WriteAllText("meineDatei.txt", "Das ist mein Text.");
+   ```
+
+    🔎 **Hinweis:** Sollte noch keine datei mit dem gegebenen Namen existieren, wrd diese automatisch erstellt und in diese geschrieben.
+
+3. **So erstellst du eine Datei (falls sie nicht existiert):**
+
+   ```csharp
+   string pfad = "meinOrdner\\meineDatei.txt";
+   Directory.CreateDirectory("meinOrdner"); // erstellt den Ordner, falls er nicht existiert
+   File.WriteAllText(pfad, "Neuer Inhalt der Datei");
+   ```
+
+   🔎 **Hinweis:** Bei Angabe eines relativen Pfads (wie oben) wird die Datei im Projektverzeichnis gespeichert – also dort, wo auch deine `.csproj`-Datei liegt.
+   Das ist nützlich, damit dein Code auf verschiedenen Rechnern ohne Anpassung des Pfads funktioniert.
+
+4. **So liest du Text aus einer Datei:**
+
+   ```csharp
+   string inhalt = File.ReadAllText("meineDatei.txt");
+   Console.WriteLine(inhalt);
+   ```
+
+5. **So prüfst du, ob eine Datei existiert:**
+
+   ```csharp
+   if (File.Exists("meineDatei.txt"))
+   {
+       // Datei lesen oder anzeigen
+   }
+   else
+   {
+       Console.WriteLine("Datei nicht gefunden.");
+   }
+   ```
+
+6. **So verwendest du eine Schleife, um Eingaben zu wiederholen:**
+
+   ```csharp
+   while (true)
+   {
+       // Menü anzeigen und auf Benutzereingabe reagieren
+   }
+   ```
+
+7. **Tipp:** Nutze Kommentare, um die Aufgaben schrittweise zu dokumentieren und später leichter zu erweitern.
+
+---
+
+## Weiterführende Ideen
+
+* Gib dem Benutzer einfaches Feedback durch meldungen nach Abschließen einer Aktion wie `"Text wurde erfolgreich in '{pfad}' gespeichert."`.
+* Gib dem Benutzer die Möglichkeit, **Dateinamen selbst einzugeben**.
+* Ergänze die Option, einen vorhandenen Text zu **bearbeiten und erneut zu speichern**.
+* Ermögliche das **Löschen** einer Datei.
+* Unterstütze das Speichern mehrerer Texte in verschiedenen Dateien.
+* Nutze **mehrere Methoden** zur sauberen Strukturierung (z. B. `TextSpeichern()`, `TextLaden()`).
+* Ermöglichen Sie dem Benutzer, einfache **Formatierungen** wie Zeilenumbrüche oder Absätze einzufügen.
+---
+
+> 💡 **Diese Aufgabe bildet die Grundlage für spätere Projekte mit Dateiverwaltung, z. B. Adressbuch oder Notizsystem.**
+
+---
 
 <details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+<summary><strong>Möglicher Lösungsvorschlag anzeigen</strong></summary>
 
 ```csharp
 using System;

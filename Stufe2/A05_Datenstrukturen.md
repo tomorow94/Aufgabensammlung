@@ -1,28 +1,43 @@
-# Aufgabe A05: Datenstrukturen – List, HashSet, Dictionary
+# 🔵 Aufgabe A05: Datenstrukturen – List, HashSet, Dictionary
 
-## Ziel
+## Ziel der Aufgabe
 
-In dieser Aufgabe lernen Sie verschiedene Datenstrukturen in C# kennen: `List<T>`, `HashSet<T>` und `Dictionary<TKey, TValue>`. Sie sollen deren Unterschiede verstehen, insbesondere hinsichtlich ihrer Performance bei der Suche und Speicherung von Werten.
+Erstelle ein Programm, das die Unterschiede zwischen den drei wichtigsten C#-Datenstrukturen **`List<T>`**, **`HashSet<T>`** und **`Dictionary<TKey, TValue>`** erfahrbar macht.
+
+Du lernst dabei:
+
+* Wie man diese Datenstrukturen **erstellt**, **nutzt** und **vergleicht**
+* Welche Struktur sich **wofür eignet** (z. B. schneller Zugriff vs. Reihenfolge)
+* Wie man mit **großen Datenmengen performant arbeitet**
+
+Diese Aufgabe erfordert, dass du den Code **selbst entwickelst**. Nutze bei Bedarf gezielte Internetrecherche.
+
+---
 
 ## Einführung in die Datenstrukturen
 
 ### **1. List<T>**
-- Eine `List<T>` ist eine dynamische Liste, die ähnlich wie ein Array funktioniert, aber automatisch in der Größe wächst.
-- Elemente sind geordnet und können über einen Index angesprochen werden.
-- Das Suchen eines Elements (`Contains`) hat eine **lineare Laufzeit O(n)**, wenn kein sortierter Zugriff oder `BinarySearch` genutzt wird.
-- Eignet sich gut für **kleinere Mengen von Daten**, bei denen Reihenfolge und Duplikate wichtig sind.
+
+* Eine `List<T>` ist eine dynamische Liste, die ähnlich wie ein Array funktioniert, aber automatisch in der Größe wächst.
+* Elemente sind geordnet und können über einen Index angesprochen werden.
+* Das Suchen eines Elements (`Contains`) hat eine **lineare Laufzeit O(n)**, wenn kein sortierter Zugriff oder `BinarySearch` genutzt wird.
+* Eignet sich gut für **kleinere Mengen von Daten**, bei denen Reihenfolge und Duplikate wichtig sind.
 
 **Beispiel:**
+
 ```csharp
 List<int> zahlenListe = new List<int> { 1, 2, 3, 4, 5 };
 zahlenListe.Add(6);
 Console.WriteLine(zahlenListe.Contains(3)); // True
 ```
+
 ### **2. HashSet<T>**
+
 Ein `HashSet<T>` speichert nur eindeutige Werte und verwendet eine Hash-Funktion, um die Suche zu beschleunigen.
 Die Suche (`Contains`) hat nahezu konstante Laufzeit O(1), sofern keine Hash-Kollisionen auftreten.
 Es ist sehr effizient für große Mengen von Daten, bei denen die Reihenfolge unwichtig ist.
-Beispiel:
+
+**Beispiel:**
 
 ```csharp
 HashSet<int> zahlenSet = new HashSet<int> { 1, 2, 3, 4, 5 };
@@ -30,11 +45,13 @@ zahlenSet.Add(6);
 Console.WriteLine(zahlenSet.Contains(3)); // True
 ```
 
-### **3. Dictionary<TKey, TValue>**
+### **3. Dictionary\<TKey, TValue>**
+
 Ein `Dictionary<TKey, TValue>` ist eine Sammlung von Schlüssel-Wert-Paaren, bei denen jeder Schlüssel eindeutig ist.
 Der Zugriff auf Werte geschieht über den Schlüssel und hat in der Regel eine Laufzeit von O(1).
 Nützlich für schnelle Zuordnungen, wie z. B. das Speichern von Namen und Telefonnummern.
-Beispiel:
+
+**Beispiel:**
 
 ```csharp
 Dictionary<string, int> alterVonPersonen = new Dictionary<string, int>
@@ -45,27 +62,109 @@ Dictionary<string, int> alterVonPersonen = new Dictionary<string, int>
 Console.WriteLine(alterVonPersonen["Alice"]); // 25
 ```
 
-## Aufgaben
-### 1. Datenstrukturen ausprobieren
+---
 
-Erstellen Sie eine `List<int>`, ein `HashSet<int>` und ein `Dictionary<string, int>`.
-Fügen Sie einige Werte hinzu und testen Sie `Contains()` für `List<T>` und `HashSet<T>` sowie das Abrufen eines Wertes für `Dictionary<TKey, TValue>`.
+## Was du lernst
+
+* Unterschiede zwischen `List`, `HashSet` und `Dictionary`
+* Performance-Vergleich bei der **Suche mit `Contains()`**
+* Verwendung von `Stopwatch` zur Zeitmessung
+* Strukturierter Code mit Methoden und Vergleichsausgaben
+* Erzeugen von Zufallszahlen mit `Random`
+
+---
+
+## Vorgehen & Tipps
+
+### 1. Grundlagen ausprobieren
+
+Erstelle in deinem Programm:
+
+* Eine `List<int>` mit einigen Zahlen
+* Ein `HashSet<int>` mit denselben Zahlen
+* Ein `Dictionary<string, string>` mit z. B. Stadt → Land
+
+Teste jeweils:
+
+```csharp
+Console.WriteLine(liste.Contains(3));
+Console.WriteLine(set.Contains(3));
+Console.WriteLine(woerterbuch["Berlin"]);
+```
+
+💡 Zufallszahlen erzeugen
+
+Nutze `Random`, um Zufallszahlen zu generieren – z. B. für spätere Tests mit großen Datenmengen:
+
+```csharp
+Random zufall = new Random();
+int zahl = zufall.Next(1, 100); // Zahl zwischen 1 und 99
+```
+
+---
 
 ### 2. Performance-Vergleich: List vs. HashSet
 
-Erstellen Sie eine `List<int>` und ein `HashSet<int>` mit 1 Million zufälligen Zahlen.
-Messen Sie die Zeit für die Suche nach einer Zahl mit `Contains()` und vergleichen Sie die Laufzeiten.
+Erzeuge 1 Million zufällige Zahlen in **List** und **HashSet**. Wähle eine davon aus der Mitte und miss die Zeit für `Contains()` mit der `Stopwatch`-Klasse:
 
-### 3. Key-Value-Zuordnung mit Dictionary
+```csharp
+Stopwatch sw = Stopwatch.StartNew();
+list.Contains(suchzahl);
+sw.Stop();
+Console.WriteLine($"List: {sw.ElapsedMilliseconds} ms");
+```
 
-Erstellen Sie ein `Dictionary<string, string>`, das Städtenamen als Schlüssel und deren Länder als Wert speichert.
-Lassen Sie den Benutzer eine Stadt eingeben und geben Sie das entsprechende Land aus.
+Vergleiche die Werte mit `HashSet.Contains()`.
 
-## Hinweise
-Verwenden Sie `Stopwatch` aus `System.Diagnostics`, um die Zeitmessung für die Performance-Vergleiche durchzuführen.
-Beachten Sie, dass `List<T>` nützlich ist, wenn eine Reihenfolge beibehalten werden soll, `HashSet<T>` für große Mengen einzigartiger Daten und `Dictionary<TKey, TValue>` für schnelle Key-Value-Zuordnungen.
+💡 `HashSet<T>` ist bei großen Datenmengen deutlich schneller als `List<T>` beim Suchen.
 
-<details> <summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+🤔 **Extra-Tipp (nicht überspringen!)**: Schau dir ruhig mal `list.Count` und `set.Count` an, nachdem du viele Zufallszahlen eingefügt hast. Hast du erwartet, dass beide gleich viele Einträge enthalten?
+
+```csharp
+Console.WriteLine(list.Count);
+Console.WriteLine(set.Count);
+```
+
+Teste das ruhig mehrmals.
+
+<details>
+<summary>💡 Warum hat das HashSet oft weniger Einträge?</summary>
+Weil ein `HashSet` keine doppelten Werte erlaubt! Wenn du z. B. denselben zufälligen Wert mehrmals erzeugst, wird er in der `List` mehrfach eingefügt – im `HashSet` jedoch **nur einmal gespeichert**. So entsteht automatisch eine Art Duplikat-Filter.
+</details>
+
+---
+
+### 3. Dictionary mit Benutzereingabe
+
+Erstelle ein `Dictionary<string, string>` mit Städten und Ländern. Frage den Benutzer nach einer Stadt und gib das passende Land aus:
+
+```csharp
+Console.Write("Gib eine Stadt ein: ");
+string stadt = Console.ReadLine();
+if (map.ContainsKey(stadt))
+{
+    Console.WriteLine($"{stadt} liegt in {map[stadt]}.");
+}
+else
+{
+    Console.WriteLine("Stadt nicht gefunden.");
+}
+```
+
+---
+
+## Weiterführende Ideen
+
+* Führe die Zeitmessung mehrfach durch und berechne Mittelwerte
+* Führe `Add`, `Remove`, `Count` und `Clear` mit jeder Datenstruktur durch
+* Sortiere eine Liste und nutze `BinarySearch`
+* Füge eine Auswertung hinzu, wie oft jeder Wert gesucht wurde (mit Dictionary)
+* Visualisiere die Unterschiede z. B. durch Balkendiagramme (später in GUI-Aufgaben)
+
+---
+
+<details>
+<summary><strong>Beispielhafte Lösung anzeigen</strong></summary>
 
 ```csharp
 using System;
@@ -76,20 +175,21 @@ class Program
 {
     static void Main()
     {
-        // 1. Datenstrukturen ausprobieren
+        // 1. Strukturen testen
         List<int> zahlenListe = new List<int> { 1, 2, 3, 4, 5 };
         HashSet<int> zahlenSet = new HashSet<int> { 1, 2, 3, 4, 5 };
         Dictionary<string, string> stadtLand = new Dictionary<string, string>
         {
             { "Berlin", "Deutschland" },
-            { "Paris", "Frankreich" }
+            { "Paris", "Frankreich" },
+            { "Madrid", "Spanien" }
         };
 
-        Console.WriteLine(zahlenListe.Contains(3)); // True
-        Console.WriteLine(zahlenSet.Contains(3));   // True
-        Console.WriteLine(stadtLand["Berlin"]);     // Deutschland
+        Console.WriteLine(zahlenListe.Contains(3));
+        Console.WriteLine(zahlenSet.Contains(3));
+        Console.WriteLine(stadtLand["Berlin"]);
 
-        // 2. Performance-Vergleich: List vs. HashSet
+        // 2. Performance-Test
         List<int> listTest = new List<int>();
         HashSet<int> setTest = new HashSet<int>();
         Random rand = new Random();
@@ -101,28 +201,31 @@ class Program
             setTest.Add(num);
         }
 
+        Console.WriteLine($"List Count: {listTest.Count}");
+        Console.WriteLine($"HashSet Count: {setTest.Count}");
+
         int testZahl = listTest[500000];
 
         Stopwatch sw = Stopwatch.StartNew();
-        bool inList = listTest.Contains(testZahl);
+        listTest.Contains(testZahl);
         sw.Stop();
         Console.WriteLine($"List: {sw.ElapsedMilliseconds} ms");
 
         sw.Restart();
-        bool inSet = setTest.Contains(testZahl);
+        setTest.Contains(testZahl);
         sw.Stop();
         Console.WriteLine($"HashSet: {sw.ElapsedMilliseconds} ms");
 
-        // 3. Key-Value-Zuordnung mit Dictionary
-        Console.Write("Geben Sie eine Stadt ein: ");
-        string stadt = Console.ReadLine();
-        if (stadtLand.ContainsKey(stadt))
+        // 3. Dictionary-Suche
+        Console.Write("Gib eine Stadt ein: ");
+        string eingabe = Console.ReadLine();
+        if (stadtLand.ContainsKey(eingabe))
         {
-            Console.WriteLine($"{stadt} liegt in {stadtLand[stadt]}.");
+            Console.WriteLine($"{eingabe} liegt in {stadtLand[eingabe]}.");
         }
         else
         {
-            Console.WriteLine("Stadt nicht gefunden.");
+            Console.WriteLine("Nicht gefunden.");
         }
     }
 }

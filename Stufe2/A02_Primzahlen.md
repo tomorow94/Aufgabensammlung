@@ -1,51 +1,107 @@
-# Aufgabe A02: Primzahlenprüfung
+# 🔵 Aufgabe A02: Primzahlenprüfung
 
-## Ziel
+## Ziel der Aufgabe
 
-Entwickeln Sie ein C#-Programm, das eine vom Benutzer eingegebene Zahl daraufhin überprüft, ob sie eine Primzahl ist. Diese Aufgabe dient dazu, den Umgang mit Schleifen, bedingten Anweisungen und mathematischen Operationen in C# zu üben.
+Erstelle ein Programm, das überprüft, ob eine eingegebene Zahl eine **Primzahl** ist. Dabei sollst du lernen, wie man **mathematische Regeln**, **Schleifen**, **Methoden** und **Fehlermanagement** sinnvoll in einem Programm umsetzt.
 
-## Anleitung
+Diese Aufgabe setzt voraus, dass du **selbst den Code schreibst** (kein Copy+Paste). Du kannst aber z. B. im **C#-Cheat-Sheet** nachsehen oder **online recherchieren**. Ziel ist, dein Verständnis für Programmstruktur und Logik zu vertiefen.
 
-1. **Neues Projekt erstellen:**
-   - Starten Sie Visual Studio.
-   - Wählen Sie "Neues Projekt erstellen" aus.
-   - Wählen Sie den Projekttyp "Konsolenanwendung" aus.
-   - Geben Sie dem Projekt einen aussagekräftigen Namen, z. B. "PrimzahlenPruefung".
+---
 
-2. **Programmstruktur:**
-   - Das Programm sollte den Benutzer auffordern, eine positive ganze Zahl einzugeben.
-   - Anschließend prüft das Programm, ob die eingegebene Zahl eine Primzahl ist.
-   - Das Ergebnis der Prüfung wird dem Benutzer angezeigt.
+## Was du lernst
 
-3. **Definition einer Primzahl:**
-   - Eine Primzahl ist eine natürliche Zahl größer als 1, die nur durch 1 und sich selbst ohne Rest teilbar ist.
+* Wie man Bedingungen und Schleifen kombiniert
+* Wie man mathematische Regeln in Code übersetzt
+* Wie man Methoden schreibt, die etwas zurückgeben (z. B. `bool`)
+* Wie man ungültige Eingaben behandelt
 
-4. **Vorgehensweise zur Primzahlprüfung:**
-   - Behandeln Sie Sonderfälle: Zahlen kleiner oder gleich 1 sind keine Primzahlen.
-   - Überprüfen Sie, ob die Zahl durch eine der Zahlen von 2 bis zur Quadratwurzel der Zahl ohne Rest teilbar ist.
-   - Wenn ja, ist die Zahl keine Primzahl; andernfalls ist sie eine Primzahl.
+---
 
-5. **Hinweise zur Implementierung:**
-   - Verwenden Sie eine Schleife, um mögliche Teiler zu überprüfen.
-   - Nutzen Sie die `Math.Sqrt`-Funktion, um die Quadratwurzel der Zahl zu berechnen.
-   - Implementieren Sie eine geeignete Fehlerbehandlung für ungültige Eingaben.
+## Vorgehen & Tipps
 
-## Hinweise
+1. **Plane dein Programm zuerst in Stichpunkten**.
 
-- **Effizienz:** Durch die Prüfung möglicher Teiler bis zur Quadratwurzel der Zahl reduzieren Sie die Anzahl der notwendigen Berechnungen und erhöhen die Effizienz des Programms.
+   * Du kannst deine Gedanken direkt im Code als Kommentare notieren.
+   * Beispiel:
 
-- **Fehlerbehandlung:** Stellen Sie sicher, dass das Programm ungültige Eingaben erkennt und den Benutzer entsprechend informiert. Verwenden Sie hierfür die `int.TryParse`-Methode, um Eingaben zu validieren.
+     ```csharp
+     // Benutzer zur Eingabe auffordern
+     // Zahl einlesen und überprüfen ob sie gültig ist
+     // Methode zur Primzahlprüfung aufrufen
+     // Ergebnis ausgeben
+     ```
 
-## Weiterführende Aufgaben
+2. **So schreibt man in C# Kommentare:**
 
-- **Erweiterung zur Primzahlliste:** Passen Sie das Programm so an, dass es alle Primzahlen bis zu einer vom Benutzer eingegebenen Zahl findet und ausgibt.
+   * Einzeilig: `// dies ist ein Kommentar`
+   * Mehrzeilig:
 
-- **Optimierung:** Implementieren Sie den "Sieb des Eratosthenes"-Algorithmus, um die Effizienz bei der Suche nach Primzahlen in einem größeren Bereich zu erhöhen.
+     ```csharp
+     /*
+        Dies ist ein
+        mehrzeiliger Kommentar
+     */
+     ```
 
-- **Benutzeroberfläche:** Entwickeln Sie eine einfache grafische Benutzeroberfläche (GUI) für das Programm, um die Benutzerinteraktion zu verbessern.
+3. **Schreibe dann Schritt für Schritt die Teile, die du geplant hast.**
+
+---
+
+## Definition einer Primzahl
+
+Eine **Primzahl** ist eine natürliche Zahl, die **nur durch 1 und sich selbst** ohne Rest teilbar ist. Beispiele: 2, 3, 5, 7, 11
+
+* **Hinweis:** 1 ist **keine** Primzahl.
+* Du musst nur bis zur **Quadratwurzel** der Zahl testen, um Teiler zu finden. Warum? Wenn eine Zahl durch etwas > Wurzel teilbar ist, dann gibt es bereits einen kleineren Teiler.
+
+---
+
+## Beispielstruktur deines Programms
+
+```csharp
+Console.Write("Bitte gib eine ganze Zahl > 1 ein: ");
+// Eingabe einlesen und mit TryParse überprüfen
+// Falls gültig, Methode zur Prüfung aufrufen
+// Ausgabe: Primzahl oder nicht?
+```
+
+---
+
+## Hinweise zur Umsetzung
+
+* `Math.Sqrt(zahl)` liefert die Quadratwurzel einer Zahl.
+
+* Nutze `bool` als Rückgabewert deiner Methode, z. B.:
+
+  ```csharp
+  static bool IstPrimzahl(int zahl)
+  ```
+
+* Verwende `int.TryParse`, um Benutzereingaben abzufangen.
+
+* Verwende `for`- oder `while`-Schleifen zum Testen von Teilern.
+
+* Nutze `continue` oder `return` sinnvoll, um Schleifen zu verlassen.
+
+---
+
+## Weiterführende Ideen
+
+* Verwende **Debugging** in Visual Studio, um Schritt für Schritt zu beobachten, wie dein Programm Teiler prüft.
+* Gib dem Benutzer die Möglichkeit, das Programm mehrfach zu verwenden (Schleife um `Main`).
+* Erweitere das Programm so, dass alle **Primzahlen bis zu einer bestimmten Zahl** ausgegeben werden.
+* Baue eine **Methode mit Sieb des Eratosthenes**, um viele Primzahlen effizient zu berechnen.
+* Entwerfe und implementiere eine einfache grafische Benutzeroberfläche (GUI) für das Programm, um die Benutzerinteraktion zu verbessern.
+
+---
+
+> 🧠 Diese Aufgabe ist ideal, um das Zusammenspiel von Schleifen, Methoden und mathematischem Denken zu festigen. Sie ist außerdem eine gute Vorbereitung für spätere Algorithmen-Aufgaben.
+
+
+---
 
 <details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+<summary><strong>Möglichen Lösungsvorschlag anzeigen</strong></summary>
 
 ```csharp
 using System;
