@@ -8,7 +8,7 @@ Jede Aufgabe ist als **Markdown-Datei** abgelegt und enthält:
 - Theoretische **Einführungen in Konzepte**.
 - Eine **optionale Lösung** in einer ausklappbaren Sektion.
 
-Eine Sammlung nützlicher Referenzen findet sich am Ende der Datei.
+Eine Sammlung nützlicher **Referenzen** findet sich am **Ende der Datei.**
 
 ---
 
@@ -121,6 +121,7 @@ Die Aufgabensammlung ist in **6 Stufen** gegliedert, die jeweils unterschiedlich
 
 ## 💡 Nützliche Links
 - [C# - Ceate Sheet](./Referenzen/CheatSheet_CSharp.md)
+- [C# - Grundlagen](./Referenzen/Grundlagen.md)
 - [Microsoft C# Dokumentation](https://learn.microsoft.com/en-us/dotnet/csharp/)
 - [ASP.NET Core Tutorial](https://learn.microsoft.com/en-us/aspnet/core/)
 - [HTML & CSS Grundlagen](https://developer.mozilla.org/de/docs/Web/HTML)
