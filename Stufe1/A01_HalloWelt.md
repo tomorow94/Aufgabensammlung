@@ -95,3 +95,7 @@ class Program
 
 > 🧠 Diese Aufgabe ist der perfekte Einstieg, weil du sofort etwas siehst und ausprobierst. Keine Theorie, kein Ballast – einfach machen. 😊
 
+
+## Selbst prüfen
+
+Ändere die Ausgabe, füge eine zweite Zeile hinzu und überprüfe die Reihenfolge. Setze einen Haltepunkt vor `WriteLine` und führe mit F10 jeweils eine Anweisung aus.

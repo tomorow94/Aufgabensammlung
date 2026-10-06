@@ -7,12 +7,12 @@ Bisher wurden einzelne Programme als eigenständige Konsolenanwendungen geschrie
 ### **Warum verwenden wir eine Ordnerstruktur und mehrere Klassen?**
 - **Modularität:** Jedes Programm wird als separate **Klasse** organisiert, was eine saubere Trennung von Verantwortlichkeiten ermöglicht.
 - **Wiederverwendbarkeit:** Bestehende Programme müssen nicht kopiert oder mehrfach geschrieben werden, sondern können direkt aufgerufen werden.
-- **Erweiterbarkeit:** Neue Programme können einfach hinzugefügt werden, indem neue Klassen erstellt werden, ohne das Hauptmenü zu verändern.
+- **Erweiterbarkeit:** Neue Programme erhalten eigene Klassen und werden zunächst ausdrücklich im Menü registriert. In A04 vereinfachst du diese Registrierung mit einer gemeinsamen Schnittstelle.
 - **Verbesserte Lesbarkeit:** Eine gut strukturierte Ordnerhierarchie erleichtert die Navigation im Code.
 
 ### **Warum wechseln wir jetzt auf Englisch im Code?**
-- **Standard in der Softwareentwicklung:** Die meisten professionellen Softwareprojekte verwenden Englisch als Programmiersprache, um internationale Zusammenarbeit zu erleichtern.
-- **Vermeidung von Codierungsproblemen:** Deutsche Umlaute (ä, ö, ü) und Sonderzeichen können in bestimmten Umgebungen zu Fehlern führen.
+- **Standard in der Softwareentwicklung:** Viele professionelle Softwareprojekte verwenden Englisch für Bezeichner und Kommentare, um internationale Zusammenarbeit zu erleichtern.
+- **Vermeidung von Codierungsproblemen:** C# erlaubt Unicode-Bezeichner, auch Umlaute. Englische Namen sind hier eine Teamkonvention, keine Einschränkung der Sprache.
 - **Bessere Lesbarkeit für andere Entwickler:** Falls das Projekt später öffentlich gemacht oder mit anderen Entwicklern geteilt wird, ist ein englischer Code allgemein verständlicher.
 
 ### **Versionsverwaltung mit GitHub**
@@ -34,7 +34,7 @@ In dieser Aufgabe sollen Sie eine **strukturierte Konsolenanwendung** entwickeln
    - Definieren Sie eine **sinnvolle Ordnerstruktur**, in der die bisherigen Programme abgelegt werden.
 
 2. **Bisherige Programme als eigene Klassen einbinden**
-   - Jedes bisherige Programm (z. B. "Hello World", "Guess the Number", "Stopwatch") soll in einer eigenen **Klasse** innerhalb des Menü-Projekts liegen.
+   - Zunächst zwei bisherige Programme (z. B. "Hello World", "Guess the Number", "Stopwatch") soll in einer eigenen **Klasse** innerhalb des Menü-Projekts liegen.
    - Jede dieser Klassen muss eine **öffentliche Methode `Start()`** enthalten, die das jeweilige Programm startet.
 
 3. **Menüführung implementieren**
@@ -83,7 +83,9 @@ namespace MenuApplication
                 Console.WriteLine("0. Exit");
                 Console.Write("Select a program: ");
 
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
+
+                if (input is null) return;
                 switch (input)
                 {
                     case "1":
@@ -155,3 +157,11 @@ Nächster Schritt:
 - Erstellen Sie ein privates Repository auf GitHub, um die Versionskontrolle für dieses Projekt einzuführen.
 - Fügen Sie alle Projektdateien hinzu und machen Sie den ersten Commit.
 - Dokumentieren Sie Änderungen mit sinnvollen Commit-Nachrichten.
+
+## Schrittweise Übernahme
+
+Starte mit Hallo Welt und einer Rechenaufgabe. Ersetze deren `Main()` durch eine öffentliche `Start()`-Methode; nur das Hauptprojekt behält `Main()`. Füge anschließend weitere Programme hinzu. Im Menü müssen anfangs neue Einträge und Aufrufe ergänzt werden. Für das Beispiel sind `GuessTheNumber` und `StopwatchProgram` deine eigenen umgebauten Klassen, keine mitgelieferten Bibliothekstypen.
+
+## Selbst prüfen
+
+Ein gültiger Menüpunkt startet sein Programm und kehrt anschließend ins Menü zurück. Ungültiger Text erzeugt eine Meldung. `0` beendet. Nur das Hauptprojekt enthält einen Einstiegspunkt; überprüfe, dass keine kopierten `Main()`-Methoden als zweite Einstiegspunkte verbleiben.

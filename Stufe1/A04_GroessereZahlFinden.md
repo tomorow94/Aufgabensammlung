@@ -1,4 +1,4 @@
-# 🟢 Aufgabe A10: Größere Zahl finden
+# 🟢 Aufgabe A04: Größere Zahl finden
 
 ## Ziel der Aufgabe
 
@@ -86,10 +86,14 @@ class Program
 
 - Erweitere das Programm, sodass es **drei oder mehr Zahlen** vergleicht
 - Baue eine Methode `Max(double a, double b)`, die die größere Zahl zurückgibt
-- Erlaube auch **negative Zahlen** oder **dezimale Eingaben** (z. B. 3,14)
+- Ergänze eine erneute Eingabe, wenn ungültiger Text eingegeben wird; negative und dezimale Zahlen werden bereits unterstützt.
 - Lässt sich das Programm auch mit einem `switch` umsetzen?
 
 ---
 
 > 🧠 Diese Aufgabe ist ideal, um erste Entscheidungen in deinem Code zu treffen. Du übst den Umgang mit Benutzereingaben und Bedingungen auf eine einfache, praktische Art.
 
+
+## Selbst prüfen
+
+`2` und `3` ergeben `3`, `3` und `2` ebenfalls `3`, `2` und `2` die Gleichheitsmeldung. `-3` und `-2` ergeben `-2`; negative und dezimale Zahlen werden bereits akzeptiert. `abc` ergibt eine Meldung. Beobachte im Debugger, welcher `if`-Zweig gewählt wird.

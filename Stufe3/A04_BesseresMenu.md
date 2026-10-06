@@ -1,168 +1,76 @@
-# Aufgabe A04: Erweiterung des Menüs mit OOP-Struktur
+# 🟠 Aufgabe A04: Gemeinsame Schnittstelle und Menü
 
-## Ziel
+## Ziel und Voraussetzungen
 
-Das bestehende **Menü-Projekt** soll weiterentwickelt werden, um eine **bessere Organisation der Programme** zu erreichen. Anstatt jeden Menüpunkt direkt aufzurufen, werden nun **alle Programme als eigene Klassen mit einer gemeinsamen Struktur** organisiert. Dies hilft, die Grundkonzepte von **Vererbung, Schnittstellen oder abstrakten Klassen** in der objektorientierten Programmierung (OOP) zu verstehen.
-
-Zusätzlich soll eine **Navigationsfunktion** in die Basisklasse integriert werden, die es ermöglicht, **mit `Ctrl + B` eine Ebene zurück oder mit `Ctrl + M` direkt ins Hauptmenü zu wechseln**.
-
----
+Du hast Klassen und Objekte kennengelernt. Jetzt beschreibst du mit einer **Schnittstelle** einen gemeinsamen Vertrag: Jedes eingebundene Programm hat einen Namen und eine `Start()`-Methode. Das Menü braucht die konkrete Klasse dahinter nicht zu kennen. Dies ist eine erste Anwendung von Polymorphie.
 
 ## Anforderungen
 
-1. **Basisklasse für Programme mit Navigationsfunktion**
-   - Erstellen Sie eine **Basisklasse `BaseProgram`**, von der alle Programme erben.
-   - Diese Basisklasse enthält eine **`Start()`-Methode**, die in den Kindklassen überschrieben wird.
-   - Fügen Sie eine **Navigationsmethode** hinzu, die es ermöglicht:
-     - Mit `Ctrl + B` eine Ebene zurückzugehen.
-     - Mit `Ctrl + M` ins Hauptmenü zurückzukehren.
+1. Definiere `IMenuProgram` mit `Name` und `Start()`.
+2. Registriere Programme ausdrücklich in einer `List<IMenuProgram>`.
+3. Zeige die Liste als Menü und prüfe die Auswahl mit `TryParse`.
+4. `0` beendet das Menü. Ungültiger Text beendet es nicht.
+5. Ein Unterprogramm kehrt durch das Ende seiner `Start()`-Methode oder `return` ins aufrufende Menü zurück.
 
-2. **Programme in eigenen Klassen verwalten**
-   - Alle Programme müssen nun von `BaseProgram` erben.
-   - Die bisher im Menü aufgerufenen Programme müssen auf die neue Struktur umgestellt werden.
+Eine Liste entdeckt Klassen **nicht automatisch**. Die explizite Registrierung ist in dieser Aufgabe Absicht. Reflection ist eine spätere Vertiefung. Tastenkürzel und Exceptions zur Navigation sind für diesen Lernschritt unnötig.
 
-3. **Menü dynamisch generieren**
-   - Das Menü soll die vorhandenen Programme **automatisch** erkennen.
-   - Statt manueller `switch`-Abfragen soll eine **Liste von Programmklassen** verwendet werden.
-   - Das Menü ruft das jeweilige Programm durch `Start()` auf.
-
----
-
-## Hinweise
-
-- Nutzen Sie **Reflection oder eine generische Liste**, um Programme zu verwalten.
-- Die Navigation sorgt für eine **bessere Benutzerführung** und ermöglicht eine flexible Menüstruktur.
-- `Ctrl + B` und `Ctrl + M` verhindern versehentliche Eingaben und verbessern die Bedienbarkeit.
-
----
-
-## Beispielhafter Lösungsansatz
-
-### **1. Erstellung der `BaseProgram`-Klasse mit Navigation**
-
-```csharp
-using System;
-
-public abstract class BaseProgram
-{
-    protected void NavigateBack()
-    {
-        Console.WriteLine("\nPress 'Ctrl + B' to go back or 'Ctrl + M' to return to the main menu.");
-
-        while (true)
-        {
-            var key = Console.ReadKey(intercept: true);
-
-            if (key.Modifiers.HasFlag(ConsoleModifiers.Control))
-            {
-                if (key.Key == ConsoleKey.B)
-                {
-                    return; // Goes back to the previous menu level
-                }
-                if (key.Key == ConsoleKey.M)
-                {
-                    throw new Exception("MainMenu"); // Exception used for menu navigation
-                }
-            }
-
-            Console.WriteLine("Invalid input. Press 'Ctrl + B' to go back or 'Ctrl + M' to return to the main menu.");
-        }
-    }
-
-    public abstract void Start();
-}
-```
-
-### **2. Programme erben von `BaseProgram`**
-
-```csharp
-public class HelloWorld : BaseProgram
-{
-    public override void Start()
-    {
-        Console.WriteLine("Hello, World!");
-        NavigateBack();
-    }
-}
-```
-
-### **3. Menü mit automatischer Programmsuche und Navigation**
+<details>
+<summary>Vollständiges Beispiel für Program.cs (.NET 10)</summary>
 
 ```csharp
 using System;
 using System.Collections.Generic;
-
-namespace MenuApplication
+public interface IMenuProgram
 {
-    class Menu
+    string Name { get; }
+    void Start();
+}
+public class HelloWorld : IMenuProgram
+{
+    public string Name => "Hallo Welt";
+    public void Start() => Console.WriteLine("Hallo Welt!");
+}
+public class Menu
+{
+    private readonly List<IMenuProgram> programs;
+    public Menu(List<IMenuProgram> programs) => this.programs = programs;
+    public void Start()
     {
-        private List<BaseProgram> programs = new List<BaseProgram>
+        while (true)
         {
-            new HelloWorld(),
-            new GuessTheNumber(),
-            new StopwatchProgram()
-        };
-
-        public void Start()
-        {
-            while (true)
+            for (int i = 0; i < programs.Count; i++) Console.WriteLine($"{i + 1}. {programs[i].Name}");
+            Console.Write("0. Beenden\nAuswahl: ");
+            string? text = Console.ReadLine();
+            if (text is null) return;
+            if (!int.TryParse(text, out int choice))
             {
-                try
-                {
-                    Console.WriteLine("===== Main Menu =====");
-                    for (int i = 0; i < programs.Count; i++)
-                    {
-                        Console.WriteLine($"{i + 1}. {programs[i].GetType().Name}");
-                    }
-                    Console.WriteLine("0. Exit");
-                    Console.Write("Select a program: ");
-
-                    if (int.TryParse(Console.ReadLine(), out int choice) && choice > 0 && choice <= programs.Count)
-                    {
-                        programs[choice - 1].Start();
-                    }
-                    else if (choice == 0)
-                    {
-                        Console.WriteLine("Exiting...");
-                        break;
-                    }
-                    else
-                    {
-                        Console.WriteLine("Invalid selection. Try again.");
-                    }
-                }
-                catch (Exception ex) when (ex.Message == "MainMenu")
-                {
-                    // Catch the exception and loop back to main menu
-                }
+                Console.WriteLine("Bitte eine ganze Zahl eingeben.");
+                continue;
             }
+            if (choice == 0) return;
+            if (choice < 1 || choice > programs.Count)
+            {
+                Console.WriteLine("Auswahl außerhalb des Menüs.");
+                continue;
+            }
+            programs[choice - 1].Start();
         }
     }
 }
-```
-
-### **4. Hauptprogramm**
-
-```csharp
 class Program
 {
-    static void Main()
-    {
-        new Menu().Start();
-    }
+    static void Main() => new Menu(new List<IMenuProgram> { new HelloWorld() }).Start();
 }
 ```
 
-## Erweiterungsmöglichkeiten
+</details>
 
-- **Reflection nutzen**: Finden und instanziieren Sie Klassen **automatisch** durch `Assembly.GetExecutingAssembly()`.
-- **Kategorien einführen**: Programme könnten in **Untermenüs** nach Themen gruppiert werden.
-- **Logging-Funktion**: Speichern Sie, wann welche Programme gestartet wurden.
+## Selbst prüfen
 
-## Vorteile dieser Erweiterung:
+`abc`, leere Eingabe, `-1` und `99` zeigen Meldungen und lassen das Menü geöffnet. `1` führt das Unterprogramm aus und zeigt danach wieder das Menü. Nur `0` oder das Ende des Eingabestroms beendet es. Füge dein Adressbuch als weitere Implementierung hinzu und teste zwei Aufrufe: Der Zustand darf nicht versehentlich zurückgesetzt werden.
 
-- **Bessere Strukturierung**: Jedes Programm ist nun eine eigene Klasse.
-- **Flexiblere Navigation**: Benutzer können gezielt zurück oder direkt ins Hauptmenü springen.
-- **Leichtere Erweiterbarkeit**: Neue Programme können einfach hinzugefügt werden.
+## Vertiefung
 
-Diese Anpassung verbessert das Menü-Projekt nachhaltig, macht die Navigation intuitiver und bereitet auf komplexere OOP-Konzepte vor! 🚀
+Vergleiche eine Schnittstelle mit einer abstrakten Basisklasse: Gemeinsame Implementierung kann in einer Basisklasse liegen, der Vertrag allein in einer Schnittstelle. Untermenüs können ein `NavigationResult`-Enum zurückgeben, etwa `Back` und `MainMenu`; der Aufrufer entscheidet über den weiteren Ablauf. Verwende hierfür keine Exception-Nachricht als Steuersignal.
+
+Optional: Reflection zur Entdeckung von Implementierungen, nachdem du Registrierung und Polymorphie verstanden hast. Definiere dann ausdrücklich, welche Klassen instanziiert werden dürfen und wie sie ihre Abhängigkeiten erhalten.

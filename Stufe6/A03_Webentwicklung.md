@@ -1,295 +1,93 @@
-# Aufgabe A03: Webseite mit HTML, CSS und JavaScript – Einführung in Webentwicklung
+# 🔴 Aufgabe A03: Webseite für dasselbe Adressbuch
 
-## Einführung in Stufe 6: API & Webentwicklung
+## Ziel und Voraussetzungen
 
-Nachdem wir in den vorherigen Aufgaben eine **REST-API** mit ASP.NET Core entwickelt und mit Tests abgesichert haben, benötigen wir nun eine Benutzeroberfläche.  
-In dieser Aufgabe erstellen wir eine **einfache Webseite mit HTML, CSS und JavaScript**, die mit unserer API kommuniziert.  
+Die getestete API verwaltet Kontakte. Erstelle jetzt eine Oberfläche mit HTML, CSS und JavaScript. Teile die Arbeit auf: erst statisches Formular, dann Beispielkontakte ohne Netzwerk, zuletzt echte API-Requests.
 
-Das Ziel ist es, die Grundlagen der **Frontend-Webentwicklung** zu verstehen und eine **dynamische Webseite** zu erstellen, die Daten von der API abruft und darstellt.
-
-Die wichtigsten Konzepte in dieser Aufgabe sind:
-- **HTML & CSS**: Strukturierung und Gestaltung der Webseite.
-- **JavaScript & DOM-Manipulation**: Interaktive Inhalte erstellen.
-- **API-Kommunikation**: Daten von der API abrufen und anzeigen.
-
-
-<details>
-<summary><strong>Einführung in HTML, CSS und JavaScript</strong></summary>
-
-## **1. Was ist HTML?**
-**HTML (Hypertext Markup Language)** ist die **Struktur** einer Webseite.  
-Es beschreibt, welche **Elemente** auf einer Seite vorhanden sind, z. B. Überschriften, Absätze, Links oder Bilder.
-
-### **Beispiel für ein einfaches HTML-Dokument:**
-```html
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <title>Meine erste Webseite</title>
-</head>
-<body>
-    <h1>Hallo Welt!</h1>
-    <p>Das ist meine erste Webseite mit HTML.</p>
-</body>
-</html>
-```
-
-Wichtige HTML-Elemente:
-| **Tag**               | **Beschreibung**                          |
-|-----------------------|------------------------------------------|
-| `<h1>` - `<h6>`      | Überschriften (h1 = größte, h6 = kleinste) |
-| `<p>`                | Absatz (Paragraph)                        |
-| `<a href="url">`     | Link zu einer anderen Seite              |
-| `<img src="bild.jpg">` | Bild einfügen                           |
-| `<ul><li></li></ul>` | Unsortierte Liste mit Einträgen          |
-
-## **2. Was ist CSS?**
-CSS (Cascading Style Sheets) bestimmt das Aussehen einer Webseite.
-Es ermöglicht das Ändern von Farben, Schriftarten, Abständen, Layouts und mehr.
-
-### Beispiel für CSS:
-```css
-body {
-    background-color: lightgray;
-    font-family: Arial, sans-serif;
-}
-
-h1 {
-    color: blue;
-    text-align: center;
-}
-
-p {
-    font-size: 18px;
-}
-```
-
-### Wie wird CSS eingebunden?
-- Intern (im `<style>`-Tag in HTML)
-- Extern (eine separate `styles.css`-Datei)
-- Inline (direkt im HTML-Tag, sollte aber vermieden werden)
-
-#### Externes CSS einbinden:
-
-```html
-<head>
-    <link rel="stylesheet" href="styles.css">
-</head>
-```
-
-## **3. Was ist JavaScript?**
-JavaScript (JS) macht Webseiten interaktiv.
-Damit kann man Buttons anklicken, Inhalte dynamisch laden, Eingaben validieren und vieles mehr.
-
-### Beispiel für JavaScript:
-```js
-document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("btn").addEventListener("click", () => {
-        alert("Hallo, das ist eine Interaktion mit JavaScript!");
-    });
-});
-```
-
-### JavaScript-Grundlagen:
-| **Begriff**                | **Beschreibung**                          |
-|----------------------------|------------------------------------------|
-| `let` / `const`           | Variablen in JavaScript                 |
-| `document.getElementById()` | Greift auf HTML-Elemente zu             |
-| `addEventListener()`       | Reagiert auf Benutzeraktionen           |
-| `fetch()`                  | Ruft Daten von einer API ab             |
-| `console.log()`            | Gibt Werte in der Entwicklerkonsole aus |
-
-## **4. JavaScript mit HTML verbinden**
-JavaScript kann in einer separaten Datei (`script.js`) gespeichert und in HTML eingebunden werden:
-
-```html
-<script src="script.js"></script>
-```
-Dadurch bleibt der Code übersichtlich und wiederverwendbar.
-
-## **5. API-Requests mit der Fetch API**
-Webseiten können Daten aus einer API abrufen und anzeigen.
-
-### Beispiel: Eine API-Abfrage mit Fetch
-```js
-fetch("https://jsonplaceholder.typicode.com/users")
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error("Fehler:", error));
-```
-
-Erklärung:
-
-- `fetch(URL)` sendet eine Anfrage an die API.
-- `.then(response => response.json())` verarbeitet die Antwort als JSON.
-- `.catch(error => ...)` fängt Fehler ab.
-
-</details> 
-
----
-
-## Ziel
-
-In dieser Aufgabe lernen Sie:
-- **Grundlagen von HTML, CSS und JavaScript** für Webentwicklung.
-- **Wie man API-Requests mit der Fetch API oder Axios durchführt**.
-- **Wie man Daten aus der API in der Webseite darstellt**.
-
----
+**HTML** beschreibt Struktur und Bedeutung, **CSS** das Aussehen, **JavaScript** verarbeitet Aktionen. Das **DOM** ist die vom Browser verwaltete Dokumentstruktur. `fetch` sendet HTTP-Requests; `await` wartet auf die Antwort.
 
 ## Anforderungen
 
-1. **Projektstruktur erstellen**
-   - Arbeiten Sie in **Visual Studio Code** und legen Sie folgende Dateien an:
-     ```
-     /webapp
-       ├── index.html
-       ├── styles.css
-       ├── script.js
-     ```
-   - **HTML für die Webseite** erstellen (`index.html`).
-   - **CSS für das Layout** (`styles.css`).
-   - **JavaScript für API-Aufrufe und Interaktivität** (`script.js`).
+1. Erstelle `index.html`, `styles.css`, `script.js`.
+2. Verwende sichtbare `label`-Elemente und passende Eingabetypen (`email`, `tel`, `number`).
+3. Das Formular enthält dieselben Felder wie `ContactInput`: Name, Alter, Geschlecht, Telefonnummer und E-Mail.
+4. GET lädt Kontakte, POST fügt einen hinzu, DELETE entfernt ihn. Eine Bearbeitungsfunktion mit PUT ist eine Zusatzaufgabe.
+5. Prüfe `response.ok` vor der Verarbeitung. `fetch` wirft bei HTTP 400/404/500 nicht allein wegen des Status einen Fehler.
+6. Zeige Ladezustand und Fehlermeldungen sichtbar an. Leere ein Formular erst nach einem erfolgreichen POST; bei einem Fehler bleiben die Daten erhalten.
+7. Verwende für Kontaktdaten `textContent`, nicht aus Eingaben zusammengesetztes HTML.
 
-2. **HTML-Struktur für eine Benutzerverwaltung**
-   - Erstellen Sie eine einfache **Tabelle oder Liste**, um Benutzer aus der API anzuzeigen.
-   - Ein **Eingabefeld und ein Button**, um neue Benutzer hinzuzufügen.
+## Zwei Startmöglichkeiten
 
-3. **CSS zur Gestaltung der Webseite**
-   - Nutzen Sie CSS für ein ansprechendes Layout (keine Inline-Styles).
-   - Optional: Eine einfache **Button- und Tabellen-Formatierung**.
+**Gemeinsame Herkunft (empfohlener Einstieg):** Lege die Dateien in `Api/wwwroot` ab. ASP.NET Core liefert API und Webseite aus; relative Requests an `/api/contacts` verwenden automatisch denselben Host und Port. Vom Repository-Wurzelordner:
 
-4. **JavaScript für API-Requests (Fetch API)**
-   - **GET**-Request: Benutzerliste aus der API abrufen und anzeigen.
-   - **POST**-Request: Neuen Benutzer hinzufügen.
-   - **DELETE**-Request: Benutzer aus der Liste entfernen.
+```shell
+dotnet run --project Beispiele/Adressbuch/Api -- --urls http://localhost:5000
+```
 
-5. **Daten von der API abrufen & darstellen**
-   - Verwenden Sie die Fetch API oder Axios, um mit der API zu kommunizieren.
-   - JSON-Daten der API in eine HTML-Tabelle oder Liste einfügen.
+Öffne `http://localhost:5000`. Die Datenbankvorbereitung steht in A01; die Webseite wird nicht direkt als `file://` geöffnet.
 
----
+**Separate Herkunft als Untersuchung:** Starte im Ordner `Api/wwwroot` einen lokalen statischen Server, z. B. mit Python:
 
-## Hinweise
+```shell
+python -m http.server 5500 --bind localhost
+```
 
-- **JavaScript-Logik trennen**: Halten Sie die API-Logik in `script.js`, statt Inline-Skripte in HTML zu verwenden.
-- **Vermeiden Sie Seiten-Neuladen**: Nutzen Sie **`event.preventDefault()`**, um Formulare abzufangen.
-- **Testen Sie die API vorab mit Postman oder im Browser**, um sicherzustellen, dass die Requests korrekt sind.
+Ändere `apiUrl` in `script.js` hierfür zu `http://localhost:5000/api/contacts` und öffne `http://localhost:5500`. Port 5500 und Port 5000 sind verschiedene Origins. Die Referenz-API erlaubt für diesen Versuch ausdrücklich `http://localhost:5500` über CORS. Eine andere Adresse, etwa `127.0.0.1`, ist eine andere Herkunft und muss entsprechend konfiguriert werden. JSON-POSTs können einen OPTIONS-Preflight auslösen. Postman prüft keine Browser-CORS-Regeln.
 
----
-
-## Erweiterungsmöglichkeiten
-
-- **Suchfunktion hinzufügen**: Lassen Sie Benutzer nach Namen filtern.
-- **Dynamisches CSS**: Ändern Sie das Design basierend auf der API-Antwort.
-- **Animations- oder Ladeeffekte**: Zeigen Sie ein „Lädt…“ an, während Daten abgerufen werden.
-
----
+Für den gemeinsamen Start stelle anschließend wieder die relative URL ein. Beim Veröffentlichen keine `localhost`-Adresse im Frontend belassen.
 
 <details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+<summary>Vollständige Lösung</summary>
 
-### **1. HTML-Grundstruktur**
+- [index.html](../Beispiele/Adressbuch/Api/wwwroot/index.html): Formular mit allen Eingabefeldern und Beschriftungen.
+- [styles.css](../Beispiele/Adressbuch/Api/wwwroot/styles.css): einfache Gestaltung und sichtbarer Tastaturfokus.
+- [script.js](../Beispiele/Adressbuch/Api/wwwroot/script.js): Request-Helfer, Fehlerbehandlung, Ladezustand und CRUD-Aktionen.
+
+Das Script wird mit `defer` geladen, sodass die DOM-Elemente bereits verfügbar sind. Die Request-Funktion behandelt 204 ohne JSON-Body und liest bei Fehlern nach Möglichkeit die Validierungsinformationen der API. Konsolenausgaben allein wären für Benutzer keine ausreichende Fehlerrückmeldung.
+
+</details>
+
+## Selbst prüfen
+
+| Aktion | Erwartung |
+|---|---|
+| gültigen vollständigen Kontakt absenden | Kontakt erscheint, Formular wird geleert |
+| ungültige E-Mail oder leere Pflichtfelder | kein Kontakt gespeichert, verständliche Meldung |
+| API stoppen und Formular absenden | sichtbarer Fehler, Eingaben bleiben erhalten |
+| Kontakt löschen | aus Liste und Datenbank entfernt |
+| POST erfolgreich, danach Listenabruf fehlgeschlagen | Meldung unterscheidet gespeicherten Kontakt und fehlende Aktualisierung |
+| Name enthält `<b>Alice</b>` | Text erscheint als Text, nicht als HTML |
+| Bedienung nur mit Tastatur | Formular und Buttons erreichbar, Fokus sichtbar |
+| separater Server auf 5500 | Preflight und Request funktionieren |
+
+Öffne im Browser die Netzwerkansicht: Prüfe JSON-Felder, Statuscode, OPTIONS und Antwortinhalt. Zusatz: Bearbeiten mit PUT, Suche und Ladeanzeige. Node.js, npm und ein Frontendframework sind für diese einfache Webseite nicht erforderlich.
+
+Referenzen: [Fetch und Fehlerstatus](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch), [CORS in ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/security/cors?view=aspnetcore-10.0).
+
+## Drei kleine Einstiegsschritte
+
+**HTML:** Schreibe zuerst eine Überschrift, ein Formular und eine Liste. Ein `<label for="name">` gehört zu einem Feld mit `id="name"`; `required` aktiviert die Browserprüfung. Die Serverprüfung bleibt trotzdem notwendig.
+
 ```html
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Benutzerverwaltung</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <h1>Benutzerverwaltung</h1>
-    <form id="userForm">
-        <input type="text" id="username" placeholder="Benutzername eingeben" required>
-        <button type="submit">Benutzer hinzufügen</button>
-    </form>
-    <ul id="userList"></ul>
-    <script src="script.js"></script>
-</body>
-</html>
+<label for="name">Name</label>
+<input id="name" name="name" required>
+<ul id="contacts"></ul>
 ```
 
-### **2. CSS für Layout & Buttons**
+**CSS:** Binde die Datei im `head` mit `<link rel="stylesheet" href="styles.css">` ein. Ein Selektor wie `form` wählt die entsprechenden Elemente; Deklarationen legen deren Darstellung fest.
+
 ```css
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-}
-
-button {
-    background-color: #28a745;
-    color: white;
-    border: none;
-    padding: 10px 15px;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #218838;
-}
+form { display: grid; gap: 0.5rem; }
 ```
 
-### **3. JavaScript für API-Requests**
+**JavaScript:** Ein Event-Listener reagiert auf eine Aktion. `preventDefault()` verhindert hier, dass das Formular eine neue Seite lädt. Die Skizze setzt ein vorhandenes Formular voraus und gehört in die mit `defer` geladene Scriptdatei.
+
 ```js
-document.addEventListener("DOMContentLoaded", () => {
-    const apiUrl = "http://localhost:5000/api/customers"; // URL zur API
-    const userList = document.getElementById("userList");
-    const userForm = document.getElementById("userForm");
-    const usernameInput = document.getElementById("username");
-
-    async function fetchUsers() {
-        try {
-            const response = await fetch(apiUrl);
-            const users = await response.json();
-            userList.innerHTML = ""; 
-            users.forEach(user => {
-                const li = document.createElement("li");
-                li.textContent = `${user.name} (${user.id})`;
-                
-                const deleteBtn = document.createElement("button");
-                deleteBtn.textContent = "Löschen";
-                deleteBtn.onclick = () => deleteUser(user.id);
-                
-                li.appendChild(deleteBtn);
-                userList.appendChild(li);
-            });
-        } catch (error) {
-            console.error("Fehler beim Abrufen der Benutzer:", error);
-        }
-    }
-
-    async function addUser(event) {
-        event.preventDefault();
-        const username = usernameInput.value.trim();
-        if (!username) return;
-
-        try {
-            await fetch(apiUrl, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ name: username })
-            });
-            usernameInput.value = "";
-            fetchUsers(); 
-        } catch (error) {
-            console.error("Fehler beim Hinzufügen des Benutzers:", error);
-        }
-    }
-
-    async function deleteUser(id) {
-        try {
-            await fetch(`${apiUrl}/${id}`, { method: "DELETE" });
-            fetchUsers(); 
-        } catch (error) {
-            console.error("Fehler beim Löschen des Benutzers:", error);
-        }
-    }
-
-    userForm.addEventListener("submit", addUser);
-    fetchUsers(); 
+const form = document.getElementById("contactForm");
+form.addEventListener("submit", event => {
+    event.preventDefault();
+    console.log("Formular wurde abgeschickt.");
 });
 ```
-</details>
+
+Teste jeden Schritt einzeln. Erst danach ersetzt du die Konsolenausgabe durch einen API-Request. Die vollständige Referenzlösung oben enthält bereits die notwendigen Pflichtfelder und Fehlerbehandlung.

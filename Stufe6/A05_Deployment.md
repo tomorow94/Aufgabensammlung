@@ -1,106 +1,76 @@
-# Aufgabe A05: Deployment & Abschlussprojekt
+# 🔴 Aufgabe A05: Adressbuch mit Datenbank bereitstellen
 
-## Einführung in Stufe 6: API & Webentwicklung
+## Ziel und Voraussetzungen
 
-Nachdem die **REST-API entwickelt, getestet und mit einer Webanwendung verbunden wurde**, ist der letzte Schritt das **Deployment**.  
-Das bedeutet, dass die Anwendung nicht mehr nur lokal läuft, sondern **auf einem Server oder in der Cloud** verfügbar ist.  
+Du hast API, Tests und Frontend. Jetzt stellst du dieselbe Anwendung reproduzierbar bereit. Wähle zunächst **einen vollständigen Weg**: API und statische Webseite im selben Container, SQL Server als separater Dienst. Dadurch bleibt die API-Adresse im Frontend relativ und die Datenhaltung dauerhaft.
 
-Ziel ist es, die **API und das Web-Frontend zu hosten**, sodass es von überall erreichbar ist.  
-Zum Abschluss reflektieren wir das gesamte Projekt und überlegen, welche **Erweiterungen oder Verbesserungen** noch möglich sind.
-
----
-
-## Ziel
-
-In dieser Aufgabe lernen Sie:
-- **Wie eine Webanwendung und API online bereitgestellt werden**.
-- **Die Grundlagen von Deployment-Strategien**, z. B. Hosting über **Docker, Azure oder Netlify**.
-- **Wie man eine finale Reflexion über das Projekt durchführt**.
-
----
+Voraussetzungen: Docker mit Linux-Containern (unter Windows etwa Docker Desktop mit WSL 2), ausreichender Speicher für SQL Server und ein Rechner, auf dem die SQL-Server-Linux-Container unterstützt werden. Die Developer Edition der Datenbank in diesem Beispiel ist für Entwicklung und Tests vorgesehen.
 
 ## Anforderungen
 
-1. **API und Webanwendung deployen**
-   - **Option 1: Lokales Hosting mit Docker**:
-     - Container für die API und das Frontend erstellen.
-   - **Option 2: Deployment auf einem Cloud-Dienst (Azure, Netlify, Vercel)**.
-   - **Option 3: Deployment auf eigenem Webserver** (z. B. über ein günstiges Hosting-Paket).
+1. Erzeuge das Publish-Ergebnis mit .NET 10 und starte die passende Runtime.
+2. Binde API-Port und Frontend konsistent ein.
+3. Erstelle das Datenbankschema durch eine Migration, bevor die Anwendung startet.
+4. Speichere die Datenbank in einem Volume, damit Daten Containerneustarts überleben.
+5. Konfiguriere Verbindung und Passwort außerhalb des Quellcodes.
+6. Prüfe Hinzufügen, Neustart, Lesen, Bearbeiten und Löschen.
 
-2. **Finale Tests nach dem Deployment**
-   - Überprüfen, ob die API erreichbar ist (`https://meinprojekt.com/api/customers`).
-   - Sicherstellen, dass das Frontend korrekt auf die API zugreift.
+## Vollständiger lokaler Weg
 
-3. **Abschlussreflexion: Rückblick auf das Projekt**
-   - Welche Konzepte wurden gelernt?
-   - Welche Herausforderungen gab es?
-   - Was könnte in Zukunft verbessert oder erweitert werden?
+Wechsle vom Repository-Wurzelordner nach `Beispiele/Adressbuch`. Erstelle in PowerShell die lokale Konfigurationsdatei:
 
----
-
-## Hinweise
-
-- **Docker-Container ermöglichen ein flexibles Deployment**, indem sie API und Frontend in getrennte, portable Umgebungen packen.
-- **Azure App Services oder Netlify sind einfache Cloud-Lösungen**, falls kein eigener Server vorhanden ist.
-- **Nach dem Deployment ist eine gründliche Fehleranalyse wichtig**, um sicherzustellen, dass alle Komponenten korrekt funktionieren.
-
----
-
-## Erweiterungsmöglichkeiten
-
-- **Datenbank-Backup-Strategie entwickeln**, um Datenverluste zu vermeiden.
-- **Sicherheit verbessern**, indem API-Zugriffe mit **JWT-Authentifizierung oder API-Keys** gesichert werden.
-- **Automatische Updates und CI/CD einführen**, um Änderungen nahtlos online zu bringen.
-
----
-
-<details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
-
-### **1. Deployment mit Docker**
-1. **Dockerfile für die API erstellen**:
-```dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:6.0
-WORKDIR /app
-COPY ./publish .
-ENTRYPOINT ["dotnet", "MyRestApi.dll"]
+```powershell
+Copy-Item .env.example .env
 ```
 
-2. Dockerfile für das Frontend erstellen:
-```dockerfile
-FROM nginx
-COPY ./webapp /usr/share/nginx/html
-```
-
-3. Docker-Container bauen und starten:
+Ersetze in `.env` `SQL_PASSWORD` durch ein eigenes Entwicklungspasswort mit mindestens acht Zeichen, Groß-/Kleinbuchstaben, Ziffer und Sonderzeichen. Verwende im Beispiel keine Semikolons, da der Wert in einen Connection String eingesetzt wird. `.env` steht in `.gitignore`.
 
 ```shell
-docker build -t myapi .
-docker run -d -p 5000:80 myapi
+docker compose up --build -d
+docker compose ps
+docker compose logs migrate app
 ```
 
-### **2. Deployment auf Azure (alternativ)**
-1. API in Azure App Service hochladen.
-2. Web-App mit Netlify oder Vercel hosten.
-3. API-URL in der Webanwendung anpassen.
+Öffne `http://localhost:5000`. Compose startet zuerst SQL Server, wartet auf dessen Healthcheck, führt einen einmaligen Migrationsdienst aus und startet danach die App. Der Port ist ausdrücklich **5000 außen → 8080 im Container**. Der Browser greift relativ auf `/api/contacts` zu. Die Datenbank hat keinen veröffentlichten Host-Port; Dienste erreichen sie intern über `db`.
 
-### **3. Abschlussreflexion**
-Fragen zur Reflexion:
+Wenn du Anwendungsänderungen veröffentlichen willst, baue die App neu; für neue Migrationen muss auch der Migrationsdienst erneut ausgeführt werden:
 
-- Was waren die größten Herausforderungen in diesem Projekt?
-- Welche Konzepte sind jetzt klarer geworden?
-- Wie könnte das Projekt in Zukunft weiterentwickelt werden?
+```shell
+docker compose up --build -d
+```
+
+Bei Fehlern schaue in die Logs des betroffenen Dienstes. Fehlende `.env`, ein unzulässiges Passwort, Portkonflikte und zu wenig Datenbankspeicher sind unterschiedliche Ursachen.
+
+<details>
+<summary>Dateien und Buildschritte</summary>
+
+- [Dockerfile](../Beispiele/Adressbuch/Dockerfile): mehrstufiger Build mit SDK 10 und Runtime 10.
+- [compose.yaml](../Beispiele/Adressbuch/compose.yaml): Datenbank, Migration, App, Volume und feste Portzuordnung.
+- [.env.example](../Beispiele/Adressbuch/.env.example): lokale Konfigurationsvorlage.
+- [Migrationen](../Beispiele/Adressbuch/Data/Migrations/): initiales Schema für frische Datenbanken.
+
+Das Dockerfile führt `dotnet publish` selbst aus. Es erwartet keinen vorher manuell erzeugten `publish`-Ordner. Der letzte Container enthält das Publish-Ergebnis einschließlich `wwwroot`; ein zusätzlicher nginx-Container ist für diese kleine Anwendung nicht erforderlich.
+
+Die Migration verwendet dieselben Kontaktfelder wie SQL, EF und API. Bereits manuell angelegte Tabellen aus Stufe 5 werden nicht erneut durch die Initialmigration erstellt. Das Compose-Beispiel startet dafür eine eigene frische Datenbank; siehe die Erklärung zur Baseline in Stufe 5.
+
 </details>
 
-## Abschließende Worte
-Herzlichen Glückwunsch! 🎉
-Mit dieser letzten Aufgabe ist das komplette Full-Stack-Projekt abgeschlossen.
+## Selbst prüfen
 
-Du hast gelernt, wie man:
-✅ Eine API mit C# und ASP.NET Core entwickelt.
-✅ Eine Webanwendung mit HTML, CSS und JavaScript erstellt.
-✅ Automatisierte Tests schreibt, um Fehler frühzeitig zu erkennen.
-✅ Die Anwendung auf einen Server deployt, sodass sie online erreichbar ist.
+1. Erstelle einen Kontakt und merke dir seine ID.
+2. Führe `docker compose restart app` aus: Der Kontakt bleibt erhalten.
+3. Beende mit `docker compose down` und starte erneut: Das benannte Datenbank-Volume bleibt erhalten und der Kontakt ist weiterhin da.
+4. Prüfe HTTP 400 für ungültige Daten und HTTP 404 für fehlende IDs.
+5. Prüfe die Webseite in einem zweiten Browserfenster.
 
-Das sind wertvolle Fähigkeiten, die direkt in der Praxis anwendbar sind.
-Dieses Projekt kann jetzt als Portfolio-Projekt auf GitHub genutzt werden – und als Grundlage für viele weitere Webentwicklungsprojekte dienen. 🚀
+`docker compose down --volumes` entfernt auch die gespeicherten Daten. Nutze es nur, wenn du die Entwicklungsdaten ausdrücklich verwerfen willst.
+
+## Von lokal zu öffentlich
+
+Lokales Docker-Hosting ist noch keine öffentlich erreichbare Anwendung. Für einen eigenen Server benötigst du zusätzlich eine Domain, einen Reverse Proxy mit HTTPS, korrekt konfigurierte öffentliche Ports und eine Produktionsdatenbank mit geeigneter Lizenz. Verwende dort einen eingeschränkten Datenbankbenutzer, gültige Zertifikate, Backups und eine getestete Wiederherstellung. Das lokale Beispiel bindet absichtlich nur an `127.0.0.1`.
+
+Azure App Service kann die ASP.NET-Core-Anwendung ausführen; Azure SQL ist eine mögliche passende Datenbank. Netlify oder Vercel können das statische Frontend übernehmen, benötigen für diese Architektur aber zusätzlich einen geeigneten ASP.NET-Core-API-Host. Bei getrennten Hosts musst du die öffentliche HTTPS-API-URL und die erlaubte CORS-Origin konfigurieren. Diese Alternativen sind Vertiefungen und ersetzen nicht die vollständige lokale Startanleitung.
+
+## Abschlussreflexion
+
+Dokumentiere den Weg eines Kontakts vom Formular über HTTP und EF zur Tabelle. Welche Prüfungen laufen im Browser, welche im Server? Welche Daten bleiben bei Neustart erhalten? Welche Tests benötigen SQL Server? Halte Startbefehle, verwendete Versionen und offene Erweiterungen in deiner README fest.

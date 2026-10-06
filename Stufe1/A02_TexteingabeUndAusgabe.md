@@ -37,7 +37,8 @@ class Program
     static void Main(string[] args)
     {
         Console.Write("Bitte gib deinen Namen ein: ");
-        string name = Console.ReadLine();
+        string? name = Console.ReadLine();
+        if (name is null) return;
         Console.WriteLine($"Hallo, {name}!");
     }
 }
@@ -70,7 +71,7 @@ class Program
 - Füge eine zweite Frage hinzu (z. B. Alter) und gib diese auch aus:
   ```csharp
   Console.Write("Wie alt bist du? ");
-  string alter = Console.ReadLine();
+  string alter = Console.ReadLine() ?? "";
   Console.WriteLine($"Du bist {alter} Jahre alt.");
   ```
 
@@ -80,6 +81,7 @@ class Program
   {
       Console.Write("Name darf nicht leer sein. Bitte erneut eingeben: ");
       name = Console.ReadLine();
+      if (name is null) return;
   }
   ```
 
@@ -96,12 +98,14 @@ class Program
     static void Main(string[] args)
     {
         Console.Write("Bitte gib deinen Namen ein: ");
-        string name = Console.ReadLine();
+        string? name = Console.ReadLine();
+        if (name is null) return;
 
         while (string.IsNullOrWhiteSpace(name))
         {
             Console.Write("Name darf nicht leer sein. Bitte erneut eingeben: ");
             name = Console.ReadLine();
+      if (name is null) return;
         }
 
         Console.WriteLine($"Hallo, {name}!");
@@ -115,3 +119,7 @@ class Program
 
 > 🧠 Mit dieser Aufgabe verstehst du, wie Programme mit dem Benutzer "sprechen". Du wirst das bald für Menüführung, Formulare und Spielsteuerung brauchen!
 
+
+## Selbst prüfen
+
+`Anna` ergibt die Begrüßung mit Anna. Leere Eingaben werden in der Erweiterung erneut abgefragt. Prüfe mehrere Leerzeichen und den Abbruch der Eingabe. Beobachte `name` im Debugger.

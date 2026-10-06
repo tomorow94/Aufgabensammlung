@@ -73,29 +73,29 @@ class BankAccount
         Balance = 0m;
     }
 
-    public void Deposit(decimal amount)
+    public bool Deposit(decimal amount)
     {
-        if (amount > 0)
+        if (amount > 0 && amount <= decimal.MaxValue - Balance)
         {
             Balance += amount;
-            Console.WriteLine($"Deposited {amount:C}. New balance: {Balance:C}");
+            return true;
         }
         else
         {
-            Console.WriteLine("Deposit amount must be positive.");
+            return false;
         }
     }
 
-    public void Withdraw(decimal amount)
+    public bool Withdraw(decimal amount)
     {
         if (amount > 0 && amount <= Balance)
         {
             Balance -= amount;
-            Console.WriteLine($"Withdrawn {amount:C}. New balance: {Balance:C}");
+            return true;
         }
         else
         {
-            Console.WriteLine("Invalid withdrawal amount or insufficient funds.");
+            return false;
         }
     }
 
@@ -112,7 +112,7 @@ class Program
     static void Main()
     {
         Console.Write("Enter account holder name: ");
-        string name = Console.ReadLine();
+        string name = Console.ReadLine() ?? "";
         BankAccount account = new BankAccount(name);
 
         bool running = true;
@@ -125,13 +125,15 @@ class Program
             Console.WriteLine("4. Exit");
             Console.Write("Select an option: ");
 
-            switch (Console.ReadLine())
+            string? choice = Console.ReadLine();
+            if (choice is null) return;
+            switch (choice)
             {
                 case "1":
                     Console.Write("Enter amount to deposit: ");
                     if (decimal.TryParse(Console.ReadLine(), out decimal depositAmount))
                     {
-                        account.Deposit(depositAmount);
+                        Console.WriteLine(account.Deposit(depositAmount) ? "Deposit successful." : "Invalid deposit.");
                     }
                     else
                     {
@@ -142,7 +144,7 @@ class Program
                     Console.Write("Enter amount to withdraw: ");
                     if (decimal.TryParse(Console.ReadLine(), out decimal withdrawAmount))
                     {
-                        account.Withdraw(withdrawAmount);
+                        Console.WriteLine(account.Withdraw(withdrawAmount) ? "Withdrawal successful." : "Invalid amount or insufficient funds.");
                     }
                     else
                     {
@@ -166,3 +168,9 @@ class Program
 ```
 
 </details>
+
+## Selbst prüfen: Geschäftslogik
+
+`Deposit` und `Withdraw` geben einen Erfolgswert zurück; das Menü erzeugt die Meldung. Prüfe mit einem frischen Konto: Einzahlung `100` ergibt `100`, Einzahlung `-1` und `0` ändern nichts, Abhebung `101` ändert nichts, Abhebung `100` ergibt `0`. Eine weitere Abhebung wird abgewiesen. Die Kontonummer ist nur innerhalb dieses laufenden Beispiels eindeutig; für dauerhaft gespeicherte Konten benötigst du eine dauerhafte ID-Vergabe.
+
+Zusatz: Lege schon jetzt ein xUnit-Projekt an (`dotnet new xunit -n BankAccount.Tests --framework net10.0`), referenziere das Konto-Projekt und automatisiere diese Fälle. Teste den Erfolgswert und den Kontostand, ohne Konsolenausgaben abzufangen. Stufe 6 erklärt das Vorgehen ausführlicher.

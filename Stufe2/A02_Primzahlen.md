@@ -49,7 +49,7 @@ Diese Aufgabe setzt voraus, dass du **selbst den Code schreibst** (kein Copy+Pas
 
 ## Definition einer Primzahl
 
-Eine **Primzahl** ist eine natürliche Zahl, die **nur durch 1 und sich selbst** ohne Rest teilbar ist. Beispiele: 2, 3, 5, 7, 11
+Eine **Primzahl** ist eine natürliche Zahl **größer als 1** mit genau zwei positiven Teilern: **1 und sich selbst**. Beispiele: 2, 3, 5, 7, 11
 
 * **Hinweis:** 1 ist **keine** Primzahl.
 * Du musst nur bis zur **Quadratwurzel** der Zahl testen, um Teiler zu finden. Warum? Wenn eine Zahl durch etwas > Wurzel teilbar ist, dann gibt es bereits einen kleineren Teiler.
@@ -81,14 +81,14 @@ Console.Write("Bitte gib eine ganze Zahl > 1 ein: ");
 
 * Verwende `for`- oder `while`-Schleifen zum Testen von Teilern.
 
-* Nutze `continue` oder `return` sinnvoll, um Schleifen zu verlassen.
+* `continue` überspringt den Rest des aktuellen Durchlaufs; `break` beendet die Schleife, `return` die Methode.
 
 ---
 
 ## Weiterführende Ideen
 
 * Verwende **Debugging** in Visual Studio, um Schritt für Schritt zu beobachten, wie dein Programm Teiler prüft.
-* Gib dem Benutzer die Möglichkeit, das Programm mehrfach zu verwenden (Schleife um `Main`).
+* Gib dem Benutzer die Möglichkeit, das Programm mehrfach zu verwenden (Schleife innerhalb von `Main`).
 * Erweitere das Programm so, dass alle **Primzahlen bis zu einer bestimmten Zahl** ausgegeben werden.
 * Baue eine **Methode mit Sieb des Eratosthenes**, um viele Primzahlen effizient zu berechnen.
 * Entwerfe und implementiere eine einfache grafische Benutzeroberfläche (GUI) für das Programm, um die Benutzerinteraktion zu verbessern.
@@ -148,4 +148,10 @@ namespace PrimzahlenPruefung
         }
     }
 }
+```
+
 </details>
+
+## Selbst prüfen
+
+`1` ist keine Primzahl, `2` und `97` sind Primzahlen, `4` und `49` nicht. `0`, negative Werte und `abc` werden als Eingaben abgewiesen. Prüfe die Methode direkt zusätzlich mit `0` und `-1`: Sie muss `false` zurückgeben. Beobachte bei `49` den Teiler `7` im Debugger.

@@ -67,7 +67,7 @@ Die Auswahl erfolgt über eine Menüführung mit `switch` und wird in einer Schl
    Console.WriteLine("Verstrichene Zeit: " + sw.Elapsed.ToString(@"hh\:mm\:ss\.fff"));
    ```
 
-   🔎 **Hinweis:** Beispiel 1 verwendet einen Intrpolierten Format-String, was funktioniert, da es sich bei der `Elapsed` time von `Stopwatch` um den Datentyp `TimeSpan` handelt. Beispiel 2 verwendet eine weiter verbreitete Lösung, die die Methode `ToString()` aufruft, der ein Format-String übergeben werden muss. Der Format-String bestimmt, wie die Zeit dargestellt wird. Eine andere Formatierung wäre beispielsweise `"hh\:mm\:ss"`.
+   🔎 **Hinweis:** Beispiel 1 verwendet einen interpolierten Format-String, was funktioniert, da es sich bei der `Elapsed`-Zeit von `Stopwatch` um den Datentyp `TimeSpan` handelt. Beispiel 2 verwendet eine weiter verbreitete Lösung, die die Methode `ToString()` aufruft, der ein Format-String übergeben werden muss. Der Format-String bestimmt, wie die Zeit dargestellt wird. Eine andere Formatierung wäre beispielsweise `@"hh\:mm\:ss"`.
 
 4. **Zustand prüfen:**
 
@@ -127,7 +127,8 @@ namespace Stoppuhr
                 Console.WriteLine("4. Zurücksetzen");
                 Console.WriteLine("5. Beenden");
                 Console.Write("Wählen Sie eine Option: ");
-                string eingabe = Console.ReadLine();
+                string? eingabe = Console.ReadLine();
+                if (eingabe is null) return;
 
                 switch (eingabe)
                 {
@@ -174,4 +175,10 @@ namespace Stoppuhr
         }
     }
 }
-</details> ```
+```
+
+</details>
+
+## Selbst prüfen
+
+Start → kurz warten → Stop → Anzeige ergibt eine positive Zeit. Während Stop verändert sich die Zeit nicht. Ein weiterer Start setzt die Messung fort. Reset setzt Zeit auf null und stoppt die Uhr. Doppelter Start/Stop führt nicht zum Absturz. Für einen Neustart mit sofortiger Messung gibt es `Restart()`.

@@ -1,4 +1,4 @@
-# 🟢 Aufgabe A08: Zahlenraten
+# 🟢 Aufgabe A09: Zahlenraten
 
 ## Ziel der Aufgabe
 
@@ -49,9 +49,10 @@ class Program
         while (versuche < maxVersuche && !erraten)
         {
             Console.Write($"Versuch {versuche + 1}: Deine Zahl? ");
-            string eingabe = Console.ReadLine();
+            string? eingabe = Console.ReadLine();
+            if (eingabe is null) return;
 
-            if (int.TryParse(eingabe, out int tipp))
+            if (int.TryParse(eingabe, out int tipp) && tipp >= 1 && tipp <= 100)
             {
                 versuche++;
 
@@ -72,7 +73,7 @@ class Program
             }
             else
             {
-                Console.WriteLine("Bitte gib eine gültige Zahl ein.");
+                Console.WriteLine("Bitte gib eine ganze Zahl zwischen 1 und 100 ein.");
             }
         }
 
@@ -118,3 +119,7 @@ class Program
 
 > 🧠 Dieses Spiel verbindet Benutzereingabe, Logik, Schleifen und Bedingungen zu einem kleinen, unterhaltsamen Projekt!
 
+
+## Selbst prüfen
+
+Setze zum Prüfen vorübergehend `geheimzahl = 50`. `25` ergibt „zu niedrig“, `75` „zu hoch“, `50` den Gewinn. Zehn falsche gültige Tipps ergeben eine Niederlage. Ungültiger Text und Zahlen außerhalb 1–100 verbrauchen keinen Versuch. Setze danach die Zufallsauswahl wieder ein.

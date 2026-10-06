@@ -66,11 +66,12 @@ class TicTacToe
 
         while (gameRunning)
         {
-            Console.Clear();
             PrintBoard();
             Console.Write($"\nPlayer {currentPlayer}, choose a field (1-9): ");
             
-            if (int.TryParse(Console.ReadLine(), out int choice) && choice >= 1 && choice <= 9)
+            string? input = Console.ReadLine();
+            if (input is null) return;
+            if (int.TryParse(input, out int choice) && choice >= 1 && choice <= 9)
             {
                 int row = (choice - 1) / 3;
                 int col = (choice - 1) % 3;
@@ -82,14 +83,12 @@ class TicTacToe
 
                     if (CheckWin())
                     {
-                        Console.Clear();
                         PrintBoard();
                         Console.WriteLine($"\nPlayer {currentPlayer} wins!");
                         gameRunning = false;
                     }
                     else if (turns == 9)
                     {
-                        Console.Clear();
                         PrintBoard();
                         Console.WriteLine("\nIt's a draw!");
                         gameRunning = false;
@@ -142,3 +141,7 @@ class TicTacToe
 </details>
 
 
+
+## Selbst prüfen
+
+Züge `1,4,2,5,3` ergeben einen Sieg für X. `1,2,3,5,4,6,8,7,9` ergeben ein Unentschieden. Ein belegtes Feld und Zahlen außerhalb 1–9 ändern weder das Brett noch den Spieler. Prüfe alle acht Gewinnlinien und dass Fehlermeldungen vor der nächsten Eingabe sichtbar bleiben.

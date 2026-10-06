@@ -1,4 +1,4 @@
-# 🟢 Aufgabe A06: Division
+# 🟢 Aufgabe A07: Division
 
 ## Ziel der Aufgabe
 
@@ -81,3 +81,7 @@ class Program
 
 > 🧠 Diese Aufgabe zeigt dir, wie wichtig es ist, **Eingaben zu überprüfen**, bevor du mit ihnen rechnest!
 
+
+## Selbst prüfen
+
+`7` und `2` ergeben `3,5` in einer deutschen Umgebung; `-6` und `2` ergeben `-3`. Nenner `0` ergibt eine Meldung, keine Berechnung. Das Einstiegsbeispiel setzt Zahlen als Eingabe voraus; ergänze die aus A05 bekannte `TryParse`-Prüfung und prüfe `abc` sowie eine leere Eingabe.

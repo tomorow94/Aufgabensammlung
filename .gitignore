@@ -1,0 +1,12 @@
+**/bin/
+**/obj/
+.vs/
+.idea/
+TestResults/
+node_modules/
+publish/
+.env
+*.db
+*.db-shm
+*.db-wal
+.build/

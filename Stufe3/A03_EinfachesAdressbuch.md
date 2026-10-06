@@ -1,183 +1,89 @@
-# Aufgabe A03: Einfaches Adressbuch – Erweiterung der `Person`-Klasse
+# 🟠 Aufgabe A03: Adressbuch mit Kontakten und Dateispeicherung
 
-## Ziel
+## Ziel und Voraussetzungen
 
-In dieser Aufgabe erweitern Sie die bestehende `Person`-Klasse, um ein einfaches **Adressbuch** zu erstellen. Das Adressbuch soll es ermöglichen, **Personen mit Namen und Telefonnummern zu speichern und wieder abzurufen**. Dies vertieft die Arbeit mit **Listen, Suchfunktionen und Benutzerinteraktionen**.
+Erweitere die Personenklasse aus A02 zu einem Adressbuch. Ab hier bleibt dieses Datenmodell bis zum Abschlussprojekt gleich:
 
----
+| Eigenschaft | Typ und Bedeutung |
+|---|---|
+| `Id` | `int`, von der Anwendung bzw. später der Datenbank vergeben |
+| `Name` | `string`, Pflichtfeld, höchstens 100 Zeichen |
+| `Age` | `int`, 0–130 |
+| `Gender` | `GenderType`, 0 = Unknown, 1 = Male, 2 = Female, 3 = Diverse |
+| `PhoneNumber` | `string`, Pflichtfeld, höchstens 50 Zeichen; kein Zahlentyp wegen `+` und führender Nullen |
+| `Email` | `string`, gültige Adresse, höchstens 200 Zeichen |
+
+Du brauchst Listen, Dateizugriffe und Methoden. Neu ist **JSON**, ein Textformat zum Speichern strukturierter Daten. `System.Text.Json` gehört zu .NET 10.
 
 ## Anforderungen
 
-1. **Erweiterung der `Person`-Klasse**
-   - Fügen Sie ein **Feld für die Telefonnummer** (`PhoneNumber`) hinzu.
-   - Erweitern Sie den Konstruktor, um die Telefonnummer zu speichern.
-   - Aktualisieren Sie die `Greet()`-Methode, sodass sie nun auch die Telefonnummer anzeigt.
+1. Erstelle `AddressBook` mit `AddPerson`, `FindPerson` und `DisplayAll`.
+2. Trenne die Kontaktliste von der Menüführung. Suchmethoden geben Daten zurück; das Menü zeigt sie an.
+3. Ergänze `PhoneNumber`, `Email` und `Id`. Verwende für diese bearbeitbaren Kontakte Eigenschaften mit `get; set;`.
+4. Prüfe Eingaben, einschließlich Name, Alter, Telefonnummer, E-Mail und Enum. `Enum.TryParse` allein akzeptiert auch undefinierte numerische Werte; prüfe zusätzlich `Enum.IsDefined`.
+5. Speichere Kontakte in `contacts.json` und lade sie beim Start. Zeige den vollständigen Pfad an.
+6. Bei ungültigen Eingaben frage erneut oder kehre ins Menü zurück; ersetze ungültiges Alter nicht still durch `0`.
 
-2. **Adressbuch-Klasse erstellen**
-   - Erstellen Sie eine **neue Klasse `AddressBook`**, die eine **Liste von `Person`-Objekten** verwaltet.
-   - Implementieren Sie folgende Methoden:
-     - `AddPerson(Person person)`: Fügt eine Person zum Adressbuch hinzu.
-     - `FindPerson(string name)`: Sucht eine Person nach ihrem Namen und gibt deren Informationen aus.
-     - `DisplayAll()`: Gibt alle gespeicherten Kontakte aus.
+## Vorgehen
 
-3. **Menü für Benutzerinteraktion**
-   - Erstellen Sie eine **Benutzerschnittstelle** in der Konsole, die folgende Aktionen ermöglicht:
-     - Eine neue Person hinzufügen.
-     - Eine Person nach Namen suchen.
-     - Alle gespeicherten Kontakte anzeigen.
-     - Programm beenden.
+Implementiere zuerst Hinzufügen und Anzeigen ohne Datei. Danach Suche, dann Speichern und Laden. Die Datei befindet sich relativ zum **Arbeitsverzeichnis**, das du mit `Directory.GetCurrentDirectory()` prüfen kannst.
 
----
+<details>
+<summary>Lösungsskizze: Datenmodell und Sammlung</summary>
 
-## Hinweise
+Das vollständige Datenmodell liegt in [Person.cs](../Beispiele/Adressbuch/Core/Person.cs). Kopiere es und entferne für dein einfaches Konsolenprojekt gegebenenfalls die Namespace-Zeile. `GenderType` ersetzt die Definition aus A02; definiere das Enum nur einmal.
 
-- Verwenden Sie eine **`List<Person>`**, um die Personen im Adressbuch zu speichern.
-- Nutzen Sie **Schleifen und `Console.ReadLine()`**, um Benutzereingaben zu verarbeiten.
-- Implementieren Sie **eine einfache Suchfunktion**, um eine Person anhand ihres Namens zu finden.
-
----
-
-## Beispielhafter Lösungsansatz
-
-### **1. Erweiterung der `Person`-Klasse**
-```csharp
-public class Person
-{
-    public string Name { get; set; }
-    public int Age { get; set; }
-    public GenderType Gender { get; set; }
-    public string PhoneNumber { get; set; }
-
-    public Person(string name, int age, GenderType gender, string phoneNumber)
-    {
-        Name = name;
-        Age = age;
-        Gender = gender;
-        PhoneNumber = phoneNumber;
-    }
-
-    public void Greet()
-    {
-        string genderText = Gender switch
-        {
-            GenderType.Male => "Mr.",
-            GenderType.Female => "Ms.",
-            GenderType.Diverse => "Mx.",
-            _ => ""
-        };
-
-        Console.WriteLine($"Hello {genderText} {Name}, you are {Age} years old. Phone: {PhoneNumber}");
-    }
-}
-```
-
-### **2. Neue Klasse `AddressBook`**
 ```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.IO;
+using System.Text.Json;
+using AddressBook.Core;
 
 public class AddressBook
 {
-    private List<Person> contacts = new List<Person>();
-
+    private List<Person> contacts = [];
+    private int nextId = 1;
     public void AddPerson(Person person)
     {
+        person.Id = nextId++;
         contacts.Add(person);
-        Console.WriteLine($"{person.Name} has been added to the address book.");
     }
-
-    public void FindPerson(string name)
+    public Person? FindPerson(string name) => contacts.FirstOrDefault(p =>
+        string.Equals(p.Name, name, StringComparison.OrdinalIgnoreCase));
+    public IReadOnlyList<Person> GetAll() => contacts.AsReadOnly();
+    public void Save(string path) => File.WriteAllText(path, JsonSerializer.Serialize(contacts));
+    public void Load(string path)
     {
-        var person = contacts.FirstOrDefault(p => p.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
-        if (person != null)
-        {
-            Console.WriteLine($"Found: {person.Name}, Age: {person.Age}, Phone: {person.PhoneNumber}");
-        }
-        else
-        {
-            Console.WriteLine("Person not found.");
-        }
-    }
-
-    public void DisplayAll()
-    {
-        if (contacts.Count == 0)
-        {
-            Console.WriteLine("The address book is empty.");
-            return;
-        }
-
-        Console.WriteLine("Address Book:");
-        foreach (var person in contacts)
-        {
-            Console.WriteLine($"- {person.Name}, Age: {person.Age}, Phone: {person.PhoneNumber}");
-        }
+        if (!File.Exists(path)) return;
+        var loaded = JsonSerializer.Deserialize<List<Person>>(File.ReadAllText(path))
+            ?? throw new InvalidDataException("Kontaktliste fehlt.");
+        if (loaded.Any(p => p is null || p.Id <= 0) || loaded.Select(p => p.Id).Distinct().Count() != loaded.Count)
+            throw new InvalidDataException("Ungültige oder doppelte Kontakt-IDs.");
+        contacts = loaded;
+        nextId = checked(contacts.Select(p => p.Id).DefaultIfEmpty(0).Max() + 1);
     }
 }
 ```
 
-### **3. Menü für die Benutzerinteraktion**
-```csharp
-class Program
-{
-    static void Main()
-    {
-        AddressBook addressBook = new AddressBook();
-        bool running = true;
+Diese Skizze ergänzt du um das Menü und die fachliche Eingabeprüfung. Eine Telefonnummer darf nicht leer sein. Prüfe die E-Mail etwa mit `EmailAddressAttribute` aus `System.ComponentModel.DataAnnotations`. Vor dem Hinzufügen und nach dem Laden müssen die Kontakte dieselben Regeln erfüllen. Fehler beim Lesen (`IOException`, `JsonException`, `InvalidDataException`) werden im Menü sichtbar angezeigt; eine beschädigte Datei soll nicht still überschrieben werden.
 
-        while (running)
-        {
-            Console.WriteLine("\n===== Address Book Menu =====");
-            Console.WriteLine("1. Add a new person");
-            Console.WriteLine("2. Search for a person");
-            Console.WriteLine("3. Display all contacts");
-            Console.WriteLine("4. Exit");
-            Console.Write("Choose an option: ");
+`DisplayAll()` kann über `GetAll()` iterieren. Für Menü-Aktionen nutzt du ab A04 `Start()` statt zusätzlicher `Main`-Methoden. Neue Kontakte erhalten IDs durch `AddressBook`; bei Datenbanken übernimmt dies später `IDENTITY`.
 
-            string choice = Console.ReadLine();
-            switch (choice)
-            {
-                case "1":
-                    Console.Write("Enter name: ");
-                    string name = Console.ReadLine();
-                    Console.Write("Enter age: ");
-                    int age = int.TryParse(Console.ReadLine(), out int parsedAge) ? parsedAge : 0;
-                    Console.Write("Enter gender (Male, Female, Diverse, Unknown): ");
-                    GenderType gender = Enum.TryParse(Console.ReadLine(), out GenderType parsedGender) ? parsedGender : GenderType.Unknown;
-                    Console.Write("Enter phone number: ");
-                    string phone = Console.ReadLine();
+</details>
 
-                    addressBook.AddPerson(new Person(name, age, gender, phone));
-                    break;
+## Selbst prüfen
 
-                case "2":
-                    Console.Write("Enter the name of the person: ");
-                    string searchName = Console.ReadLine();
-                    addressBook.FindPerson(searchName);
-                    break;
+| Ablauf | Erwartung |
+|---|---|
+| Alice hinzufügen, nach `alice` suchen | Alice wird gefunden |
+| zweimal denselben Namen hinzufügen | zwei Kontakte mit unterschiedlichen IDs; Suche findet den ersten |
+| Telefonnummer `+49 0123` | Zeichen bleiben erhalten |
+| leere Telefonnummer, ungültige E-Mail, Alter `-1`, Gender `99` | Eingabe abgewiesen |
+| speichern, Programm neu starten | Kontakte und IDs bleiben erhalten |
+| weitere Person nach Neustart hinzufügen | keine doppelte ID |
+| Datei fehlt | leeres Adressbuch |
+| beschädigtes JSON | verständliche Meldung; Datei nicht überschreiben |
 
-                case "3":
-                    addressBook.DisplayAll();
-                    break;
-
-                case "4":
-                    running = false;
-                    Console.WriteLine("Exiting program...");
-                    break;
-
-                default:
-                    Console.WriteLine("Invalid input. Please try again.");
-                    break;
-            }
-        }
-    }
-}
-```
-
-## Erweiterungsmöglichkeiten
-- Speicherung in einer Datei: Erweitern Sie das Programm so, dass Kontakte in einer Datei gespeichert und beim Start geladen werden.
-- Löschen von Kontakten: Fügen Sie eine Funktion hinzu, um Personen aus dem Adressbuch zu entfernen.
-- Erweiterte Suchfunktionen: Implementieren Sie eine Suche nach Telefonnummer oder Alter.
-
-Dieses Adressbuch ermöglicht eine **erste praktische Nutzung von Klassen und Listen**, bietet **eine einfache Interaktion mit Benutzereingaben** und kann später durch weitere Funktionen ergänzt werden.
+Setze einen Haltepunkt beim Hinzufügen und beobachte die Liste. Zusatz: Suche mit mehreren Treffern, Bearbeiten und Löschen. Wenn du IDs auch nach dem Löschen niemals wiederverwenden willst, speichere den fortlaufenden Zähler zusammen mit der Liste. Die spätere SQL-Datenbank erledigt dies selbst.

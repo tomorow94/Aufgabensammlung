@@ -90,3 +90,7 @@ if (!double.TryParse(Console.ReadLine(), out double zahl))
 
 > 🧠 Diese Aufgabe ist ein wichtiger Baustein für alles, was mit Berechnungen zu tun hat. Du wirst das Prinzip bald für viele weitere Operationen nutzen!
 
+
+## Selbst prüfen
+
+`2` und `3` ergeben `5`, `-2` und `3` ergeben `1`. In einer deutschen Umgebung ergeben `4` und `5,5` den Wert `9,5`. Das Dezimaltrennzeichen richtet sich nach der Rechnerkultur. Das erste einfache Beispiel setzt gültige Zahlen voraus; die Erweiterung mit `TryParse` weist `abc` und leere Eingaben ab. Ändere beim Wechsel zu `int` auch die Umwandlung: `int.TryParse` statt nur den Variablentyp.

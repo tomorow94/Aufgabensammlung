@@ -1,243 +1,97 @@
-# Aufgabe A03: ORM für vereinfachten Datenbankzugriff – Einführung in ORM und LINQ
+# 🟣 Aufgabe A03: Dasselbe Adressbuch mit EF Core und LINQ
 
-## Ziel
+## Ziel und Voraussetzungen
 
-In dieser Aufgabe lernen Sie, wie **Object-Relational Mapping (ORM)** den Zugriff auf relationale Datenbanken in C# vereinfacht.  
-Zusätzlich wird **LINQ (Language Integrated Query)** genutzt, um Datenbankabfragen auf **objektorientierte Weise** auszuführen.
+Nach direktem SQL verwendest du **Entity Framework Core** als ORM. Es ordnet die Tabelle `Contacts` der Klasse `Person` zu. **LINQ** beschreibt Abfragen; Hinzufügen, Ändern und Löschen sind EF-Core-Operationen, keine LINQ-Abfragen.
 
-Dabei lernen Sie:
-- **Grundlagen von ORM**: Wie ORM den Zugriff auf Datenbanktabellen erleichtert.
-- **LINQ-Abfragen**, um CRUD-Operationen (Create, Read, Update, Delete) effizient auszuführen.
-- **DbContext und DbSet** zur Verwaltung der Datenbank in einer C#-Anwendung.
-
----
-
-## Einführung: Was ist Object-Relational Mapping (ORM)?
-
-**ORM** ermöglicht es, Datenbanktabellen als **C#-Klassen** zu modellieren.  
-Anstatt SQL-Abfragen zu schreiben, wird direkt mit Objekten gearbeitet.
-
-**Beispiel für eine einfache SQL-Abfrage vs. LINQ:**
-| **SQL** | **LINQ mit Entity Framework** |
-|------------------------------|-----------------|
-| `SELECT * FROM Customers WHERE Name = 'Alice';` | `context.Customers.Where(c => c.Name == "Alice").ToList();` |
-| `INSERT INTO Customers (Name, PhoneNumber) VALUES ('Bob', '123456');` | `context.Customers.Add(new Customer { Name = "Bob", PhoneNumber = "123456" }); context.SaveChanges();` |
-| `UPDATE Customers SET Name = 'Charlie' WHERE ID = 1;` | `customer.Name = "Charlie"; context.SaveChanges();` |
-
----
+Die Felder und der Tabellenname bleiben aus A02 erhalten. Wechsle nicht zu einem neuen Kundenmodell. Du brauchst SQL-Grundlagen, Klassen, Listen und Methoden; Lambda-Ausdrücke wie `p => p.Name` bedeuten hier „für jedes p dessen Name“.
 
 ## Anforderungen
 
-1. **ORM-Framework in das Projekt integrieren**
-   - Nutzen Sie **Entity Framework Core** als ORM.
-   - Installieren Sie über NuGet:
-     ```shell
-     Install-Package Microsoft.EntityFrameworkCore.SqlServer
-     ```
-   - Erstellen Sie eine **Datenbankverbindung** mit einer **DbContext-Klasse**.
+1. Installiere `Microsoft.EntityFrameworkCore.SqlServer` passend zu .NET 10.
+2. Erstelle `AddressBookContext` und `DbSet<Person> Contacts`.
+3. Verwende die vorhandene Tabelle aus A02 und dieselbe Verbindungszeichenfolge.
+4. Implementiere CRUD und die bisherigen Eingabeprüfungen.
+5. Suche mit `Where`, sortiere mit `OrderBy` und begrenze Ergebnisse mit `Take`.
+6. Prüfe, dass Daten nach Programmneustart erhalten bleiben.
 
-2. **ORM-Klasse für Kunden anlegen**
-   - Erstellen Sie eine ORM-Klasse `Customer`, die der SQL-Tabelle entspricht:
-     - `CustomerID` (Primärschlüssel)
-     - `Name` (String)
-     - `PhoneNumber` (String)
+## Projekt vorbereiten
 
-3. **CRUD-Operationen mit LINQ**
-   - **Create**: Kunden hinzufügen.
-   - **Read**: Alle Kunden anzeigen, nach Namen suchen.
-   - **Update**: Kundendaten ändern.
-   - **Delete**: Kunde entfernen.
+Vom Wurzelordner deiner eigenen Sammlung aus:
 
-4. **Komplexere LINQ-Abfragen nutzen**
-   - Kunden alphabetisch sortieren.
-   - Kunden anzeigen, deren Name mit einem bestimmten Buchstaben beginnt.
+```shell
+dotnet new console -n AddressBook.Ef --framework net10.0
+dotnet add AddressBook.Ef reference Beispiele/Adressbuch/Data/Data.csproj
+```
 
-5. **Anwendungslogik in einer Konsolen-App**
-   - Der Benutzer kann Kunden verwalten, ohne SQL schreiben zu müssen.
+Bei deinem eigenen Projekt installierst du stattdessen das Paket und legst Modell und Context selbst an:
 
----
-
-## Hinweise
-
-- ORM-Frameworks erstellen **automatisch Tabellen** basierend auf den definierten Klassen.
-- **LINQ-Abfragen** vereinfachen das Arbeiten mit der Datenbank.
-- **DbContext** verwaltet die Verbindung zur Datenbank und wird für Abfragen genutzt.
-
----
-
-## Erweiterungsmöglichkeiten
-
-- **Mehr Tabellen hinzufügen**: Beziehungen zwischen `Customers` und `Orders` definieren.
-- **GUI-Anbindung**: Windows Forms oder WPF für eine visuelle Benutzeroberfläche.
-- **Erweiterte Abfragen**: Kunden nach Telefonnummer filtern, Paginierung einbauen.
-
----
+```shell
+dotnet add AddressBook.Ef package Microsoft.EntityFrameworkCore.SqlServer --version 10.0.0
+```
 
 <details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+<summary>Context, Modell und Beispielabfragen</summary>
 
-### **1. ORM-Datenbankverbindung einrichten**
-```csharp
-using Microsoft.EntityFrameworkCore;
+Das gleiche [Person-Modell](../Beispiele/Adressbuch/Core/Person.cs) und der [Context](../Beispiele/Adressbuch/Data/AddressBookContext.cs) werden später direkt von der API wiederverwendet. Der Context bekommt seine Optionen von außen; er enthält keine feste Serveradresse.
 
-public class CustomerContext : DbContext
-{
-    public DbSet<Customer> Customers { get; set; }
-
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        options.UseSqlServer("Server=localhost\\SQLEXPRESS;Database=OrmDatabase;Trusted_Connection=True;");
-    }
-}
-```
-
-### **2. ORM-Klasse für Customer**
-```csharp
-public class Customer
-{
-    public int CustomerID { get; set; }
-    public string Name { get; set; }
-    public string PhoneNumber { get; set; }
-}
-```
-
-### **3. CRUD-Operationen mit LINQ**
 ```csharp
 using System;
 using System.Linq;
-
+using AddressBook.Core;
+using AddressBook.Data;
+using Microsoft.EntityFrameworkCore;
 class Program
 {
     static void Main()
     {
-        using (var context = new CustomerContext())
-        {
-            context.Database.EnsureCreated(); // Erstellt die Datenbank, falls nicht vorhanden.
-
-            bool running = true;
-            while (running)
-            {
-                Console.WriteLine("\n===== Customer Management =====");
-                Console.WriteLine("1. Add Customer");
-                Console.WriteLine("2. View Customers");
-                Console.WriteLine("3. Search Customers by Name");
-                Console.WriteLine("4. Update Customer");
-                Console.WriteLine("5. Delete Customer");
-                Console.WriteLine("6. Exit");
-                Console.Write("Choose an option: ");
-
-                switch (Console.ReadLine())
-                {
-                    case "1":
-                        AddCustomer(context);
-                        break;
-                    case "2":
-                        ViewCustomers(context);
-                        break;
-                    case "3":
-                        SearchCustomers(context);
-                        break;
-                    case "4":
-                        UpdateCustomer(context);
-                        break;
-                    case "5":
-                        DeleteCustomer(context);
-                        break;
-                    case "6":
-                        running = false;
-                        break;
-                    default:
-                        Console.WriteLine("Invalid selection.");
-                        break;
-                }
-            }
-        }
-    }
-
-    static void AddCustomer(CustomerContext context)
-    {
-        Console.Write("Enter name: ");
-        string name = Console.ReadLine();
-        Console.Write("Enter phone number: ");
-        string phone = Console.ReadLine();
-
-        var customer = new Customer { Name = name, PhoneNumber = phone };
-        context.Customers.Add(customer);
+        var options = new DbContextOptionsBuilder<AddressBookContext>()
+            .UseSqlServer("Server=localhost\\SQLEXPRESS;Database=AddressBook;Integrated Security=True;Encrypt=True;TrustServerCertificate=True")
+            .Options;
+        using var context = new AddressBookContext(options);
+        var person = new Person { Name = "Alice", Age = 30, Gender = GenderType.Unknown,
+            PhoneNumber = "+49 0123", Email = "alice@example.com" };
+        context.Contacts.Add(person);
+        context.SaveChanges(); // Die Datenbank setzt person.Id.
+        var found = context.Contacts.Where(p => p.Name.StartsWith("A")).OrderBy(p => p.Name).Take(20).ToList();
+        foreach (var contact in found) Console.WriteLine(contact);
+        person.Email = "alice.neu@example.com";
         context.SaveChanges();
-        Console.WriteLine("Customer added.");
-    }
-
-    static void ViewCustomers(CustomerContext context)
-    {
-        var customers = context.Customers.OrderBy(c => c.Name).ToList();
-        Console.WriteLine("\nCustomers:");
-        foreach (var customer in customers)
-        {
-            Console.WriteLine($"{customer.CustomerID}: {customer.Name} - {customer.PhoneNumber}");
-        }
-    }
-
-    static void SearchCustomers(CustomerContext context)
-    {
-        Console.Write("Enter name to search: ");
-        string name = Console.ReadLine();
-
-        var results = context.Customers.Where(c => c.Name.Contains(name)).ToList();
-        if (results.Any())
-        {
-            Console.WriteLine("\nSearch Results:");
-            foreach (var customer in results)
-            {
-                Console.WriteLine($"{customer.CustomerID}: {customer.Name} - {customer.PhoneNumber}");
-            }
-        }
-        else
-        {
-            Console.WriteLine("No customers found.");
-        }
-    }
-
-    static void UpdateCustomer(CustomerContext context)
-    {
-        Console.Write("Enter customer ID to update: ");
-        if (int.TryParse(Console.ReadLine(), out int id))
-        {
-            var customer = context.Customers.Find(id);
-            if (customer != null)
-            {
-                Console.Write("Enter new name: ");
-                customer.Name = Console.ReadLine();
-                Console.Write("Enter new phone number: ");
-                customer.PhoneNumber = Console.ReadLine();
-                context.SaveChanges();
-                Console.WriteLine("Customer updated.");
-            }
-            else
-            {
-                Console.WriteLine("Customer not found.");
-            }
-        }
-    }
-
-    static void DeleteCustomer(CustomerContext context)
-    {
-        Console.Write("Enter customer ID to delete: ");
-        if (int.TryParse(Console.ReadLine(), out int id))
-        {
-            var customer = context.Customers.Find(id);
-            if (customer != null)
-            {
-                context.Customers.Remove(customer);
-                context.SaveChanges();
-                Console.WriteLine("Customer deleted.");
-            }
-            else
-            {
-                Console.WriteLine("Customer not found.");
-            }
-        }
+        context.Contacts.Remove(person);
+        context.SaveChanges();
     }
 }
 ```
 
+Das Beispiel setzt die bereits angelegte Tabelle aus A02 voraus. Es erstellt und entfernt seinen Demonstrationskontakt. Für deine Menüaktionen verwende kurze Context-Lebensdauern; lade bei Bearbeiten/Löschen mit `Find(id)` und behandle `null` als „nicht gefunden“.
+
 </details>
+
+## Schemaerstellung und Migrationen
+
+Ein ORM legt Tabellen **nicht allein durch die Klassendefinition** an. Die vorhandene Tabelle aus A02 kann ohne Neuerstellung verwendet werden. Für eine **frische** Datenbank enthält die Referenzanwendung eine initiale Migration:
+
+```shell
+cd Beispiele/Adressbuch
+dotnet tool restore
+dotnet ef database update --project Data --startup-project Api
+```
+
+Führe die initiale Migration nicht auf der bereits manuell angelegten `Contacts`-Tabelle aus: Sie würde dieselbe Tabelle erneut anlegen wollen. Für das Testen der Referenzmigration wähle mit der Umgebungsvariable `ConnectionStrings__AddressBook` eine neue Datenbank, z. B. `AddressBookMigrationDemo`. Die API kann die vorhandene A02-Datenbank unabhängig davon normal verwenden.
+
+Wenn du danach das Schema ändern willst, lege eine weitere Migration an:
+
+```shell
+dotnet ef migrations add AddContactNote --project Data --startup-project Api
+dotnet ef database update --project Data --startup-project Api
+```
+
+Bei einer bestehenden manuell verwalteten Datenbank ist zunächst eine geprüfte Baseline-Migration nötig, bevor du sie in diesen Migrationsweg überführst. Übe Schemaänderungen zuerst an einer neuen Entwicklungsdatenbank. `EnsureCreated()` ist für einfache, neu erstellte Wegwerfdatenbanken geeignet, etwa in Tests; es aktualisiert keine vorhandenen Tabellen und wird nicht mit Migrationen gemischt.
+
+## Selbst prüfen
+
+Ein Kontakt bekommt eine Datenbank-ID, Suche und Sortierung stimmen, Änderungen überleben Neustarts, eine fehlende ID wird behandelt. JSON-, SQL- und EF-Kontakte enthalten dieselben Eigenschaften. Schaue dir im Debugger den Zustand eines hinzugefügten und eines geänderten Objekts an. Prüfe die Suche auch bei null Treffern.
+
+Zusatz: Beziehungen und Paginierung. Beachte, dass SQLite-Tests SQL-Server-spezifische Datentypen, Constraints und Abfragen nicht vollständig prüfen; führe wichtige Datenbankfälle auch mit SQL Server aus.
+
+Referenzen: [EF Core](https://learn.microsoft.com/en-us/ef/core/) und [Schemaerstellung](https://learn.microsoft.com/en-us/ef/core/managing-schemas/ensure-created).

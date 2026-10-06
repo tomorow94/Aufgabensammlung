@@ -45,7 +45,7 @@ In C# schreibst du Kommentare mit zwei Schrägstrichen `//` – alles, was recht
 
 Du kannst mit den folgenden Umrechnungen starten:
 
-- Celsius → Fahrenheit:  `F = C * 9/5 + 32`
+- Celsius → Fahrenheit:  `F = C * 9.0 / 5.0 + 32`
 - Kilometer → Meilen:   `mi = km * 0.621371`
 
 Optional kannst du später weitere Umrechnungen ergänzen (siehe unten).
@@ -83,7 +83,7 @@ Optional kannst du später weitere Umrechnungen ergänzen (siehe unten).
 <details>
 <summary>📘 Tipp zur Struktur</summary>
 
-Ein einfaches Menü könnte so aussehen:
+Die folgende Skizze setzt `bool weiter = true;` und deine Methoden `CelsiusZuFahrenheit()` sowie `KilometerZuMeilen()` voraus. Ein einfaches Menü könnte so aussehen:
 
 ```csharp
 while (weiter)
@@ -93,7 +93,7 @@ while (weiter)
     Console.WriteLine("2 = Kilometer zu Meilen");
     Console.WriteLine("0 = Beenden");
     
-    string auswahl = Console.ReadLine();
+    string auswahl = Console.ReadLine() ?? "";
     switch (auswahl)
     {
         case "1": CelsiusZuFahrenheit(); break;
@@ -110,3 +110,13 @@ while (weiter)
 
 > 🧠 Diese Aufgabe trainiert dein Verständnis für mathematische Zusammenhänge und Methodenstruktur – wichtig für wartbaren und gut organisierten Code!
 
+
+## Selbst prüfen
+
+`0 °C` ergibt `32 °F`, `100 °C` ergibt `212 °F`, `-40 °C` ergibt `-40 °F`. `1 km` ergibt ungefähr `0,621371 mi`. Ungültige Auswahl oder ungültiger Zahlentext ergibt eine Meldung; Beenden funktioniert auch nach mehreren Umrechnungen. Halte Berechnung und Eingabe getrennt, damit du die Methoden ohne Konsole testen kannst.
+
+## Reine Methoden und frühe automatisierte Tests
+
+Verwende für die Rechnung etwa `static double CelsiusToFahrenheit(double c) => c * 9.0 / 5.0 + 32;`. Eingabe und Ausgabe liegen außerhalb. `9 / 5` allein ist Ganzzahldivision und ergibt `1`; die Dezimalliterale vermeiden diesen Fehler unabhängig vom Typ des Eingabewerts. Liter → Gallonen bezieht sich bei Faktor `0.264172` auf US-Gallonen.
+
+Zusatz: Automatisiere die drei Temperaturfälle schon jetzt in einem xUnit-Projekt. Für die beiden nicht exakt darstellbaren Umrechnungen prüfe mit einer Toleranz statt auf exakte Gleitkommagleichheit. Die Einrichtung wird in Stufe 6 wieder aufgegriffen.

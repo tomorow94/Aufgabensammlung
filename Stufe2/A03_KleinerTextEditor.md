@@ -45,7 +45,7 @@ Diese Aufgabe verlangt, dass du den Code **selbst schreibst**, orientiere dich d
    File.WriteAllText("meineDatei.txt", "Das ist mein Text.");
    ```
 
-    🔎 **Hinweis:** Sollte noch keine datei mit dem gegebenen Namen existieren, wrd diese automatisch erstellt und in diese geschrieben.
+    🔎 **Hinweis:** Sollte noch keine Datei mit dem gegebenen Namen existieren, wird diese automatisch erstellt und in diese geschrieben.
 
 3. **So erstellst du eine Datei (falls sie nicht existiert):**
 
@@ -55,7 +55,7 @@ Diese Aufgabe verlangt, dass du den Code **selbst schreibst**, orientiere dich d
    File.WriteAllText(pfad, "Neuer Inhalt der Datei");
    ```
 
-   🔎 **Hinweis:** Bei Angabe eines relativen Pfads (wie oben) wird die Datei im Projektverzeichnis gespeichert – also dort, wo auch deine `.csproj`-Datei liegt.
+   🔎 **Hinweis:** Bei Angabe eines relativen Pfads (wie oben) bezieht sich der Pfad auf das **aktuelle Arbeitsverzeichnis**. Es muss nicht mit dem Ordner der `.csproj`-Datei übereinstimmen. Prüfe es mit `Directory.GetCurrentDirectory()` und zeige mit `Path.GetFullPath(pfad)` den tatsächlichen Speicherort an.
    Das ist nützlich, damit dein Code auf verschiedenen Rechnern ohne Anpassung des Pfads funktioniert.
 
 4. **So liest du Text aus einer Datei:**
@@ -93,7 +93,7 @@ Diese Aufgabe verlangt, dass du den Code **selbst schreibst**, orientiere dich d
 
 ## Weiterführende Ideen
 
-* Gib dem Benutzer einfaches Feedback durch meldungen nach Abschließen einer Aktion wie `"Text wurde erfolgreich in '{pfad}' gespeichert."`.
+* Gib dem Benutzer einfaches Feedback durch Meldungen nach Abschließen einer Aktion wie `"Text wurde erfolgreich in '{pfad}' gespeichert."`.
 * Gib dem Benutzer die Möglichkeit, **Dateinamen selbst einzugeben**.
 * Ergänze die Option, einen vorhandenen Text zu **bearbeiten und erneut zu speichern**.
 * Ermögliche das **Löschen** einer Datei.
@@ -127,7 +127,8 @@ namespace KleinerTextEditor
                 Console.WriteLine("2. Gespeicherten Text laden und anzeigen");
                 Console.WriteLine("3. Programm beenden");
                 Console.Write("Wählen Sie eine Option (1-3): ");
-                string eingabe = Console.ReadLine();
+                string? eingabe = Console.ReadLine();
+                if (eingabe is null) return;
 
                 switch (eingabe)
                 {
@@ -152,14 +153,15 @@ namespace KleinerTextEditor
         {
             Console.WriteLine("Geben Sie den Text ein (beenden mit einer leeren Zeile):");
             string text = "";
-            string zeile;
-            while ((zeile = Console.ReadLine()) != "")
+            string? zeile;
+            while ((zeile = Console.ReadLine()) is not null && zeile != "")
             {
                 text += zeile + Environment.NewLine;
             }
 
             try
             {
+                // WriteAllText überschreibt eine bereits vorhandene Datei vollständig.
                 File.WriteAllText(pfad, text);
                 Console.WriteLine($"Text wurde erfolgreich in '{pfad}' gespeichert.");
             }
@@ -192,4 +194,10 @@ namespace KleinerTextEditor
         }
     }
 }
-</details> ```
+```
+
+</details>
+
+## Selbst prüfen
+
+Speichere zwei Zeilen, starte neu und lade sie wieder. Eine fehlende Datei ergibt eine Meldung. Zeige den vollständigen Pfad an und ändere das Arbeitsverzeichnis: Der relative Speicherort verändert sich. Erneutes Speichern überschreibt den bisherigen Inhalt; weise darauf hin oder frage vorher nach. Eine schreibgeschützte Datei ergibt eine verständliche Fehlermeldung.

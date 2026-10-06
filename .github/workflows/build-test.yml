@@ -1,0 +1,20 @@
+name: Build & Test
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-node@v5
+        with:
+          node-version: '24'
+      - run: dotnet restore Beispiele/Adressbuch/Adressbuch.slnx
+      - run: dotnet build Beispiele/Adressbuch/Adressbuch.slnx --configuration Release --no-restore
+      - run: dotnet test Beispiele/Adressbuch/Adressbuch.slnx --configuration Release --no-build
+      - run: python3 tools/validate_material.py --compile
+      - run: node --test tools/frontend.test.cjs
