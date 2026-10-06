@@ -1,140 +1,130 @@
-# Aufgabe A02: Hangman (Galgenmännchen)
+# 🟡 Aufgabe A02: Hangman
 
-## Ziel
+## Einordnung und Lernziele
 
-In dieser Aufgabe entwickeln Sie das klassische Spiel **Hangman (Galgenmännchen)** als Konsolenanwendung in C#.  
-Dabei lernen Sie:
-- **Zeichenkettenmanipulation** zur Darstellung des gesuchten Wortes.
-- **Benutzereingaben zu verarbeiten und zu prüfen**.
-- **Spielmechaniken**, wie das Zeichnen des Hängemännchens und das Verwalten von Versuchen.
+**Status:** Pflicht im Lernfaden.
 
----
+**Voraussetzungen:** [Tic Tac Toe – Einführung in Spielmechaniken, Arrays und Entscheidungslogik](A01_TicTacToe.md)
+
+**Intention:** Zeichenketten und Spielzustände ohne doppelte Verarbeitung verwalten.
+
+**Lernziele:**
+
+- Du kannst erratene Buchstaben speichern und sichtbare Wortteile erzeugen.
+- Du kannst falschen, wiederholten und ungültigen Versuchen unterschiedliche Folgen geben.
+
+**Weiter im Pflichtpfad:** [Einfaches Bankkonto-System](A03_Bankkonto.md)
+
+## Ziel und Voraussetzungen
+
+Du kennst Arrays, Listen und Spielzustände aus Tic-Tac-Toe. Jetzt verarbeitest du Zeichenketten und einzelne Buchstaben. Der Computer wählt ein Wort; richtige Buchstaben werden aufgedeckt, falsche verringern die verbleibenden Versuche.
 
 ## Anforderungen
 
-1. **Wortauswahl und Darstellung**
-   - Das Programm wählt ein zufälliges Wort aus einer **Liste von Wörtern**.
-   - Das Wort wird als eine Reihe von **`_` (Unterstrichen)** dargestellt, wobei nur erratene Buchstaben sichtbar sind.
+1. Wähle ein zufälliges Wort aus einer Liste und zeige zunächst `_` an.
+2. Akzeptiere genau einen Buchstaben, unabhängig von Groß-/Kleinschreibung.
+3. Bereits geratene Buchstaben und ungültige Eingaben verbrauchen keinen Versuch.
+4. Erlaube sieben Fehlversuche. Dafür brauchst du **acht Bilder**: Anfangszustand plus sieben Fehlerzustände.
+5. Nach Sieg oder Niederlage zeige das Wort an. Fehlermeldungen bleiben sichtbar.
 
-2. **Benutzereingaben verarbeiten**
-   - Der Spieler gibt **einen Buchstaben pro Versuch** ein.
-   - Falls der Buchstabe im Wort enthalten ist, wird er an den richtigen Stellen angezeigt.
-   - Falls nicht, wird das Hängemännchen **schrittweise aufgebaut**.
+## Gestufte Hinweise
 
-3. **Spielregeln**
-   - Der Spieler hat **maximal 7 Fehlversuche**, bevor das Spiel verloren ist.
-   - Das Spiel endet, wenn:
-     - Der Spieler das Wort vollständig erraten hat → **Gewonnen**.
-     - Der Spieler alle Versuche aufgebraucht hat → **Verloren**.
-
-4. **Visualisierung des Hängemännchens**
-   - Verwenden Sie eine einfache **ASCII-Grafik**, um den Fortschritt des Spiels anzuzeigen.
-   - Nach jedem falschen Versuch wird ein weiterer Teil des Galgens gezeichnet.
-
----
-
-## Hinweise
-
-- Nutzen Sie eine **Liste oder ein Array**, um mehrere Wörter zur Auswahl zu haben.
-- Verwenden Sie **Schleifen und Methoden**, um den Code übersichtlich zu halten.
-- Implementieren Sie eine **Methode, die das Hängemännchen je nach Anzahl der Fehlversuche anzeigt**.
-
----
-
-## Erweiterungsmöglichkeiten
-
-- **Mehrspieler-Modus:** Ein Spieler gibt ein Wort ein, das der andere erraten muss.
-- **Themenbezogene Wörter:** Lassen Sie den Spieler zwischen Kategorien wie „Tiere“, „Länder“ oder „Technologie“ wählen.
-- **Grafische Oberfläche:** Erstellen Sie eine einfache GUI mit **Windows Forms oder WPF**.
-
----
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
 
 <details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Information brauchst du, um einen wiederholten Buchstaben zu erkennen?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Nutze eine Menge für schon geratene Buchstaben und vermindere Versuche nur bei einem neuen falschen Buchstaben.
+
+</details>
+
+<details>
+<summary>Lösungsvorschlag für Program.cs (.NET 10)</summary>
 
 ```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
-
 class Hangman
 {
-    static string[] words = { "computer", "programming", "developer", "software", "keyboard" };
-    static string chosenWord;
-    static char[] guessedWord;
-    static List<char> guessedLetters = new List<char>();
-    static int attemptsLeft = 7;
-
+    static readonly string[] words = { "computer", "programming", "developer", "software", "keyboard" };
+    const int MaxMistakes = 7;
+    static string chosenWord = "";
+    static char[] guessedWord = [];
+    static readonly HashSet<char> guessedLetters = [];
+    static int attemptsLeft = MaxMistakes;
+    static readonly string[] stages =
+    {
+        "\n\n\n\n\n\n=========",
+        "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========",
+        "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========",
+        "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========",
+        "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========",
+        "  +---+\n  |   |\n  O   |\n /|\\  |\n      |\n      |\n=========",
+        "  +---+\n  |   |\n  O   |\n /|\\  |\n /    |\n      |\n=========",
+        "  +---+\n  |   |\n  O   |\n /|\\  |\n / \\  |\n      |\n========="
+    };
     static void Main()
     {
-        Random rand = new Random();
-        chosenWord = words[rand.Next(words.Length)];
+        chosenWord = words[Random.Shared.Next(words.Length)];
         guessedWord = new string('_', chosenWord.Length).ToCharArray();
-
+        guessedLetters.Clear();
+        attemptsLeft = MaxMistakes;
         while (attemptsLeft > 0 && guessedWord.Contains('_'))
         {
-            Console.Clear();
             DrawHangman();
-            Console.WriteLine($"\nWord: {new string(guessedWord)}");
-            Console.WriteLine($"Attempts left: {attemptsLeft}");
-            Console.Write("Guess a letter: ");
-
-            char guess = Console.ReadKey().KeyChar;
-            Console.WriteLine();
-
-            if (guessedLetters.Contains(guess))
+            Console.WriteLine($"Wort: {new string(guessedWord)}; übrig: {attemptsLeft}");
+            Console.Write("Ein Buchstabe: ");
+            string? input = Console.ReadLine()?.Trim();
+            if (input is null) return;
+            if (input.Length != 1 || !char.IsLetter(input[0]))
             {
-                Console.WriteLine("You already guessed this letter. Try again.");
+                Console.WriteLine("Bitte genau einen Buchstaben eingeben.");
                 continue;
             }
-
-            guessedLetters.Add(guess);
-
+            char guess = char.ToLowerInvariant(input[0]);
+            if (!guessedLetters.Add(guess))
+            {
+                Console.WriteLine("Dieser Buchstabe wurde bereits versucht.");
+                continue;
+            }
             if (chosenWord.Contains(guess))
             {
                 for (int i = 0; i < chosenWord.Length; i++)
-                {
-                    if (chosenWord[i] == guess)
-                    {
-                        guessedWord[i] = guess;
-                    }
-                }
+                    if (chosenWord[i] == guess) guessedWord[i] = guess;
             }
-            else
-            {
-                attemptsLeft--;
-            }
+            else attemptsLeft--;
         }
-
-        Console.Clear();
         DrawHangman();
-        Console.WriteLine($"\nWord: {chosenWord}");
-
-        if (attemptsLeft > 0)
-        {
-            Console.WriteLine("Congratulations! You won!");
-        }
-        else
-        {
-            Console.WriteLine("Game over! You lost.");
-        }
+        Console.WriteLine($"{(attemptsLeft > 0 ? "Gewonnen" : "Verloren")}: {chosenWord}");
     }
-
-    static void DrawHangman()
-    {
-        string[] hangmanStages = {
-            "  +---+\n  |   |\n      |\n      |\n      |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n      |\n      |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n  |   |\n      |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n /|   |\n      |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n /|\\  |\n      |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n /|\\  |\n /    |\n      |\n=========",
-            "  +---+\n  |   |\n  O   |\n /|\\  |\n / \\  |\n      |\n=========",
-        };
-
-        Console.WriteLine(hangmanStages[7 - attemptsLeft]);
-    }
+    static void DrawHangman() => Console.WriteLine(stages[MaxMistakes - attemptsLeft]);
 }
 ```
 
-</details> 
+</details>
+
+## Selbst prüfen
+
+Verwende zunächst das feste Wort `computer`, bevor du die Zufallsauswahl einschaltest. Sieben falsche unterschiedliche Buchstaben (`a b f g h i j`) ergeben eine Niederlage ohne Absturz. `C` deckt `c` auf; ein zweites `c` kostet nichts. `1`, eine leere Zeile und `ab` kosten keinen Versuch. Mit `c o m p u t e r` gewinnst du.
+
+Setze einen Haltepunkt in `DrawHangman()` und beobachte die Indizes `0–7`.
+
+## Bonus: Weitere Spielrunden
+
+**Intention:** Übertrage die Zustandsprüfung auf erweiterte Spielabläufe.
+
+**Lernziel:** Du kannst Runden neu initialisieren und Kategorien oder ein zweites Spielerwort einbauen, ohne alte Versuche zu übernehmen.
+
+Kategorien, mehrere Runden oder ein von einem zweiten Spieler eingegebenes Wort.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-4-zustand-und-geschäftsregeln). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

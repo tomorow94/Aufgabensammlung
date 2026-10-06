@@ -1,87 +1,107 @@
-# Aufgabe A02: Erstellung einer Klasse "Person" – Einführung in Objekte und Enums
+# 🟠 Aufgabe A02: Person, Eigenschaften, Konstruktor und Enum
 
-## Ziel
+## Einordnung und Lernziele
 
-In dieser Aufgabe erstellen Sie eine **Klasse `Person`**, um die Grundlagen der **objektorientierten Programmierung (OOP)** in C# zu erlernen. Sie werden die Konzepte von **Klassen, Objekten, Eigenschaften und Methoden** kennenlernen.
+**Status:** Pflicht im Lernfaden.
 
-Zusätzlich wird ein **Enum** eingeführt, um den Umgang mit vordefinierten Kategorien innerhalb einer Klasse zu üben.
+**Voraussetzungen:** [Menüführung mit Klassen & Struktur](A01_KlassenUndStruktur.md)
 
----
+**Intention:** Ein wiederverwendbares Kontaktmodell mit eigenen Objektzuständen aufbauen.
+
+**Lernziele:**
+
+- Du kannst Person-Objekte über Eigenschaften und Konstruktoren erstellen.
+- Du kannst Enum-Werte und unterschiedliche Zustände zweier Objekte erklären.
+
+**Weiter im Pflichtpfad:** [Adressbuch mit Kontakten und Dateispeicherung](A03_EinfachesAdressbuch.md)
+
+## Ziel und Voraussetzungen
+
+Du kennst Methoden und das Menüprojekt. Eine **Klasse** beschreibt die Daten und das Verhalten ihrer **Objekte**. Eine Eigenschaft wie `Name` gehört zu einem bestimmten Objekt; eine Methode wie `Greet()` kann dessen Daten verwenden.
+
+Ein **Konstruktor** wird beim Erstellen mit `new` aufgerufen. Ein **Enum** benennt eine begrenzte Menge von Werten. `Unknown` steht hier an Position `0`, damit ein noch nicht gesetzter Wert „keine Angabe“ bedeutet.
 
 ## Anforderungen
 
-1. **Klasse `Person` erstellen**
-   - Die Klasse soll die folgenden Eigenschaften besitzen:
-     - `Name` (string) – Name der Person.
-     - `Age` (int) – Alter der Person.
-     - `Gender` (GenderType) – Geschlecht der Person (Enum).
-   - Eine Methode `Greet()`, die eine personalisierte Begrüßung ausgibt.
+1. Erstelle `Person` mit `Name`, `Age` und `Gender`.
+2. Definiere `GenderType` vollständig und erstelle mehrere Personen.
+3. Lass jede Person `Greet()` ausführen. Überprüfe ein negatives Alter.
+4. Trenne Dateien für `Person`, `GenderType` und das Programm, sobald das Beispiel läuft.
 
-2. **Enum `GenderType` hinzufügen**
-   - Definieren Sie ein Enum namens `GenderType` mit den Werten:
-     - `Male`
-     - `Female`
-     - `Diverse`
-     - `Unknown`
-   - Diese Werte sollen als Geschlechtsangabe für eine `Person` genutzt werden.
+## Gestufte Hinweise
 
-3. **Objekte der Klasse `Person` erstellen**
-   - Instanziieren Sie **mehrere Personen** mit unterschiedlichen Eigenschaften.
-   - Rufen Sie die Metho
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
 
-## 2. Die Person-Klasse
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Werte gehören zu jeder Person und welche mögliche Angabe soll das Enum beschreiben?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Lege Eigenschaften pro Objekt fest; Unknown an Position 0 bezeichnet eine noch nicht gesetzte Angabe.
+
+</details>
+
+<details>
+<summary>Vollständiges Einstiegsbeispiel für Program.cs (.NET 10)</summary>
 
 ```csharp
+using System;
+public enum GenderType { Unknown, Male, Female, Diverse }
 public class Person
 {
-    public string Name { get; set; }
-    public int Age { get; set; }
-    public GenderType Gender { get; set; }
-
+    public string Name { get; }
+    public int Age { get; }
+    public GenderType Gender { get; }
     public Person(string name, int age, GenderType gender)
     {
-        Name = name;
+        if (string.IsNullOrWhiteSpace(name)) throw new ArgumentException("Name fehlt.", nameof(name));
+        if (age < 0 || age > 130) throw new ArgumentOutOfRangeException(nameof(age));
+        if (!Enum.IsDefined(gender)) throw new ArgumentOutOfRangeException(nameof(gender));
+        Name = name.Trim();
         Age = age;
         Gender = gender;
     }
-
-    public void Greet()
-    {
-        string genderText = Gender switch
-        {
-            GenderType.Male => "Mr.",
-            GenderType.Female => "Ms.",
-            GenderType.Diverse => "Mx.",
-            _ => ""
-        };
-
-        Console.WriteLine($"Hello {genderText} {Name}, you are {Age} years old.");
-    }
+    public void Greet() => Console.WriteLine($"Hallo {Name}, du bist {Age} Jahre alt.");
+    public override string ToString() => $"{Name} ({Age}, {Gender})";
 }
-```
-
-## 3. Nutzung der Klasse Person
-```csharp
 class Program
 {
     static void Main()
     {
-        Person person1 = new Person("Alice", 30, GenderType.Female);
-        Person person2 = new Person("Bob", 25, GenderType.Male);
-        Person person3 = new Person("Charlie", 29, GenderType.Diverse);
-        Person person4 = new Person("Eve", 40, GenderType.Unknown);
-
-        person1.Greet();
-        person2.Greet();
-        person3.Greet();
-        person4.Greet();
+        var alice = new Person("Alice", 30, GenderType.Female);
+        var bob = new Person("Bob", 25, GenderType.Unknown);
+        alice.Greet();
+        bob.Greet();
+        Console.WriteLine(alice);
+        try { _ = new Person("Test", -1, GenderType.Unknown); }
+        catch (ArgumentOutOfRangeException) { Console.WriteLine("Negatives Alter wurde abgewiesen."); }
     }
 }
 ```
 
-## Erweiterungsmöglichkeiten
-- Zusätzliche Methoden hinzufügen: Erstellen Sie eine Methode Describe(), die weitere Details über die Person ausgibt.
-- Vergleichsmethoden implementieren: Überladen Sie die Methode ToString(), um ein einfaches Textformat für die Ausgabe der Person zu erhalten.
-- Weitere Enums integrieren: Erstellen Sie z. B. ein OccupationType-Enum, das verschiedene Berufe speichert.
-  
-Diese Aufgabe vermittelt ein Grundverständnis für Klassen, Objekte, Konstruktoren und Enums und bereitet auf komplexere OOP-Konzepte vor.
+`get` erlaubt Lesen. Der Konstruktor weist den Anfangswert zu; außerhalb der Klasse können diese Eigenschaften nicht verändert werden. `override` **überschreibt** die vorhandene Methode `ToString()`; Überladen wäre eine weitere Methode gleichen Namens mit anderen Parametern.
+
+</details>
+
+## Selbst prüfen
+
+Zwei Personen behalten unterschiedliche Namen und Alter. `Unknown` hat den Zahlenwert `0`. Leere Namen, Alter `-1` oder `131` und `(GenderType)99` werden abgewiesen. Beobachte im Debugger, welches Objekt `this` bezeichnet.
+
+Das Adressbuch ergänzt im nächsten Schritt `Id`, `PhoneNumber` und `Email`. Für dessen bearbeitbare und serialisierbare Kontakte werden die Eigenschaften bewusst auf `get; set;` umgestellt; die Eingaben prüft dann die Anwendung. Erkläre den Unterschied zu den hier unveränderlichen Eigenschaften.
+
+## Bonus: Objekte und Referenzen untersuchen
+
+**Intention:** Erweitere das Modellverständnis durch weitere Objektbeziehungen.
+
+**Lernziel:** Du kannst zwei Referenzen auf dasselbe Objekt von zwei unabhängigen Objekten unterscheiden.
+
+Ein neutrales Enum wie `ContactCategory` eignet sich für eigene Kategorien. Erweitere die Ausgabe oder untersuche zwei Referenzen auf dasselbe Objekt.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-3-struktur-und-versionsgeschichte). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

@@ -92,7 +92,7 @@ Ein `string` ist also eine Zeichenkette (Text), `bool` kann nur „true“ oder 
 
 ## 🟡 Warum muss ich Variablen initialisieren?
 
-In C# muss man einer Variable **einen Startwert geben**, bevor man sie verwendet. Das nennt man "initialisieren".
+In C# muss man einer **lokalen Variable** einen Wert zuweisen, bevor man sie verwendet. Das nennt man "initialisieren".
 
 Beispiel:
 
@@ -100,7 +100,7 @@ Beispiel:
 int x = 0; // x hat jetzt einen gültigen Wert und kann verwendet werden
 ```
 
-Wenn du versuchst, mit einer nicht initialisierten Variable zu arbeiten, meldet der Compiler einen Fehler.
+Wenn du versuchst, mit einer nicht initialisierten Variable zu arbeiten, meldet der Compiler einen Fehler. Felder und Arrayelemente erhalten dagegen Standardwerte, beispielsweise `0`, `false` oder `null`.
 
 ---
 
@@ -111,7 +111,7 @@ In C# hält man sich meistens an folgende Regeln, damit der Code **gut lesbar** 
 * **Variablennamen** beginnen klein, z. B. `anzahl`, `benutzerName`, `istFertig`
 * **Methoden** beginnen groß, z. B. `BerechneSumme()`
 * Namen sollen **beschreibend** sein – lieber `benutzerAlter` als nur `b` oder `x`
-* Keine Leerzeichen oder Sonderzeichen in Namen (stattdessen CamelCase: `meinNameIst`)
+* Keine Leerzeichen oder Satzzeichen in Namen; Unicode-Buchstaben und `_` sind erlaubt (stattdessen CamelCase: `meinNameIst`)
 * Verwende **aussagekräftige Namen**, auch wenn sie länger sind
 * ✅ **Faustregel:** *So kurz wie möglich, aber so lang wie nötig!*
 
@@ -134,7 +134,8 @@ if (x > 0)
 Wenn du eine Variable in mehreren Blöcken brauchst, deklariere sie **außerhalb** der Blöcke:
 
 ```csharp
-int y;
+int x = -1;
+int y = 0; // Anfangswert für den Fall, dass die Bedingung falsch ist
 if (x > 0)
 {
     y = 5;
@@ -146,7 +147,7 @@ Console.WriteLine(y); // funktioniert
 
 ## 🔁 Was bedeutet "return"?
 
-`return` gibt einen Wert **zurück** – meist das Ergebnis einer Berechnung.
+`return` beendet die aktuelle Methode. Bei einer Methode mit Rückgabewert gibt es dabei einen Wert zurück; in einer `void`-Methode steht nur `return;`.
 
 Beispiel:
 
@@ -172,7 +173,7 @@ if (x > 5)
 }
 ```
 
-Ohne die Klammern wüsste C# nicht, welche Zeile zur Bedingung gehört.
+Ohne Klammern gehört nur die direkt folgende Anweisung zur Bedingung. Verwende für gut lesbare Beispiele trotzdem immer Klammern.
 
 ---
 
@@ -194,9 +195,9 @@ static void Main(string[] args)
 ## 🧲 Beispiel: Gültigkeit und Sichtbarkeit von Variablen
 
 ```csharp
-int globaleZahl = 100; // sichtbar in der ganzen Methode
+int methodenZahl = 100; // sichtbar in der ganzen Methode
 
-if (globaleZahl > 50)
+if (methodenZahl > 50)
 {
     int lokaleZahl = 10; // nur innerhalb dieser if-Klammer sichtbar
     Console.WriteLine(lokaleZahl); // OK
@@ -209,7 +210,7 @@ Visualisierung:
 
 ```
 Main-Methode
-├ globalVariable
+├ methodenZahl
 └ if-Block
    └ lokaleVariable
 ```
@@ -222,7 +223,7 @@ Main-Methode
 +-------------------------------+
 |      Sichtbarkeit & Scope     |
 +-------------------------------+
-| Globale Variable (z. B. Feld) | → im gesamten Code der Klasse verfügbar
+| Feld einer Klasse | → im gesamten Code der Klasse verfügbar
 | Lokale Variable               | → nur im Block (z. B. Schleife, if) gültig
 | Parameter einer Methode       | → nur innerhalb der Methode sichtbar
 +-------------------------------+
@@ -230,7 +231,10 @@ Main-Methode
 
 Lebensdauer = wie lange die Variable im Speicher bleibt:
 
-* Lokale Variable: nur während der Methode oder des Blocks
+* Lokale Variable: gewöhnlich während des Methodenaufrufs; Sichtbarkeit und Lebensdauer sind nicht dasselbe. Closures können die Lebensdauer verlängern.
 * Objektvariable (z. B. in Klasse): solange das Objekt existiert
 
 ---
+## Moderne Projektvorlagen
+
+.NET 10 erzeugt Konsolenprojekte oft mit Top-Level-Anweisungen. Die Beispiele dieser Sammlung verwenden bewusst eine ausdrückliche `Main()`-Methode. Ersetze jeweils den gesamten Inhalt von `Program.cs`; füge nicht beide Varianten zusammen. Nullable reference types sind aktiviert: `Console.ReadLine()` kann `null` liefern. Verwende `string?` oder behandle das Ende der Eingabe mit `??` bzw. einer Prüfung.

@@ -1,0 +1,22 @@
+# Vorlage: nach .github/dependabot.yml kopieren und in den Standardbranch mergen.
+# Verzeichnisse für das eigene Projekt anpassen.
+version: 2
+updates:
+  - package-ecosystem: nuget
+    directories:
+      - /Beispiele/Adressbuch/Core
+      - /Beispiele/Adressbuch/Data
+      - /Beispiele/Adressbuch/Api
+      - /Beispiele/Adressbuch/Tests
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      dotnet-packages:
+        patterns:
+          - '*'
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5

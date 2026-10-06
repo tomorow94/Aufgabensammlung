@@ -1,0 +1,27 @@
+# Vorlage: nach .github/workflows/quality-dotnet.yml kopieren.
+# Zunächst manuell im Standardbranch ausführen; nach erfolgreicher Einrichtung
+# die zusätzlichen Prüfungen in den vorhandenen Build-Workflow übernehmen.
+name: .NET Quality
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+      - name: Restore and audit all dependencies
+        run: >-
+          dotnet restore Beispiele/Adressbuch/Adressbuch.slnx
+          -p:NuGetAudit=true -p:NuGetAuditMode=all
+          -p:TreatWarningsAsErrors=true
+      - name: Check formatting without modifying files
+        run: dotnet format Beispiele/Adressbuch/Adressbuch.slnx --verify-no-changes --no-restore
+      - name: Build with warnings as errors
+        run: dotnet build Beispiele/Adressbuch/Adressbuch.slnx --configuration Release --no-restore -warnaserror
+      - name: Test
+        run: dotnet test Beispiele/Adressbuch/Adressbuch.slnx --configuration Release --no-build

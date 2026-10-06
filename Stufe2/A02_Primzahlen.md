@@ -1,5 +1,20 @@
 # 🔵 Aufgabe A02: Primzahlenprüfung
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Umrechnung von Einheiten](A01_UmrechnungVonEinheiten.md)
+
+**Intention:** Eine mathematische Regel als prüfbare bool-Methode formulieren.
+
+**Lernziele:**
+
+- Du kannst Primzahlprüfung von Eingabe und Ausgabe trennen.
+- Du kannst 1, 2, eine Primzahl und eine Quadratzahl als Grenzfälle erklären.
+
+**Weiter im Pflichtpfad:** [Kleiner Text-Editor](A03_KleinerTextEditor.md)
+
 ## Ziel der Aufgabe
 
 Erstelle ein Programm, das überprüft, ob eine eingegebene Zahl eine **Primzahl** ist. Dabei sollst du lernen, wie man **mathematische Regeln**, **Schleifen**, **Methoden** und **Fehlermanagement** sinnvoll in einem Programm umsetzt.
@@ -49,7 +64,7 @@ Diese Aufgabe setzt voraus, dass du **selbst den Code schreibst** (kein Copy+Pas
 
 ## Definition einer Primzahl
 
-Eine **Primzahl** ist eine natürliche Zahl, die **nur durch 1 und sich selbst** ohne Rest teilbar ist. Beispiele: 2, 3, 5, 7, 11
+Eine **Primzahl** ist eine natürliche Zahl **größer als 1** mit genau zwei positiven Teilern: **1 und sich selbst**. Beispiele: 2, 3, 5, 7, 11
 
 * **Hinweis:** 1 ist **keine** Primzahl.
 * Du musst nur bis zur **Quadratwurzel** der Zahl testen, um Teiler zu finden. Warum? Wenn eine Zahl durch etwas > Wurzel teilbar ist, dann gibt es bereits einen kleineren Teiler.
@@ -81,24 +96,27 @@ Console.Write("Bitte gib eine ganze Zahl > 1 ein: ");
 
 * Verwende `for`- oder `while`-Schleifen zum Testen von Teilern.
 
-* Nutze `continue` oder `return` sinnvoll, um Schleifen zu verlassen.
+* `continue` überspringt den Rest des aktuellen Durchlaufs; `break` beendet die Schleife, `return` die Methode.
 
 ---
 
-## Weiterführende Ideen
+## Gestufte Hinweise
 
-* Verwende **Debugging** in Visual Studio, um Schritt für Schritt zu beobachten, wie dein Programm Teiler prüft.
-* Gib dem Benutzer die Möglichkeit, das Programm mehrfach zu verwenden (Schleife um `Main`).
-* Erweitere das Programm so, dass alle **Primzahlen bis zu einer bestimmten Zahl** ausgegeben werden.
-* Baue eine **Methode mit Sieb des Eratosthenes**, um viele Primzahlen effizient zu berechnen.
-* Entwerfe und implementiere eine einfache grafische Benutzeroberfläche (GUI) für das Programm, um die Benutzerinteraktion zu verbessern.
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
 
----
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
 
-> 🧠 Diese Aufgabe ist ideal, um das Zusammenspiel von Schleifen, Methoden und mathematischem Denken zu festigen. Sie ist außerdem eine gute Vorbereitung für spätere Algorithmen-Aufgaben.
+Welche Zahl widerlegt die Primzahleigenschaft und welche Werte sind sofort ausgeschlossen?
 
+</details>
 
----
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Werte kleiner als 2 sind nicht prim; ein Teiler ohne Rest bis einschließlich der Quadratwurzel reicht zum Widerlegen.
+
+</details>
 
 <details>
 <summary><strong>Möglichen Lösungsvorschlag anzeigen</strong></summary>
@@ -148,4 +166,32 @@ namespace PrimzahlenPruefung
         }
     }
 }
+```
+
 </details>
+
+## Selbst prüfen
+
+`1` ist keine Primzahl, `2` und `97` sind Primzahlen, `4` und `49` nicht. `0`, negative Werte und `abc` werden als Eingaben abgewiesen. Prüfe die Methode direkt zusätzlich mit `0` und `-1`: Sie muss `false` zurückgeben. Beobachte bei `49` den Teiler `7` im Debugger.
+
+## Bonus: Weitere Primzahlverfahren
+
+**Intention:** Erweitere die einzelne Prüfung zu einer Untersuchung vieler Zahlen.
+
+**Lernziel:** Du kannst Primzahlen in einem Bereich bestimmen und später das Sieb des Eratosthenes mit einer geeigneten Sammlung vergleichen.
+
+
+* Gib dem Benutzer die Möglichkeit, das Programm mehrfach zu verwenden (Schleife innerhalb von `Main`).
+* Erweitere das Programm so, dass alle **Primzahlen bis zu einer bestimmten Zahl** ausgegeben werden.
+* Baue eine **Methode mit Sieb des Eratosthenes**, um viele Primzahlen effizient zu berechnen.
+
+---
+
+> 🧠 Diese Aufgabe ist ideal, um das Zusammenspiel von Schleifen, Methoden und mathematischem Denken zu festigen. Sie ist außerdem eine gute Vorbereitung für spätere Algorithmen-Aufgaben.
+
+
+---
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-2-methoden-und-fehlersuche). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

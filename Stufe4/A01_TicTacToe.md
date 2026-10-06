@@ -1,5 +1,20 @@
 # Aufgabe A01: Tic Tac Toe – Einführung in Spielmechaniken, Arrays und Entscheidungslogik
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Bestehenden Code schrittweise verbessern](../Stufe3/A05_Refactoring.md)
+
+**Intention:** Ein Spiel durch Spielfeld, gültige Aktionen und Zustandsübergänge modellieren.
+
+**Lernziele:**
+
+- Du kannst ein zweidimensionales Brett und alle Gewinnlinien prüfen.
+- Du kannst einen ungültigen Zug ohne Zustandsänderung behandeln.
+
+**Weiter im Pflichtpfad:** [Hangman](A02_Hangman.md)
+
 ## Ziel
 
 In dieser Aufgabe entwickeln Sie das klassische Spiel **Tic Tac Toe** als Konsolenanwendung in C#.  
@@ -40,13 +55,23 @@ Dabei lernen Sie:
 
 ---
 
-## Erweiterungsmöglichkeiten
+## Gestufte Hinweise
 
-- **Computergegner (KI)**: Implementieren Sie eine einfache KI, die zufällig oder strategisch zieht.
-- **Mehrere Runden**: Ermöglichen Sie es den Spielern, nach Spielende erneut zu spielen.
-- **Erweiterte Darstellung**: Nutzen Sie ASCII-Grafiken für ein optisch ansprechenderes Spielfeld.
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
 
----
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Bedingungen müssen vor einem Spielerwechsel erfüllt sein?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Prüfe Bereich und freies Feld, setze dann den Zug; prüfe Sieg und Unentschieden vor dem Wechsel.
+
+</details>
 
 <details>
 <summary><strong>Lösungsvorschlag anzeigen</strong></summary>
@@ -66,11 +91,12 @@ class TicTacToe
 
         while (gameRunning)
         {
-            Console.Clear();
             PrintBoard();
             Console.Write($"\nPlayer {currentPlayer}, choose a field (1-9): ");
             
-            if (int.TryParse(Console.ReadLine(), out int choice) && choice >= 1 && choice <= 9)
+            string? input = Console.ReadLine();
+            if (input is null) return;
+            if (int.TryParse(input, out int choice) && choice >= 1 && choice <= 9)
             {
                 int row = (choice - 1) / 3;
                 int col = (choice - 1) % 3;
@@ -82,14 +108,12 @@ class TicTacToe
 
                     if (CheckWin())
                     {
-                        Console.Clear();
                         PrintBoard();
                         Console.WriteLine($"\nPlayer {currentPlayer} wins!");
                         gameRunning = false;
                     }
                     else if (turns == 9)
                     {
-                        Console.Clear();
                         PrintBoard();
                         Console.WriteLine("\nIt's a draw!");
                         gameRunning = false;
@@ -142,3 +166,24 @@ class TicTacToe
 </details>
 
 
+
+## Selbst prüfen
+
+Züge `1,4,2,5,3` ergeben einen Sieg für X. `1,2,3,5,4,6,8,7,9` ergeben ein Unentschieden. Ein belegtes Feld und Zahlen außerhalb 1–9 ändern weder das Brett noch den Spieler. Prüfe alle acht Gewinnlinien und dass Fehlermeldungen vor der nächsten Eingabe sichtbar bleiben.
+
+## Bonus: Spielvarianten
+
+**Intention:** Verändere ein funktionierendes Spiel in abgegrenzten Schritten.
+
+**Lernziel:** Du kannst mehrere Runden zurücksetzen oder einen Computerzug erzeugen, ohne die Prüfung gültiger Züge zu umgehen.
+
+
+- **Computergegner (KI)**: Implementieren Sie eine einfache KI, die zufällig oder strategisch zieht.
+- **Mehrere Runden**: Ermöglichen Sie es den Spielern, nach Spielende erneut zu spielen.
+- **Erweiterte Darstellung**: Nutzen Sie ASCII-Grafiken für ein optisch ansprechenderes Spielfeld.
+
+---
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-4-zustand-und-geschäftsregeln). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

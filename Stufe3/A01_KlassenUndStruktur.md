@@ -1,22 +1,38 @@
 # Aufgabe A01: Menüführung mit Klassen & Struktur
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [List, HashSet und Dictionary](../Stufe2/A05_Datenstrukturen.md)
+
+**Intention:** Bekannte Programme über Klassen in einem gemeinsamen Menü zusammenführen.
+
+**Lernziele:**
+
+- Du kannst zwei frühere Programme über Start-Methoden aufrufen.
+- Du kannst den einzigen Einstiegspunkt und die Rückkehr ins Menü erklären.
+- Du kannst den Projektstand in Git speichern und spätere Änderungen als Diff nachvollziehen.
+
+**Weiter im Pflichtpfad:** [Person, Eigenschaften, Konstruktor und Enum](A02_KlassePerson.md)
+
 ## Einleitung
 
-Bisher wurden einzelne Programme als eigenständige Konsolenanwendungen geschrieben. Diese Vorgehensweise eignet sich für den Einstieg, aber bei wachsender Anzahl von Programmen wird die Verwaltung und Erweiterung zunehmend unübersichtlich. Um dies zu verbessern, wird nun ein **strukturiertes Menü-Projekt** erstellt, das als zentraler Einstiegspunkt für alle bisherigen Programme dient.
+Bisher wurden einzelne Programme als eigenständige Konsolenanwendungen geschrieben. Diese Vorgehensweise eignet sich für den Einstieg, aber bei wachsender Anzahl von Programmen wird die Verwaltung und Erweiterung zunehmend unübersichtlich. Um dies zu verbessern, wird nun ein **strukturiertes Menü-Projekt** erstellt, das als zentraler Einstiegspunkt für schrittweise übernommene Programme dient.
 
 ### **Warum verwenden wir eine Ordnerstruktur und mehrere Klassen?**
 - **Modularität:** Jedes Programm wird als separate **Klasse** organisiert, was eine saubere Trennung von Verantwortlichkeiten ermöglicht.
 - **Wiederverwendbarkeit:** Bestehende Programme müssen nicht kopiert oder mehrfach geschrieben werden, sondern können direkt aufgerufen werden.
-- **Erweiterbarkeit:** Neue Programme können einfach hinzugefügt werden, indem neue Klassen erstellt werden, ohne das Hauptmenü zu verändern.
+- **Erweiterbarkeit:** Neue Programme erhalten eigene Klassen und werden zunächst ausdrücklich im Menü registriert. In A04 vereinfachst du diese Registrierung mit einer gemeinsamen Schnittstelle.
 - **Verbesserte Lesbarkeit:** Eine gut strukturierte Ordnerhierarchie erleichtert die Navigation im Code.
 
 ### **Warum wechseln wir jetzt auf Englisch im Code?**
-- **Standard in der Softwareentwicklung:** Die meisten professionellen Softwareprojekte verwenden Englisch als Programmiersprache, um internationale Zusammenarbeit zu erleichtern.
-- **Vermeidung von Codierungsproblemen:** Deutsche Umlaute (ä, ö, ü) und Sonderzeichen können in bestimmten Umgebungen zu Fehlern führen.
+- **Standard in der Softwareentwicklung:** Viele professionelle Softwareprojekte verwenden Englisch für Bezeichner und Kommentare, um internationale Zusammenarbeit zu erleichtern.
+- **Vermeidung von Codierungsproblemen:** C# erlaubt Unicode-Bezeichner, auch Umlaute. Englische Namen sind hier eine Teamkonvention, keine Einschränkung der Sprache.
 - **Bessere Lesbarkeit für andere Entwickler:** Falls das Projekt später öffentlich gemacht oder mit anderen Entwicklern geteilt wird, ist ein englischer Code allgemein verständlicher.
 
 ### **Versionsverwaltung mit GitHub**
-Dieses Projekt wird das erste sein, das mit **GitHub** verwaltet wird. Dadurch lernen Sie:
+Dein eigenes Menüprojekt wird ab hier mit **Git und GitHub** verwaltet. Falls du bereits in einem Repository arbeitest, führe dessen Versionsgeschichte weiter. Dadurch lernst du:
 - **Versionskontrolle:** Änderungen werden nachvollziehbar gespeichert.
 - **Backup und Zusammenarbeit:** Der Code kann jederzeit wiederhergestellt oder mit anderen geteilt werden.
 - **Commit-Struktur und Branching:** Änderungen können schrittweise erfasst und dokumentiert werden.
@@ -25,7 +41,7 @@ Dieses Projekt wird das erste sein, das mit **GitHub** verwaltet wird. Dadurch l
 
 ## Ziel
 
-In dieser Aufgabe sollen Sie eine **strukturierte Konsolenanwendung** entwickeln, die als Menü für bisherige Programme dient. Dabei werden alle bisherigen Programme als **eigene Klassen** in einem neuen "Menü-Projekt" abgelegt. Dadurch wird das **Verständnis für Klassen, Methoden und eine sinnvolle Code-Struktur** vertieft.
+In dieser Aufgabe entwickelst du eine **strukturierte Konsolenanwendung**, die als Menü für bisherige Programme dient. Zunächst werden zwei Programme aus dem Pflichtpfad als **eigene Klassen** in einem neuen „Menü-Projekt“ abgelegt. Weitere Programme kannst du danach ergänzen; ausgelassene Bonus-Aufgaben musst du dafür nicht nachholen. Dadurch wird das **Verständnis für Klassen, Methoden und eine sinnvolle Code-Struktur** vertieft.
 
 ## Anforderungen
 
@@ -34,7 +50,7 @@ In dieser Aufgabe sollen Sie eine **strukturierte Konsolenanwendung** entwickeln
    - Definieren Sie eine **sinnvolle Ordnerstruktur**, in der die bisherigen Programme abgelegt werden.
 
 2. **Bisherige Programme als eigene Klassen einbinden**
-   - Jedes bisherige Programm (z. B. "Hello World", "Guess the Number", "Stopwatch") soll in einer eigenen **Klasse** innerhalb des Menü-Projekts liegen.
+   - Übernimm zunächst zwei bisherige Programme (z. B. "Hello World" und "Guess the Number"), jeweils in eine eigene **Klasse** innerhalb des Menü-Projekts. Weitere Programme folgen schrittweise.
    - Jede dieser Klassen muss eine **öffentliche Methode `Start()`** enthalten, die das jeweilige Programm startet.
 
 3. **Menüführung implementieren**
@@ -43,7 +59,7 @@ In dieser Aufgabe sollen Sie eine **strukturierte Konsolenanwendung** entwickeln
    - Die Programme werden durch die **jeweilige `Start()`-Methode** aufgerufen.
 
 4. **Code-Struktur & Ordnerorganisation**
-   - Erstellen Sie einen Ordner `Programs`, in dem alle bisherigen Programme als **eigene Klassen** abgelegt werden.
+   - Erstelle einen Ordner `Programs` für die übernommenen Programmklassen.
    - Strukturieren Sie den Code **modular**, sodass das Menü leicht erweiterbar bleibt.
 
 ---
@@ -59,6 +75,24 @@ In dieser Aufgabe sollen Sie eine **strukturierte Konsolenanwendung** entwickeln
 ## Beispielhafter Lösungsansatz
 
 Da wir ab Stufe 3 nicht mehr alle Details über das Projekt wissen, geben wir hier nur eine **mögliche Lösungsskizze** für die Umsetzung.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Main-Methode gehört zum Gesamtprojekt und welche bisherigen Programme werden Unterprogramme?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Nur das Hauptprojekt behält Main; verschiebe Unterprogramme in eigene Klassen und rufe deren Start-Methode aus dem Menü auf.
+
+</details>
 
 <details> <summary><strong>Lösungsvorschlag anzeigen</strong></summary>
   
@@ -83,7 +117,9 @@ namespace MenuApplication
                 Console.WriteLine("0. Exit");
                 Console.Write("Select a program: ");
 
-                string input = Console.ReadLine();
+                string? input = Console.ReadLine();
+
+                if (input is null) return;
                 switch (input)
                 {
                     case "1":
@@ -141,17 +177,34 @@ namespace MenuApplication
 
 </details>
 
-## Erweiterungsmöglichkeiten
- - Dynamische Programmliste: Laden Sie die vorhandenen Klassen automatisch, statt sie manuell im switch-Statement zu hinterlegen.
- - Reflexion nutzen: Durch Reflection (Type.GetType()) könnten neue Programme automatisch im Menü erscheinen, ohne den Code ändern zu müssen.
- - GUI statt Konsole: Erweitern Sie das Projekt später mit Windows Forms oder WPF, um ein visuelles Menü zu erstellen.
-
 ## Abschluss
 
 Diese Aufgabe bildet die Grundlage für ein gut strukturiertes Projekt. Sie fördert Modularität, Wiederverwendbarkeit und Code-Organisation. In zukünftigen Aufgaben wird darauf aufgesetzt.
 
 Nächster Schritt:
 
-- Erstellen Sie ein privates Repository auf GitHub, um die Versionskontrolle für dieses Projekt einzuführen.
-- Fügen Sie alle Projektdateien hinzu und machen Sie den ersten Commit.
+- Erstelle für dein eigenes Projekt ein privates Repository auf GitHub, falls noch keines vorhanden ist. Initialisiere ein vorhandenes Repository nicht erneut.
+- Lege vor dem ersten Commit eine `.gitignore` an, insbesondere für `bin`, `obj` und `.vs`. Füge die Quelldateien und Projektdateien hinzu.
 - Dokumentieren Sie Änderungen mit sinnvollen Commit-Nachrichten.
+
+## Schrittweise Übernahme
+
+Starte mit Hallo Welt und einer Rechenaufgabe. Ersetze deren `Main()` durch eine öffentliche `Start()`-Methode; nur das Hauptprojekt behält `Main()`. Füge anschließend weitere Programme hinzu. Im Menü müssen anfangs neue Einträge und Aufrufe ergänzt werden. Für das Beispiel sind `GuessTheNumber` und `StopwatchProgram` deine eigenen umgebauten Klassen, keine mitgelieferten Bibliothekstypen.
+
+## Selbst prüfen
+
+Ein gültiger Menüpunkt startet sein Programm und kehrt anschließend ins Menü zurück. Ungültiger Text erzeugt eine Meldung. `0` beendet. Nur das Hauptprojekt enthält einen Einstiegspunkt; überprüfe, dass keine kopierten `Main()`-Methoden als zweite Einstiegspunkte verbleiben.
+
+## Bonus: Andere Registrierung und Oberfläche
+
+**Intention:** Untersuche zusätzliche Wege erst nach der grundlegenden Menüstruktur.
+
+**Lernziel:** Du kannst nach A04 explizite Registrierung und Reflection unterscheiden; eine Desktop-GUI erfordert zusätzliche UI-Kenntnisse außerhalb dieses Lernfadens.
+
+ - Dynamische Programmliste: Laden Sie die vorhandenen Klassen automatisch, statt sie manuell im switch-Statement zu hinterlegen.
+ - Reflection nutzen: Untersuche nach A04 die Typen einer Assembly und filtere gezielt die Implementierungen deiner Schnittstelle. `Type.GetType()` löst einen bekannten Typnamen auf; es entdeckt keine Programmliste automatisch.
+ - **Desktopoberfläche außerhalb des Pflichtpfads:** Windows Forms oder WPF setzen zusätzliche UI-Kenntnisse voraus. Intention: dieselben Programme mit einer anderen Oberfläche aufrufen. Lernziel: bekannte `Start()`-Aufrufe auf Button-Ereignisse abbilden.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-3-struktur-und-versionsgeschichte). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

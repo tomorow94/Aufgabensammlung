@@ -1,0 +1,39 @@
+# Vorlage: nach .github/workflows/sonar-dotnet.yml kopieren.
+# main und den Solution-Pfad anpassen. EU-Region vorausgesetzt.
+# SONAR_TOKEN als Secret; SONAR_PROJECT_KEY und SONAR_ORGANIZATION als Variablen.
+name: SonarQube Cloud
+on:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-dotnet@v5
+        with:
+          dotnet-version: '10.0.x'
+      - name: Install scanner
+        run: dotnet tool install --global dotnet-sonarscanner
+      - name: Begin analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_PROJECT_KEY: ${{ vars.SONAR_PROJECT_KEY }}
+          SONAR_ORGANIZATION: ${{ vars.SONAR_ORGANIZATION }}
+        run: |
+          test -n "$SONAR_TOKEN" && test -n "$SONAR_PROJECT_KEY" && test -n "$SONAR_ORGANIZATION"
+          dotnet sonarscanner begin \
+            /k:"$SONAR_PROJECT_KEY" \
+            /o:"$SONAR_ORGANIZATION" \
+            /d:sonar.token="$SONAR_TOKEN"
+      - run: dotnet restore Beispiele/Adressbuch/Adressbuch.slnx
+      - run: dotnet build Beispiele/Adressbuch/Adressbuch.slnx --configuration Release --no-restore --no-incremental
+      - run: dotnet test Beispiele/Adressbuch/Adressbuch.slnx --configuration Release --no-build
+      - name: End analysis
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: dotnet sonarscanner end /d:sonar.token="$SONAR_TOKEN"

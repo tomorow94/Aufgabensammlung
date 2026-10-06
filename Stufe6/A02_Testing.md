@@ -1,134 +1,106 @@
-# Aufgabe A02: Unit Testing & Integration Testing für die API
+# 🔴 Aufgabe A02: Unit- und Integrationstests für das Adressbuch
 
-## Einführung in Stufe 6: API & Webentwicklung
+## Einordnung und Lernziele
 
-Nachdem wir in der vorherigen Aufgabe eine **REST-API** mit ASP.NET Core entwickelt haben, ist es wichtig sicherzustellen, dass sie fehlerfrei funktioniert.  
-Dafür nutzen wir **automatisierte Tests**, um die API kontinuierlich zu überprüfen.  
+**Status:** Pflicht im Lernfaden.
 
-In dieser Aufgabe wird das **Testen der API** behandelt. Dabei unterscheiden wir zwischen:
-- **Unit-Tests**: Testen **einzelne Methoden oder Klassen** unabhängig von der API.
-- **Integration-Tests**: Testen die API **als Ganzes**, inklusive Datenbank- und HTTP-Kommunikation.
+**Voraussetzungen:** [Adressbuch als REST-API mit ASP.NET Core](A01_REST_API.md)
 
-Diese Tests helfen, Fehler frühzeitig zu erkennen und ermöglichen eine **zuverlässige API-Entwicklung**.
+**Intention:** Bekannte fachliche und HTTP-Regeln reproduzierbar automatisieren.
 
----
+**Lernziele:**
 
-## Ziel
+- Du kannst Unit- und HTTP-Integrationstests mit konkreten Assertions unterscheiden.
+- Du kannst jeden Test mit isolierten Daten ausführen und einen absichtlichen Fehler nachweisen.
 
-In dieser Aufgabe lernen Sie:
-- **Wie Unit-Tests mit xUnit oder NUnit in ASP.NET Core erstellt werden**.
-- **Wie Integration-Tests mit ASP.NET TestServer oder Postman/Newman funktionieren**.
-- **Die Grundlagen von Test Driven Development (TDD)** (optional).
+**Weiter im Pflichtpfad:** [Webseite für dasselbe Adressbuch](A03_Webentwicklung.md)
 
----
+## Ziel und Voraussetzungen
+
+Manuelle Grenzfallprüfungen begleiten die Sammlung bereits seit Stufe 1. Jetzt automatisierst du sie. **Unit-Tests** prüfen eine kleine Einheit ohne HTTP und Datenbank. **Integrationstests** prüfen das Zusammenspiel ausgewählter Teile, hier Routing, Validierung, Controller und relationale Speicherung über HTTP.
+
+Ein Integrationstest muss nicht die gesamte reale Infrastruktur verwenden. Die mitgelieferten Tests benutzen SQLite im Speicher. Das ist eine echte relationale Datenbank, aber kein vollständiger Ersatz für SQL Server. SQL-Server-spezifische Tests folgen optional in [Bonus A08](./A08_SQLServerTests_Bonus.md); die Pflichtaufgabe ist ohne lokalen SQL Server lösbar.
 
 ## Anforderungen
 
-1. **Testprojekt für Unit-Tests erstellen**
-   - Legen Sie ein neues **xUnit- oder NUnit-Testprojekt** in Visual Studio an.
-   - Installieren Sie das NuGet-Paket für xUnit:
-     ```shell
-     Install-Package xUnit
-     ```
-   - Testen Sie **die Logik der API unabhängig von HTTP**.
+1. Erstelle ein xUnit-Testprojekt mit .NET 10 und einer Referenz zum API-Projekt.
+2. Teste Regeln für Name, Alter, Telefonnummer, E-Mail und Enum unabhängig von HTTP.
+3. Verwende `Microsoft.AspNetCore.Mvc.Testing` und `WebApplicationFactory<Program>` für HTTP-Tests.
+4. Stelle jeder Testmethode einen eigenen Host und Datenbestand bereit. Tests dürfen weder eine feste Reihenfolge noch gemeinsame statische Listen voraussetzen.
+5. Prüfe CRUD, HTTP-Status, JSON-Inhalt und Location-Header; „nicht leer“ oder „Status erfolgreich“ allein reicht nicht.
+6. Sichere die frühere ID-Kollision ab: einen älteren Kontakt löschen, einen neuen hinzufügen, IDs vergleichen.
 
-2. **Unit-Tests für API-Controller schreiben**
-   - Testen Sie die Geschäftslogik, z. B.:
-     - **Ob Kunden korrekt hinzugefügt werden**.
-     - **Ob eine Fehlerbehandlung erfolgt, wenn Daten fehlen**.
+## Vorbereitung für dein eigenes Projekt
 
-3. **Integration-Tests mit ASP.NET TestServer durchführen**
-   - Nutzen Sie `Microsoft.AspNetCore.Mvc.Testing` für Tests ohne echten Webserver.
-   - Führen Sie API-Tests durch, die echte HTTP-Requests simulieren.
+```shell
+dotnet new xunit -n AddressBook.Tests --framework net10.0
+dotnet add AddressBook.Tests reference DEIN_API_PROJEKT.csproj
+dotnet add AddressBook.Tests package Microsoft.AspNetCore.Mvc.Testing --version 10.0.0
+dotnet add AddressBook.Tests package Microsoft.EntityFrameworkCore.Sqlite --version 10.0.0
+dotnet add AddressBook.Tests package SQLitePCLRaw.bundle_e_sqlite3 --version 2.1.13
+```
 
-4. **Optional: Test Driven Development (TDD)**
-   - Entwickeln Sie eine neue API-Funktion zuerst als **Testfall** und implementieren Sie sie dann.
+Ersetze `DEIN_API_PROJEKT.csproj` durch den tatsächlichen Pfad. Der zusätzliche SQLite-Bundle-Verweis aktualisiert die native Testabhängigkeit; Hintergrund siehe [Paketpflege der Referenz](../Beispiele/Adressbuch/README.md#qualitätschecks-und-paketpflege). Das xUnit-Projekttemplate enthält Test-SDK und Test-Runner bereits; nur `xunit` zu installieren genügt bei einem gewöhnlichen Klassenbibliotheksprojekt nicht.
 
----
+Die API benötigt am Ende von `Program.cs`:
 
-## Hinweise
+```csharp
+public partial class Program { }
+```
 
-- **Unit-Tests sollten unabhängig von der Datenbank sein**. Nutzen Sie Mocking-Techniken mit **Moq** oder **Fake-Daten**.
-- **Integration-Tests verwenden eine In-Memory-Datenbank**, um echte API-Aufrufe zu simulieren.
-- **Tests automatisch ausführen**: Nutzen Sie GitHub Actions oder Azure DevOps, um die Tests nach jedem Code-Commit laufen zu lassen.
+Damit ist der Einstiegspunkt aus dem Testprojekt zugänglich. Bei Controller-Tests müssen Namespace und Referenzen zum eigenen Projekt passen; die Referenzanwendung verwendet `AddressBook.Api.Controllers`.
 
----
+## Gestufte Hinweise
 
-## Erweiterungsmöglichkeiten
-
-- **Performance-Tests**: API-Reaktionszeiten mit Tools wie **JMeter** messen.
-- **API-Testautomatisierung mit Postman/Newman**: API-Tests als Skript ausführen lassen.
-- **Fehlermanagement testen**: Absichern, dass API-Anfragen sauber validiert werden.
-
----
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
 
 <details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+<summary>Hinweis 1: Denkanstoß</summary>
 
-### **1. Testprojekt erstellen**
-1. In **Visual Studio** → Neues Projekt → **xUnit Test Project**.
-2. Fügen Sie eine Referenz zum API-Projekt hinzu.
-3. Installieren Sie xUnit und ASP.NET TestServer:
-   ```shell
-   Install-Package Microsoft.AspNetCore.Mvc.Testing
-   Install-Package xUnit
-    ```
+Welche Regel braucht weder HTTP noch Datenbank und welche entsteht erst im Zusammenspiel?
 
-
-### **2. Unit-Test für die API-Logik**
-```csharp
-using Xunit;
-using MyRestApi.Controllers;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-
-public class CustomersControllerTests
-{
-    [Fact]
-    public void GetCustomers_ReturnsListOfCustomers()
-    {
-        var controller = new CustomersController();
-        var result = controller.GetCustomers();
-        var okResult = Assert.IsType<OkObjectResult>(result.Result);
-        var customers = Assert.IsType<List<Customer>>(okResult.Value);
-        Assert.NotEmpty(customers);
-    }
-}
-```
-
-### **3. Integration-Test für die API mit TestServer**
-```csharp
-using System.Net.Http;
-using System.Threading.Tasks;
-using Xunit;
-using Microsoft.AspNetCore.Mvc.Testing;
-
-public class CustomerApiTests : IClassFixture<WebApplicationFactory<Program>>
-{
-    private readonly HttpClient _client;
-
-    public CustomerApiTests(WebApplicationFactory<Program> factory)
-    {
-        _client = factory.CreateClient();
-    }
-
-    [Fact]
-    public async Task GetCustomers_ReturnsSuccess()
-    {
-        var response = await _client.GetAsync("/api/customers");
-        response.EnsureSuccessStatusCode();
-    }
-}
-```
-
-### **4. Automatische API-Tests mit Postman/Newman (optional)**
-1. Postman-Tests exportieren.
-2. Newman CLI installieren:
-```shell
-npm install -g newman
-```
-3. Tests in der CI/CD-Pipeline ausführen:
-```shell
-newman run my_api_tests.json
-```
 </details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Teste Validierung direkt und CRUD über WebApplicationFactory; jede Testmethode erhält ihren eigenen Host und Datenbestand.
+
+</details>
+
+<details>
+<summary>Vollständige Lösung</summary>
+
+- [ContactInputTests.cs](../Beispiele/Adressbuch/Tests/ContactInputTests.cs): Pflichtfelder, Alter und Mapping.
+- [ContactApiTests.cs](../Beispiele/Adressbuch/Tests/ContactApiTests.cs): eigener Host, SQLite, CRUD, ungültige Daten, fehlende IDs und CORS.
+- [Tests.csproj](../Beispiele/Adressbuch/Tests/Tests.csproj): passende Pakete und Projektreferenzen.
+
+Die Testfactory ersetzt die SQL-Server-Registrierung des Contexts durch SQLite. Die Verbindung bleibt während des Tests offen, damit die In-Memory-Datenbank erhalten bleibt. `EnsureCreated` erstellt nur dieses frische Testschema; die SQL-Server-Migrationen werden hier ausdrücklich nicht angewendet. Ein separater Testhost verhindert gegenseitige Beeinflussung.
+
+</details>
+
+## Tests ausführen
+
+Vom Repository-Wurzelordner:
+
+```shell
+dotnet test Beispiele/Adressbuch/Adressbuch.slnx --configuration Release
+```
+
+## Selbst prüfen
+
+Die Tests laufen ohne lokalen SQL Server. Verändere versuchsweise eine fachliche Regel, etwa die Altersobergrenze, und überprüfe, ob ein passender Test fehlschlägt. Stelle sie danach wieder her. Fehlende E-Mail muss HTTP 400 liefern, eine nicht existierende ID HTTP 404 und eine erfolgreiche Erstellung HTTP 201. Die Tests sind einzeln und gemeinsam ausführbar.
+
+## Bonus: Testgetriebene Erweiterung
+
+**Intention:** Erlebe, wie ein Test die Umsetzung einer neuen Funktion begleitet.
+
+**Lernziel:** Du kannst erst einen fehlgeschlagenen Suchtest schreiben, dann die Funktion implementieren und anschließend refactoren.
+
+Schreibe zunächst einen fehlschlagenden Test für eine Suchfunktion, implementiere sie und räume anschließend den Code auf (TDD). Postman/Newman kann zusätzliche End-to-End-Tests gegen einen gestarteten Server ausführen; dafür muss der Server samt Testdaten in der Pipeline tatsächlich gestartet werden.
+
+Referenz: [Integrationstests in ASP.NET Core](https://learn.microsoft.com/en-us/aspnet/core/test/integration-tests?view=aspnetcore-10.0).
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-6-http-tests-und-webseite). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

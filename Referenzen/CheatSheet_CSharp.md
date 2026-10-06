@@ -1,32 +1,34 @@
-# 📌 C# Cheat Sheet – Grundlagen & Syntax
+# C# Cheat Sheet – Grundlagen & Syntax
 
-## 📚 Inhaltsverzeichnis
-- [✫️ Grundstruktur eines Programms](#️-grundstruktur-eines-programms)
-- [🟢 Variablen & Datentypen](#-variablen--datentypen)
-- [🔁 Kontrollstrukturen](#-kontrollstrukturen)
-  - [if / else](#if--else)
-  - [switch](#switch)
-- [🔁 Schleifen](#-schleifen)
-  - [for](#for)
-  - [while](#while)
-  - [foreach](#foreach)
-- [🔧 Methoden (Funktionen)](#-methoden-funktionen)
-- [📆 Arrays & Listen](#-arrays--listen)
-  - [Array](#array)
-  - [List<T>](#listt)
-- [📒 Dictionary & HashSet](#-dictionary--hashset)
-- [🧱 Klassen & Objekte](#-klassen--objekte)
-- [🥪 Einfache Fehlerbehandlung](#-einfache-fehlerbehandlung)
-- [🕒 Zeit & Timer](#-zeit--timer)
-- [💬 Konsole](#-konsole)
-- [💪 Tipp zu LINQ](#-tipp-zu-linq)
-- [ℹ️ Weitere Ressourcen](#️-weitere-ressourcen)
+Die kurzen Codeblöcke zeigen einzelne Syntaxbausteine und sind überwiegend Fragmente für eine vorhandene Methode oder Klasse. Das vereinfachte Klassenbeispiel ist kein Ersatz für das gemeinsame [Kontaktmodell ab Stufe 3](../Stufe3/A03_EinfachesAdressbuch.md#ziel-und-voraussetzungen).
+
+## Inhaltsverzeichnis
+
+- [Grundstruktur eines Programms](#grundstruktur-eines-programms)
+- [Variablen & Datentypen](#variablen--datentypen)
+- [Kontrollstrukturen](#kontrollstrukturen)
+- [if / else](#if--else)
+- [switch](#switch)
+- [Schleifen](#schleifen)
+- [for](#for)
+- [while](#while)
+- [foreach](#foreach)
+- [Methoden (Funktionen)](#methoden-funktionen)
+- [Arrays & Listen](#arrays--listen)
+- [Array](#array)
+- [List<T>](#listt)
+- [Dictionary & HashSet](#dictionary--hashset)
+- [Klassen & Objekte](#klassen--objekte)
+- [Einfache Fehlerbehandlung](#einfache-fehlerbehandlung)
+- [Zeit & Timer](#zeit--timer)
+- [Konsole](#konsole)
+- [Tipp zu LINQ](#tipp-zu-linq)
+- [Weitere Ressourcen](#weitere-ressourcen)
+- [Sichere Zahleneingabe](#sichere-zahleneingabe)
 
 ---
 
-# 📌 C# Cheat Sheet – Grundlagen & Syntax
-
-## ✫️ Grundstruktur eines Programms
+## Grundstruktur eines Programms
 ```csharp
 using System;
 
@@ -41,10 +43,11 @@ class Program
 
 ---
 
-## 🟢 Variablen & Datentypen
+## Variablen & Datentypen
 ```csharp
 int zahl = 42;
-double preis = 19.99;
+double messwert = 1.25;
+decimal preis = 19.99m;
 string name = "Olaf";
 bool istAktiv = true;
 char buchstabe = 'A';
@@ -52,7 +55,7 @@ char buchstabe = 'A';
 
 ---
 
-## 🔁 Kontrollstrukturen
+## Kontrollstrukturen
 
 ### if / else
 ```csharp
@@ -81,7 +84,7 @@ switch (tag)
 
 ---
 
-## 🔁 Schleifen
+## Schleifen
 
 ### for
 ```csharp
@@ -112,7 +115,7 @@ foreach (string n in namen)
 
 ---
 
-## 🔧 Methoden (Funktionen)
+## Methoden (Funktionen)
 ```csharp
 static int Addiere(int a, int b)
 {
@@ -122,7 +125,7 @@ static int Addiere(int a, int b)
 
 ---
 
-## 📆 Arrays & Listen
+## Arrays & Listen
 
 ### Array
 ```csharp
@@ -139,7 +142,7 @@ namen.Add("Anna");
 
 ---
 
-## 📒 Dictionary & HashSet
+## Dictionary & HashSet
 ```csharp
 Dictionary<string, int> punkte = new Dictionary<string, int>();
 punkte["Alice"] = 10;
@@ -149,12 +152,12 @@ HashSet<int> uniqueZahlen = new HashSet<int> { 1, 2, 3 };
 
 ---
 
-## 🧱 Klassen & Objekte
+## Klassen & Objekte
 ```csharp
 class Person
 {
-    public string Name;
-    public int Alter;
+    public string Name = "";
+    public int Age;
 
     public void Begruessen()
     {
@@ -170,7 +173,7 @@ p.Begruessen();
 
 ---
 
-## 🥪 Einfache Fehlerbehandlung
+## Einfache Fehlerbehandlung
 ```csharp
 try
 {
@@ -184,30 +187,48 @@ catch (FormatException)
 
 ---
 
-## 🕒 Zeit & Timer
+## Zeit & Timer
 ```csharp
-var start = DateTime.Now;
-// ... etwas machen ...
-var dauer = DateTime.Now - start;
-Console.WriteLine($"Dauer: {dauer.TotalSeconds} Sekunden");
+using System.Diagnostics;
+var stopwatch = Stopwatch.StartNew();
+// ... etwas messen ...
+stopwatch.Stop();
+Console.WriteLine($"Dauer: {stopwatch.Elapsed.TotalMilliseconds:F3} ms");
 ```
 
 ---
 
-## 💬 Konsole
+## Konsole
 ```csharp
 Console.WriteLine("Text ausgeben");
-string eingabe = Console.ReadLine();
+string? eingabe = Console.ReadLine();
 Console.WriteLine($"Du hast '{eingabe}' eingegeben.");
 ```
 
 ---
 
-💪 **Tipp:** Nutze `using System.Linq;` für LINQ-Methoden wie `Where`, `FirstOrDefault`, `Any`, `Select`.
+## Tipp zu LINQ
+
+Nutze `using System.Linq;` für LINQ-Methoden wie `Where`, `FirstOrDefault`, `Any`, `Select`.
 
 ---
 
-### ℹ️ Weitere Ressourcen
+### Weitere Ressourcen
 - [Microsoft C# Doku](https://learn.microsoft.com/de-de/dotnet/csharp/)
 - [dotnetfiddle.net](https://dotnetfiddle.net) – C# im Browser testen
 
+
+## Sichere Zahleneingabe
+
+```csharp
+if (int.TryParse(Console.ReadLine(), out int number))
+{
+    Console.WriteLine(number);
+}
+else
+{
+    Console.WriteLine("Keine gültige ganze Zahl.");
+}
+```
+
+`continue` startet den nächsten Durchlauf; `break` verlässt die Schleife; `return` verlässt die Methode. Zeitdifferenzen der Wanduhr eignen sich für Zeitpunkte, `Stopwatch` für Laufzeitmessungen.

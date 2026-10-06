@@ -1,325 +1,149 @@
-# Aufgabe A02: Datenbank-Anbindung mit Microsoft SQL Server Express
+# 🟣 Aufgabe A02: Adressbuch mit SQL Server und ADO.NET
 
-## Ziel
+## Einordnung und Lernziele
 
-In dieser Aufgabe lernen Sie die Grundlagen relationaler Datenbanken und erstellen eine **C#-Konsolenanwendung**, die mit **Microsoft SQL Server Express** kommuniziert.  
-Dabei lernen Sie:
-- **Das Konzept relationaler Datenbanken** und wie Tabellen miteinander verknüpft sind.
-- **SQL-Abfragen** für CRUD-Operationen (**Create, Read, Update, Delete**).
-- **Wie eine C#-Anwendung mit einer Datenbank interagiert**.
+**Status:** Pflicht im Lernfaden.
 
----
+**Voraussetzungen:** [Sortieralgorithmen fair vergleichen](A01_Sortieralgorithmen.md)
 
-## Einführung: Was ist eine relationale Datenbank?
+**Intention:** Dasselbe Kontaktmodell in einer relationalen Datenbank speichern.
 
-Eine **relationale Datenbank** speichert Daten in **Tabellen**, die aus **Zeilen** (Datensätze) und **Spalten** (Attribute) bestehen.  
-Jede Zeile ist ein Datensatz, und Spalten definieren die Eigenschaften dieses Datensatzes.
+**Lernziele:**
 
-### **Entity-Relationship-Modell (ERM)**
+- Du kannst SQL-CRUD und parametrisierte ADO.NET-Befehle ausführen.
+- Du kannst Datenbank-ID, Persistenz und Eingabeprüfung getrennt erklären.
 
-Bevor man eine Datenbank erstellt, wird oft ein **ERM-Diagramm** genutzt, um die Beziehungen zwischen den Tabellen zu planen.  
-Ein Beispiel für eine einfache Datenbankstruktur:
+**Weiter im Pflichtpfad:** [Dasselbe Adressbuch mit EF Core und LINQ](A03_ORMundLINQ.md)
 
-**Tabelle: `Customers`**  
-| CustomerID | Name        | Email              |
-|-----------|------------|--------------------|
-| 1         | Alice Smith | alice@mail.com    |
-| 2         | Bob Johnson | bob@mail.com      |
+## Ziel und Voraussetzungen
 
-**Tabelle: `Orders`**  
-| OrderID | CustomerID | Product  | Amount |
-|--------|-----------|----------|--------|
-| 101    | 1         | Laptop   | 1200€  |
-| 102    | 2         | Smartphone | 800€  |
+Das Adressbuch aus Stufe 3 speichert bisher eine JSON-Datei. Jetzt speicherst du **dieselben Kontakte mit denselben Eigenschaften** in einer relationalen Datenbank. Du lernst SQL zunächst direkt und danach aus C# über ADO.NET.
 
-💡 **`CustomerID` ist der "Primärschlüssel" in `Customers` und "Fremdschlüssel" in `Orders`, was die Beziehung zwischen den Tabellen herstellt.**
+Installiere SQL Server Express und SSMS getrennt. SSMS ist ein Verwaltungsprogramm, nicht die Datenbank-Engine. Ein üblicher Instanzname ist `localhost\SQLEXPRESS`; prüfe den tatsächlich installierten Namen. Verbinde dich lokal mit Windows-Authentifizierung. Die Befehle laufen im Terminal; `Install-Package` wäre dagegen ein Befehl der Visual-Studio-Paket-Manager-Konsole.
 
----
+## Datenmodell
 
-## Anforderungen
+`Contacts` enthält `Id`, `Name`, `Age`, `Gender`, `PhoneNumber`, `Email`. Eine Zeile entspricht einer `Person`. `Id` ist der Primärschlüssel und wird durch `IDENTITY(1,1)` von SQL Server vergeben. Telefonnummern sind Text; E-Mail und Name sind ebenfalls Text. `NVARCHAR` unterstützt Unicode.
 
-1. **SQL Server Express installieren & Datenbank anlegen**
-   - Installieren Sie **Microsoft SQL Server Express** (falls nicht vorhanden).
-   - Erstellen Sie eine **Datenbank** mit einer Tabelle `Customers`:
-     - `CustomerID` (Primärschlüssel, Auto-Increment)
-     - `Name` (VARCHAR)
-     - `Email` (VARCHAR)
+Ein Fremdschlüssel wäre beispielsweise `Notes.ContactId`, der auf `Contacts.Id` verweist. Beziehungen sind eine spätere Erweiterung; zunächst genügt eine Tabelle.
 
-2. **C#-Anwendung für CRUD-Operationen**
-   - **Create**: Einen neuen Kunden hinzufügen.
-   - **Read**: Alle Kunden aus der Datenbank abrufen.
-   - **Update**: E-Mail eines Kunden aktualisieren.
-   - **Delete**: Einen Kunden löschen.
+## Anforderungen und Vorgehen
 
-3. **SQL-Verbindung in C# herstellen**
-   - Nutzen Sie `SqlConnection` aus `System.Data.SqlClient`, um mit der Datenbank zu kommunizieren.
-   - Verwenden Sie `SqlCommand`, um SQL-Abfragen auszuführen.
+1. Lege in SSMS eine Datenbank **AddressBook** an und wähle sie als aktive Datenbank.
+2. Führe [schema.sql](../Beispiele/Adressbuch/schema.sql) genau einmal aus. Es enthält dieselben Spalten wie das Modell in Stufe 3; Pflichtfelder sind auch in der Datenbank `NOT NULL`.
+3. Übe `INSERT`, `SELECT`, `UPDATE`, `DELETE` zunächst in SSMS mit erfundenen Kontakten.
+4. Erstelle ein Konsolenprojekt mit .NET 10 und installiere den SQL-Server-Treiber im festgelegten Beispielstand:
 
----
+```shell
+dotnet new console -n AddressBook.Sql --framework net10.0
+dotnet add AddressBook.Sql package Microsoft.Data.SqlClient --version 6.1.1
+```
 
-## Hinweise
+5. Übernimm `Person` und die Eingabeprüfung aus Stufe 3. Ersetze Dateioperationen durch Datenbankzugriffe.
+6. Nutze Parameter statt zusammengebauter SQL-Zeichenketten. Prüfe bei UPDATE/DELETE die Anzahl geänderter Zeilen.
+7. Halte Verbindungen mit `using` kurz offen. Fange `SqlException` im Menü ab und zeige verständliche Fehlermeldungen.
 
-- **SQL Server Management Studio (SSMS)** kann genutzt werden, um die Datenbank zu verwalten.
-- **SQL-Abfragen testen**: Bevor Sie die Abfragen in C# einbauen, testen Sie sie direkt in SSMS.
-- Nutzen Sie **Prepared Statements (`SqlParameter`)**, um **SQL-Injection** zu vermeiden.
+## Verbindung
+
+Für die lokale Windows-Instanz:
+
+```csharp
+string connectionString = "Server=localhost\\SQLEXPRESS;Database=AddressBook;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+```
+
+`TrustServerCertificate=True` ist hier eine Vereinfachung für den lokalen Entwicklungsserver mit selbstsigniertem Zertifikat. Für einen veröffentlichten Server verwende ein gültiges Zertifikat und `TrustServerCertificate=False`. Passwörter gehören in Umgebungsvariablen oder User Secrets, nicht in Quellcode. Der API-Teil zeigt beide Konfigurationswege.
+
+## SQL ausprobieren
+
+```sql
+INSERT INTO Contacts (Name, Age, Gender, PhoneNumber, Email)
+VALUES (N'Alice', 30, 0, N'+49 0123', N'alice@example.com');
+SELECT Id, Name, Age, Gender, PhoneNumber, Email FROM Contacts ORDER BY Name;
+UPDATE Contacts SET Email = N'alice.neu@example.com' WHERE Id = 1;
+DELETE FROM Contacts WHERE Id = 1;
+```
+
+Die Beispieldatei verwendet in allen Teilen `Id`, nicht wechselnd `CustomerID` oder `ID`. Passe `1` an die tatsächlich vergebene ID an.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
 
 <details>
-<summary><strong>Anleitung: Erste Schritte mit SQL Server Management Studio (SSMS) und C#</strong></summary>
+<summary>Hinweis 1: Denkanstoß</summary>
 
-## **1. Installation von Microsoft SQL Server Express und SSMS**
-Falls Sie Microsoft SQL Server Express und SSMS noch nicht installiert haben, können Sie diese hier herunterladen:
-- **SQL Server Express**: [Download-Link](https://www.microsoft.com/de-de/sql-server/sql-server-downloads)
-- **SQL Server Management Studio (SSMS)**: [Download-Link](https://aka.ms/ssmsfullsetup)
-
-Nach der Installation starten Sie **SQL Server Management Studio (SSMS)** und verbinden sich mit Ihrem lokalen SQL Server.
-
----
-
-## **2. Verbindung mit dem SQL Server in SSMS**
-1. Öffnen Sie **SSMS**.
-2. Wählen Sie im Verbindungsdialog:
-   - **Servertyp**: `Datenbank-Engine`
-   - **Servername**: `localhost\SQLEXPRESS` (Standard für SQL Server Express)
-   - **Authentifizierung**: `Windows-Authentifizierung`
-3. Klicken Sie auf **Verbinden**.
-
-Falls die Verbindung fehlschlägt, prüfen Sie:
-- Ob der **SQL Server-Dienst** läuft (`SQL Server Configuration Manager`).
-- Ob `SQLEXPRESS` tatsächlich installiert ist (ggf. mit `.\SQLEXPRESS` oder nur `localhost` testen).
-
----
-
-## **3. Neue Datenbank in SSMS anlegen**
-1. Klicken Sie mit der rechten Maustaste auf **Datenbanken** → **Neue Datenbank…**
-2. Geben Sie den Namen **CustomerDB** ein.
-3. Klicken Sie auf **OK**.
-
----
-
-## **4. Tabelle in SSMS erstellen**
-Nachdem die Datenbank erstellt wurde:
-1. Erweitern Sie die Datenbank **CustomerDB** → **Tabellen**.
-2. Rechtsklick auf **Tabellen** → **Neue Tabelle**.
-3. Fügen Sie folgende Spalten hinzu:
-   - `CustomerID` (Typ: `INT`, **Primärschlüssel**, Auto-Increment: `IDENTITY(1,1)`)
-   - `Name` (Typ: `NVARCHAR(100)`, **nicht null**)
-   - `Email` (Typ: `NVARCHAR(100)`, **nicht null**)
-4. Speichern Sie die Tabelle unter dem Namen **Customers**.
-
-Oder alternativ per **SQL-Skript:**
-```sql
-CREATE TABLE Customers (
-    CustomerID INT IDENTITY(1,1) PRIMARY KEY,
-    Name NVARCHAR(100) NOT NULL,
-    Email NVARCHAR(100) NOT NULL
-);
-```
-
-Führen Sie dieses SQL-Skript in SSMS aus, um die Tabelle zu erstellen.
-
-## **5. Verbindung zur SQL-Datenbank in einer C#-Anwendung**
-Um mit der Datenbank aus einer C#-Anwendung zu kommunizieren, benötigen Sie die Connection String-Informationen.
-
-Ein typischer Connection String für SQL Server Express:
-
-```csharp
-string connectionString = "Server=localhost\\SQLEXPRESS;Database=CustomerDB;Trusted_Connection=True;";
-```
-
-Falls Sie SQL-Authentifizierung verwenden, müssen Sie Benutzername und Passwort hinzufügen:
-
-```csharp
-string connectionString = "Server=localhost\\SQLEXPRESS;Database=CustomerDB;User Id=meinBenutzer;Password=meinPasswort;";
-```
-
-Beispiel für eine Verbindung und eine einfache SQL-Abfrage in C#:
-```csharp
-using System;
-using System.Data.SqlClient;
-
-class Program
-{
-    static void Main()
-    {
-        string connectionString = "Server=localhost\\SQLEXPRESS;Database=CustomerDB;Trusted_Connection=True;";
-
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            conn.Open();
-            Console.WriteLine("Verbindung erfolgreich!");
-
-            string query = "SELECT COUNT(*) FROM Customers";
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                int count = (int)cmd.ExecuteScalar();
-                Console.WriteLine($"Anzahl der Kunden: {count}");
-            }
-        }
-    }
-}
-```
-
-## **6. Testen der Verbindung**
-1. Starten Sie das C#-Programm.
-2. Falls die Verbindung fehlschlägt, überprüfen Sie:
-    - Ob der SQL Server-Dienst läuft.
-    - Ob die Datenbank- und Tabellen-Namen korrekt sind.
-    - Ob `SQLEXPRESS` korrekt als Servername eingetragen wurde.
-Diese Anleitung gibt Ihnen eine Schritt-für-Schritt-Erklärung, wie Sie eine SQL-Datenbank erstellen, in SSMS verwalten und mit C# darauf zugreifen können! 🚀
+Wer vergibt die ID und wie gelangt ein Name sicher in eine SQL-Abfrage?
 
 </details>
 
----
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
 
-## Erweiterungsmöglichkeiten
+IDENTITY vergibt die ID; übergib Eingaben als Parameter und prüfe das Ergebnis nach einem Programmneustart.
 
-- **Weitere Tabellen hinzufügen**: Eine `Orders`-Tabelle mit Kundenverknüpfung erstellen.
-- **GUI-Integration**: Eine **Windows Forms- oder WPF-Oberfläche** zur Verwaltung der Datenbank.
-- **Logging**: Änderungen in einer Log-Tabelle speichern.
-
----
+</details>
 
 <details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+<summary>Vollständiges kleines ADO.NET-Beispiel für Program.cs</summary>
 
-### **1. SQL-Datenbank & Tabelle anlegen**
-```sql
-CREATE DATABASE CustomerDB;
-USE CustomerDB;
-
-CREATE TABLE Customers (
-    CustomerID INT IDENTITY(1,1) PRIMARY KEY,
-    Name NVARCHAR(100),
-    Email NVARCHAR(100)
-);
-```
-2. C#-Code für die Datenbankverbindung & CRUD-Operationen
+Das Beispiel fügt einen Kontakt hinzu, liest ihn, ändert ihn und löscht ihn. Prüfe die Daten in SSMS mit einem Haltepunkt zwischen den Schritten. Baue danach dein Menü darum.
 
 ```csharp
 using System;
-using System.Data.SqlClient;
-
+using System.Data;
+using Microsoft.Data.SqlClient;
 class Program
 {
-    static string connectionString = "Server=localhost\\SQLEXPRESS;Database=CustomerDB;Trusted_Connection=True;";
-
     static void Main()
     {
-        bool running = true;
-        while (running)
+        string connectionString = Environment.GetEnvironmentVariable("ADDRESSBOOK_CONNECTION")
+            ?? "Server=localhost\\SQLEXPRESS;Database=AddressBook;Integrated Security=True;Encrypt=True;TrustServerCertificate=True";
+        try
         {
-            Console.WriteLine("\n===== Customer Management =====");
-            Console.WriteLine("1. Add Customer");
-            Console.WriteLine("2. View Customers");
-            Console.WriteLine("3. Update Email");
-            Console.WriteLine("4. Delete Customer");
-            Console.WriteLine("5. Exit");
-            Console.Write("Choose an option: ");
-
-            switch (Console.ReadLine())
+            using var connection = new SqlConnection(connectionString);
+            connection.Open();
+            using var insert = new SqlCommand("INSERT INTO Contacts (Name, Age, Gender, PhoneNumber, Email) OUTPUT INSERTED.Id VALUES (@name, @age, @gender, @phone, @email)", connection);
+            insert.Parameters.Add("@name", SqlDbType.NVarChar, 100).Value = "Alice";
+            insert.Parameters.Add("@age", SqlDbType.Int).Value = 30;
+            insert.Parameters.Add("@gender", SqlDbType.Int).Value = 0;
+            insert.Parameters.Add("@phone", SqlDbType.NVarChar, 50).Value = "+49 0123";
+            insert.Parameters.Add("@email", SqlDbType.NVarChar, 200).Value = "alice@example.com";
+            int id = (int)insert.ExecuteScalar()!;
+            using (var read = new SqlCommand("SELECT Id, Name, PhoneNumber, Email FROM Contacts WHERE Id = @id", connection))
             {
-                case "1":
-                    AddCustomer();
-                    break;
-                case "2":
-                    ViewCustomers();
-                    break;
-                case "3":
-                    UpdateEmail();
-                    break;
-                case "4":
-                    DeleteCustomer();
-                    break;
-                case "5":
-                    running = false;
-                    break;
-                default:
-                    Console.WriteLine("Invalid selection.");
-                    break;
+                read.Parameters.Add("@id", SqlDbType.Int).Value = id;
+                using var reader = read.ExecuteReader();
+                while (reader.Read()) Console.WriteLine($"{reader.GetInt32(0)}: {reader.GetString(1)}, {reader.GetString(2)}, {reader.GetString(3)}");
             }
+            using var update = new SqlCommand("UPDATE Contacts SET Email = @email WHERE Id = @id", connection);
+            update.Parameters.Add("@email", SqlDbType.NVarChar, 200).Value = "alice.neu@example.com";
+            update.Parameters.Add("@id", SqlDbType.Int).Value = id;
+            Console.WriteLine($"Geändert: {update.ExecuteNonQuery()}");
+            using var delete = new SqlCommand("DELETE FROM Contacts WHERE Id = @id", connection);
+            delete.Parameters.Add("@id", SqlDbType.Int).Value = id;
+            Console.WriteLine($"Gelöscht: {delete.ExecuteNonQuery()}");
         }
-    }
-
-    static void AddCustomer()
-    {
-        Console.Write("Enter name: ");
-        string name = Console.ReadLine();
-        Console.Write("Enter email: ");
-        string email = Console.ReadLine();
-
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            conn.Open();
-            string query = "INSERT INTO Customers (Name, Email) VALUES (@name, @email)";
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            {
-                cmd.Parameters.AddWithValue("@name", name);
-                cmd.Parameters.AddWithValue("@email", email);
-                cmd.ExecuteNonQuery();
-            }
-        }
-        Console.WriteLine("Customer added.");
-    }
-
-    static void ViewCustomers()
-    {
-        using (SqlConnection conn = new SqlConnection(connectionString))
-        {
-            conn.Open();
-            string query = "SELECT * FROM Customers";
-            using (SqlCommand cmd = new SqlCommand(query, conn))
-            using (SqlDataReader reader = cmd.ExecuteReader())
-            {
-                Console.WriteLine("\nCustomers:");
-                while (reader.Read())
-                {
-                    Console.WriteLine($"{reader["CustomerID"]}: {reader["Name"]} - {reader["Email"]}");
-                }
-            }
-        }
-    }
-
-    static void UpdateEmail()
-    {
-        Console.Write("Enter customer ID: ");
-        if (int.TryParse(Console.ReadLine(), out int id))
-        {
-            Console.Write("Enter new email: ");
-            string newEmail = Console.ReadLine();
-
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "UPDATE Customers SET Email = @email WHERE CustomerID = @id";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    cmd.Parameters.AddWithValue("@email", newEmail);
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    Console.WriteLine(rowsAffected > 0 ? "Email updated." : "Customer not found.");
-                }
-            }
-        }
-    }
-
-    static void DeleteCustomer()
-    {
-        Console.Write("Enter customer ID to delete: ");
-        if (int.TryParse(Console.ReadLine(), out int id))
-        {
-            using (SqlConnection conn = new SqlConnection(connectionString))
-            {
-                conn.Open();
-                string query = "DELETE FROM Customers WHERE CustomerID = @id";
-                using (SqlCommand cmd = new SqlCommand(query, conn))
-                {
-                    cmd.Parameters.AddWithValue("@id", id);
-                    int rowsAffected = cmd.ExecuteNonQuery();
-                    Console.WriteLine(rowsAffected > 0 ? "Customer deleted." : "Customer not found.");
-                }
-            }
-        }
+        catch (SqlException ex) { Console.WriteLine($"Datenbankzugriff fehlgeschlagen: {ex.Message}"); }
     }
 }
 ```
-</details> 
+
+</details>
+
+## Selbst prüfen
+
+Nach Hinzufügen existiert der Kontakt mit positiver ID. Änderungen sind nach einem Neustart vorhanden. Ein Name mit Apostroph (`O'Connor`) funktioniert als Parameter. Eine fehlende ID verändert null Zeilen. Telefonnummern behalten führende Nullen. Ungültige Eingaben werden vor dem SQL-Aufruf abgewiesen. Stoppe den SQL-Server-Dienst und prüfe die Fehlermeldung.
+
+## Bonus: Import und Beziehungen
+
+**Intention:** Erweitere die Datenhaltung über eine einzelne Kontakttabelle hinaus.
+
+**Lernziel:** Du kannst einen JSON-Import mit neuen Datenbank-IDs und später eine Beziehung mit Fremdschlüssel nachvollziehen.
+
+Importiere JSON-Kontakte aus Stufe 3, wobei die Datenbank neue IDs vergibt. Ergänze anschließend eine zweite Tabelle mit Fremdschlüssel und untersuche `JOIN`.
+
+Referenz: [Microsoft.Data.SqlClient](https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace).
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-5-daten-und-abfragen). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

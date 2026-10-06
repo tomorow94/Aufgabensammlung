@@ -1,178 +1,129 @@
-# Aufgabe A01: Erstellen einer REST-API in C# mit ASP.NET Core
+# 🔴 Aufgabe A01: Adressbuch als REST-API mit ASP.NET Core
 
-## Einführung in Stufe 6: API & Webentwicklung
+## Einordnung und Lernziele
 
-In dieser finalen Stufe des Projekts wird eine **vollständige Webanwendung** erstellt.  
-Der erste Schritt besteht darin, eine **REST-API** mit ASP.NET Core zu entwickeln, die **alle bisher erstellten Funktionen** als Endpunkte bereitstellt.  
-Später wird diese API von einer Webanwendung genutzt, um Benutzereingaben zu ermöglichen und Daten anzuzeigen.
+**Status:** Pflicht im Lernfaden.
 
-Die API bildet die **Grundlage für die gesamte Webanwendung**, indem sie folgende Anforderungen erfüllt:
-- **Bereitstellung von CRUD-Funktionen** für Datenbanken und bisherige Programmfunktionen.
-- **RESTful-Architektur** mit standardisierten HTTP-Methoden.
-- **Automatische API-Dokumentation** mit Swagger.
+**Voraussetzungen:** [Dasselbe Adressbuch mit EF Core und LINQ](../Stufe5/A03_ORMundLINQ.md)
 
-Diese Aufgabe konzentriert sich auf die **Erstellung der API und das Bereitstellen von Endpunkten**.
+**Intention:** Die vorhandene Kontaktverwaltung über einen HTTP-Vertrag zugänglich machen.
 
----
+**Lernziele:**
 
-## Ziel
+- Du kannst CRUD-Endpunkte mit passenden Statuscodes und validierten Eingaben bauen.
+- Du kannst Modell, Context und asynchrone Datenzugriffe weiterverwenden.
 
-In dieser Aufgabe entwickeln Sie eine **REST-API** in **ASP.NET Core**.  
-Dabei lernen Sie:
-- **Grundlagen der REST-Architektur** und wie APIs funktionieren.
-- **HTTP-Methoden** (`GET`, `POST`, `PUT`, `DELETE`).
-- **Erstellen und Dokumentieren von API-Endpunkten** mit Swagger.
+**Weiter im Pflichtpfad:** [Unit- und Integrationstests für das Adressbuch](A02_Testing.md)
 
----
+## Ziel und Voraussetzungen
+
+Stelle das Adressbuch aus Stufe 5 über HTTP bereit. Du verwendest **Person und AddressBookContext weiter**; die Kontakte bleiben in SQL Server. Das neue API-Projekt übernimmt die HTTP-Kommunikation, nicht eine zweite Kontaktliste im Speicher.
+
+Neu sind HTTP, JSON, Controller, Dependency Injection und `async`/`await`. Ein Controller erhält seinen Context über den Konstruktor. EF Core führt Datenbankzugriffe asynchron aus; `await` wartet auf das Ergebnis. Anders als bei CPU-Arbeit ist dafür kein `Task.Run` nötig.
 
 ## Anforderungen
 
-1. **Neues ASP.NET Core-Projekt erstellen**
-   - Erstellen Sie eine **ASP.NET Core Web API**-Anwendung in Visual Studio.
-   - Nutzen Sie das **Minimal API- oder Controller-Modell**.
+1. Erstelle ein ASP.NET-Core-Projekt mit .NET 10 und Controller-Unterstützung.
+2. Referenziere dein Datenprojekt mit dem Modell und Context.
+3. Implementiere die folgenden Endpunkte:
 
-2. **API-Endpunkte für bestehende Funktionen bereitstellen**
-   - Nutzen Sie die bisher entwickelten Funktionen als **Datenquellen**.
-   - Implementieren Sie CRUD-Operationen für ein Beispielmodell (z. B. `Customer`).
+| Methode | Pfad | Ergebnis |
+|---|---|---|
+| GET | `/api/contacts` | 200, Liste (auch leer) |
+| GET | `/api/contacts/{id}` | 200 mit Kontakt oder 404 |
+| POST | `/api/contacts` | 201 mit neuer Datenbank-ID und Location-Header |
+| PUT | `/api/contacts/{id}` | 204 oder 404 |
+| DELETE | `/api/contacts/{id}` | 204 oder 404 |
 
-3. **REST-Architektur umsetzen**
-   - **GET**: Daten abrufen (`api/customers`).
-   - **POST**: Neue Daten hinzufügen (`api/customers`).
-   - **PUT**: Bestehende Daten aktualisieren (`api/customers/{id}`).
-   - **DELETE**: Daten löschen (`api/customers/{id}`).
+4. Verwende einen eigenen `ContactInput` für Eingaben. IDs vergibt die Datenbank; Clients können keine ID festlegen.
+5. Validiere Name, Alter, Enum, Telefonnummer und E-Mail. `[ApiController]` gibt bei ungültigen Eingaben automatisch HTTP 400 zurück.
+6. Dokumentiere die API mit OpenAPI. Die Sammlung nutzt `Microsoft.AspNetCore.OpenApi` passend zu .NET 10; ein interaktives UI steht unter „Bonus“.
 
-4. **Swagger für API-Dokumentation integrieren**
-   - Installieren Sie `Swashbuckle.AspNetCore` über NuGet.
-   - Fügen Sie Swagger zur API hinzu, um Endpunkte zu dokumentieren.
+## Referenzanwendung starten
 
----
+Vom Repository-Wurzelordner:
 
-## Hinweise
+```shell
+dotnet restore Beispiele/Adressbuch/Adressbuch.slnx
+dotnet run --project Beispiele/Adressbuch/Api -- --urls http://localhost:5000
+```
 
-- **Verwenden Sie Dependency Injection**, um Datenbankzugriffe und Services sauber zu trennen.
-- **Nutzen Sie JSON als Datenformat**, da es der Standard für REST-APIs ist.
-- **Testen Sie Endpunkte mit Postman oder Swagger**, bevor Sie die API in die Webanwendung integrieren.
+Die Tabelle aus Stufe 5 muss existieren; alternativ richte eine frische Datenbank mit der mitgelieferten Migration ein. Stelle sicher, dass deine SQL-Server-Instanz dem lokalen Connection String entspricht. Wenn du nur die automatisierten Tests ausführen willst, brauchst du keinen SQL Server: Die Tests konfigurieren eine eigene SQLite-Datenbank.
 
----
+Der Port ist in diesem Befehl ausdrücklich festgelegt. Überprüfe bei eigenen Startprofilen immer die ausgegebene Adresse. Für OpenAPI aktiviere in PowerShell die Entwicklungsumgebung:
 
-## Erweiterungsmöglichkeiten
+```powershell
+$env:ASPNETCORE_ENVIRONMENT = "Development"
+dotnet run --project Beispiele/Adressbuch/Api -- --urls http://localhost:5000
+```
 
-- **Authentifizierung hinzufügen**: Absichern der API mit JWT-Token.
-- **Logging und Fehlerbehandlung**: Zentrale Verwaltung von Fehlern und Logs.
-- **Rate Limiting & Caching**: API-Leistung optimieren durch Zwischenspeicherung von Antworten.
+Dann liefert `http://localhost:5000/openapi/v1.json` das OpenAPI-Dokument. Teste mit Postman, einer REST-Datei im Editor oder dem Browser (GET).
 
----
+## Konfiguration
+
+Der lokale Connection String steht in [appsettings.json](../Beispiele/Adressbuch/Api/appsettings.json). Für andere Verbindungen überschreibst du `ConnectionStrings:AddressBook` über User Secrets oder `ConnectionStrings__AddressBook` als Umgebungsvariable. Im Terminal aus `Beispiele/Adressbuch`:
+
+```shell
+dotnet user-secrets set "ConnectionStrings:AddressBook" "DEIN_CONNECTION_STRING" --project Api
+```
+
+User Secrets werden im Development-Modus gelesen. Für das lokale SQL-Zertifikat ist `TrustServerCertificate=True` erklärt in Stufe 5; veröffentlichte Datenbanken verwenden ein gültiges Zertifikat. Fehlerdetails und Passwörter gehören nicht in HTTP-Antworten.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
 
 <details>
-<summary><strong>Lösungsvorschlag anzeigen</strong></summary>
+<summary>Hinweis 1: Denkanstoß</summary>
 
-### **1. Neues ASP.NET Core API-Projekt erstellen**
-1. **Visual Studio öffnen** → Neues Projekt erstellen → **ASP.NET Core Web API** auswählen.
-2. Projektname: **"MyRestApi"**.
-3. Framework: **.NET 6+** auswählen.
-4. Swagger aktivieren (`Enable OpenAPI support` ankreuzen).
-
----
-
-### **2. Beispielmodell für die API**
-```csharp
-public class Customer
-{
-    public int Id { get; set; }
-    public string Name { get; set; }
-    public string Email { get; set; }
-}
-```
-
-### **3. API-Controller mit CRUD-Methoden**
-
-```csharp
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-
-[Route("api/customers")]
-[ApiController]
-public class CustomersController : ControllerBase
-{
-    private static List<Customer> customers = new List<Customer>
-    {
-        new Customer { Id = 1, Name = "Alice", Email = "alice@mail.com" },
-        new Customer { Id = 2, Name = "Bob", Email = "bob@mail.com" }
-    };
-
-    [HttpGet]
-    public ActionResult<IEnumerable<Customer>> GetCustomers()
-    {
-        return Ok(customers);
-    }
-
-    [HttpGet("{id}")]
-    public ActionResult<Customer> GetCustomer(int id)
-    {
-        var customer = customers.FirstOrDefault(c => c.Id == id);
-        if (customer == null) return NotFound();
-        return Ok(customer);
-    }
-
-    [HttpPost]
-    public ActionResult AddCustomer([FromBody] Customer newCustomer)
-    {
-        newCustomer.Id = customers.Count + 1;
-        customers.Add(newCustomer);
-        return CreatedAtAction(nameof(GetCustomer), new { id = newCustomer.Id }, newCustomer);
-    }
-
-    [HttpPut("{id}")]
-    public ActionResult UpdateCustomer(int id, [FromBody] Customer updatedCustomer)
-    {
-        var customer = customers.FirstOrDefault(c => c.Id == id);
-        if (customer == null) return NotFound();
-        
-        customer.Name = updatedCustomer.Name;
-        customer.Email = updatedCustomer.Email;
-        return NoContent();
-    }
-
-    [HttpDelete("{id}")]
-    public ActionResult DeleteCustomer(int id)
-    {
-        var customer = customers.FirstOrDefault(c => c.Id == id);
-        if (customer == null) return NotFound();
-
-        customers.Remove(customer);
-        return NoContent();
-    }
-}
-```
-
-### **4. Swagger aktivieren**
-
-Öffnen Sie Program.cs und fügen Sie Swagger hinzu:
-
-```csharp
-var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-var app = builder.Build();
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
-app.UseAuthorization();
-app.MapControllers();
-app.Run();
-```
-
-Starten Sie die API, öffnen Sie den Browser und rufen Sie Swagger auf:
-```bash
-http://localhost:5000/swagger
-```
-
-Testen Sie die API-Endpunkte direkt in der Swagger-Oberfläche.
+Welche Daten liefert der Client und welche vergibt der Server?
 
 </details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+POST enthält ContactInput ohne ID; das gleiche Datenmodell wird gespeichert und der Server liefert 201 mit Location.
+
+</details>
+
+<details>
+<summary>Vollständige Lösung und Dateiaufteilung</summary>
+
+- [Person.cs](../Beispiele/Adressbuch/Core/Person.cs): gemeinsames Datenmodell.
+- [ContactInput.cs](../Beispiele/Adressbuch/Core/ContactInput.cs): validierte Eingaben, keine ID.
+- [AddressBookContext.cs](../Beispiele/Adressbuch/Data/AddressBookContext.cs): dieselbe Kontakttabelle wie in Stufe 5.
+- [Program.cs](../Beispiele/Adressbuch/Api/Program.cs): DI, OpenAPI, CORS und statische Dateien.
+- [ContactsController.cs](../Beispiele/Adressbuch/Api/Controllers/ContactsController.cs): vollständiges CRUD mit EF Core.
+
+Die Datenbank erzeugt IDs unabhängig von der aktuellen Anzahl von Kontakten. Jeder HTTP-Request erhält einen eigenen Context. Es gibt keine gemeinsame ungeschützte `static List` und keinen Ersatz von Datenbank-IDs durch `Count + 1`.
+
+</details>
+
+## Beispielrequest
+
+```json
+{"name":"Alice","age":30,"gender":0,"phoneNumber":"+49 0123","email":"alice@example.com"}
+```
+
+In Postman: POST an `http://localhost:5000/api/contacts`, Body als JSON, Header `Content-Type: application/json`. Verwende die zurückgegebene ID für weitere Requests.
+
+## Selbst prüfen
+
+Neuer Kontakt → 201; gültiger Abruf → 200; Änderung/Löschung → 204; fehlende ID → 404. Leerer Name, Alter `-1`, Gender `99`, fehlende Telefonnummer oder fehlende/ungültige E-Mail → 400. Lösche einen älteren Kontakt und füge einen neuen hinzu: Keine vorhandene ID darf doppelt vergeben werden. Starte die API neu und prüfe die gespeicherten Daten.
+
+## Bonus: Weitere API-Funktionen
+
+**Intention:** Erweitere einen bestehenden HTTP-Vertrag gezielt.
+
+**Lernziel:** Du kannst Suchparameter und Paginierung definieren; Logging und Authentifizierung sind zusätzliche eigene Lernschritte.
+
+Suchparameter, Paginierung, Logging und später Authentifizierung. Die folgende Aufgabe automatisiert zunächst die vorhandenen Verträge.
+
+## Bonus: Interaktive API-Dokumentation
+
+**Intention:** Probiere eine zusätzliche Oberfläche für den vorhandenen OpenAPI-Vertrag aus. **Lernziel:** Du kannst eine passende UI einrichten und erklären, dass sie den API-Vertrag anzeigt, aber keine fachlichen Tests ersetzt. Die konkrete UI-Bibliothek und ihre kompatible Version recherchierst du zusätzlich; die Pflichtaufgabe funktioniert mit OpenAPI und REST-Client.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-6-http-tests-und-webseite). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

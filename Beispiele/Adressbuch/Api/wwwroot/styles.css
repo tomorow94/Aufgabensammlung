@@ -1,0 +1,11 @@
+body { font-family: system-ui, sans-serif; margin: 0; background: #f5f7fa; color: #17212b; }
+main { max-width: 42rem; margin: 2rem auto; padding: 1.5rem; background: white; }
+form { display: grid; gap: .5rem; }
+input, select, button { font: inherit; padding: .6rem; }
+button { cursor: pointer; }
+button:disabled { cursor: wait; }
+li { margin: 1rem 0; overflow-wrap: anywhere; }
+li button { margin-left: .75rem; }
+#status { min-height: 1.5rem; }
+#status[data-error="true"] { color: #a01818; }
+:focus-visible { outline: 3px solid #175cd3; outline-offset: 2px; }
