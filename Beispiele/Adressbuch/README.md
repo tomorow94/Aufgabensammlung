@@ -51,6 +51,12 @@ docker compose up --build -d
 
 Webseite: `http://localhost:5000`. SQL Server speichert in einem benannten Volume. Die App startet erst nach erfolgreicher Schema-Migration. `docker compose down` erhält die Daten; `--volumes` würde sie entfernen. Docker verwendet eine eigene Datenbank, nicht die Windows-Express-Instanz. Details und Prüfschritte stehen in [Deployment](../../Stufe6/A05_Deployment.md).
 
+## Qualitätschecks und Paketpflege
+
+Die [Bonus-Aufgabe](../../Stufe6/A06_Qualitaetschecks_Bonus.md) zeigt kostenlose Analysen und CI-Vorlagen. NuGet Audit hat bei der Prüfung zwei indirekte Abhängigkeiten gemeldet: [Microsoft.OpenApi](https://github.com/advisories/GHSA-v5pm-xwqc-g5wc) und [SQLitePCLRaw.lib.e_sqlite3](https://github.com/advisories/GHSA-2m69-gcr7-jv3q). Deshalb referenziert die API ausdrücklich `Microsoft.OpenApi` 2.7.5 und das Testprojekt `SQLitePCLRaw.bundle_e_sqlite3` 2.1.13. So werden korrigierte Versionen aufgelöst, ohne die EF-/ASP.NET-Hauptversion zu wechseln.
+
+Prüfe bei späteren Updates, ob die übergeordneten Pakete die Korrekturen bereits selbst anfordern. Erst dann kannst du die zusätzlichen Referenzen entfernen; Audit und Tests müssen weiterhin erfolgreich sein.
+
 ## Datenmodell und Endpunkte
 
 Ein Kontakt hat `Id`, `Name`, `Age`, `Gender`, `PhoneNumber`, `Email`. Gender wird als Zahl übertragen: 0 Unknown, 1 Male, 2 Female, 3 Diverse. Beispiel für POST:

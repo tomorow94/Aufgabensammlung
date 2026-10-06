@@ -12,5 +12,7 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.0" />
+    <!-- Fix für die transitive OpenAPI-Abhängigkeit, siehe README. -->
+    <PackageReference Include="Microsoft.OpenApi" Version="2.7.5" />
   </ItemGroup>
 </Project>

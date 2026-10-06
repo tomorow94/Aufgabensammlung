@@ -1,6 +1,6 @@
 # 📚 Programmier-Aufgabensammlung
 
-Diese deutschsprachige Sammlung führt von ersten **C#-Konsolenprogrammen** zu einem **Adressbuch mit Datenbank, REST-API und Webseite**. Sie enthält 32 Aufgaben, davon zwei optionale Vertiefungen. Die Stufen erhöhen schrittweise Selbstständigkeit und Komplexität.
+Diese deutschsprachige Sammlung führt von ersten **C#-Konsolenprogrammen** zu einem **Adressbuch mit Datenbank, REST-API und Webseite**. Sie enthält 33 Aufgaben, davon drei optionale Vertiefungen. Die Stufen erhöhen schrittweise Selbstständigkeit und Komplexität.
 
 Jede Aufgabe beschreibt Lernziel, Voraussetzungen und prüfbare Ergebnisse. Am Anfang helfen vollständige Beispiele; später planst du selbst und nutzt ausklappbare Lösungen oder die verlinkte Referenzanwendung. Lies zuerst die Aufgabe, versuche eine eigene Lösung und vergleiche sie anschließend. Codebeispiele mit Kennzeichnung „Skizze“ brauchen die erwähnten zusätzlichen Klassen oder Methoden.
 
@@ -88,6 +88,7 @@ Dasselbe Modell und dieselbe Datenhaltung über HTTP, Tests, Webseite, CI und De
 - [Aufgabe A03: Webseite für dasselbe Adressbuch](./Stufe6/A03_Webentwicklung.md)
 - [Aufgabe A04: Bestehendes GitHub-Projekt und CI weiterentwickeln](./Stufe6/A04_GitHub.md)
 - [Aufgabe A05: Adressbuch mit Datenbank bereitstellen](./Stufe6/A05_Deployment.md)
+- [Bonus A06: Kostenlose Qualitäts- und Sicherheitschecks auf GitHub](./Stufe6/A06_Qualitaetschecks_Bonus.md)
 
 ## Prüfen statt nur kopieren
 

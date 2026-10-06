@@ -50,8 +50,11 @@ public class ContactApiTests
 {
     private static ContactInput ValidInput(string name = "Alice") => new()
     {
-        Name = name, Age = 30, Gender = GenderType.Unknown,
-        PhoneNumber = "012345", Email = "alice@example.com"
+        Name = name,
+        Age = 30,
+        Gender = GenderType.Unknown,
+        PhoneNumber = "012345",
+        Email = "alice@example.com"
     };
 
     [Fact]
