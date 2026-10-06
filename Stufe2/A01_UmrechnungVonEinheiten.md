@@ -1,5 +1,20 @@
 # 🔵 Aufgabe A01: Umrechnung von Einheiten
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Fibonacci als Zahlenfolge](../Stufe1/A10_Fibonacci.md)
+
+**Intention:** Berechnung in Methoden aufteilen und Rechenfehler mit dem Debugger erklären.
+
+**Lernziele:**
+
+- Du kannst reine Umrechnungsmethoden mit Parametern und Rückgabewerten schreiben.
+- Du kannst einen falschen Faktor anhand von Haltepunkten und Variablen eingrenzen.
+
+**Weiter im Pflichtpfad:** [Primzahlenprüfung](A02_Primzahlen.md)
+
 ## Ziel der Aufgabe
 
 In dieser Aufgabe wirst du ein Programm erstellen, das verschiedene Einheiten umrechnen kann, z. B. **Celsius in Fahrenheit** oder **Kilometer in Meilen**. Dabei vertiefst du dein Wissen über **Benutzereingaben**, **mathematische Formeln** und die Strukturierung von Programmen in **Methoden**.
@@ -48,7 +63,7 @@ Du kannst mit den folgenden Umrechnungen starten:
 - Celsius → Fahrenheit:  `F = C * 9.0 / 5.0 + 32`
 - Kilometer → Meilen:   `mi = km * 0.621371`
 
-Optional kannst du später weitere Umrechnungen ergänzen (siehe unten).
+Weitere Umrechnungen stehen unter „Bonus“.
 
 ---
 
@@ -57,6 +72,8 @@ Optional kannst du später weitere Umrechnungen ergänzen (siehe unten).
 - Erstelle **für jede Umrechnung eine eigene Methode**.
 - Nutze ein **einfaches Textmenü**, damit der Benutzer zwischen den Umrechnungen wählen kann.
 - Verwende eine **Schleife**, damit der Benutzer mehrere Umrechnungen nacheinander machen kann.
+
+Eine Menüaktion darf Eingaben lesen und Meldungen zeigen. Sie ruft für die eigentliche Rechnung eine reine Methode mit Zahlenparameter und Rückgabewert auf; so kannst du die Formel unabhängig vom Menü prüfen.
 
 ---
 
@@ -70,15 +87,30 @@ Optional kannst du später weitere Umrechnungen ergänzen (siehe unten).
 
 ---
 
-## 💡 Probiere selbst
+## Weiterüben im Pflichtpfad
 
-- Füge weitere Umrechnungen hinzu, z. B.:
-  - Kilogramm → Pfund (`kg * 2.20462`)
-  - Liter → Gallonen (`l * 0.264172`)
 - Sorge dafür, dass dein Menü sich wiederholt, bis der Benutzer "Beenden" auswählt
 - Gib eine Fehlermeldung aus, wenn eine ungültige Option eingegeben wurde
 
 ---
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Teile brauchen die Konsole und welche nur einen Zahlenwert?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Die Rechenmethode nimmt double entgegen und gibt double zurück; untersuche die Variante 9 / 5 in der Debugging-Übung.
+
+</details>
 
 <details>
 <summary>📘 Tipp zur Struktur</summary>
@@ -115,8 +147,24 @@ while (weiter)
 
 `0 °C` ergibt `32 °F`, `100 °C` ergibt `212 °F`, `-40 °C` ergibt `-40 °F`. `1 km` ergibt ungefähr `0,621371 mi`. Ungültige Auswahl oder ungültiger Zahlentext ergibt eine Meldung; Beenden funktioniert auch nach mehreren Umrechnungen. Halte Berechnung und Eingabe getrennt, damit du die Methoden ohne Konsole testen kannst.
 
-## Reine Methoden und frühe automatisierte Tests
+## Reine Methoden und Debugging im Pflichtpfad
 
 Verwende für die Rechnung etwa `static double CelsiusToFahrenheit(double c) => c * 9.0 / 5.0 + 32;`. Eingabe und Ausgabe liegen außerhalb. `9 / 5` allein ist Ganzzahldivision und ergibt `1`; die Dezimalliterale vermeiden diesen Fehler unabhängig vom Typ des Eingabewerts. Liter → Gallonen bezieht sich bei Faktor `0.264172` auf US-Gallonen.
 
-Zusatz: Automatisiere die drei Temperaturfälle schon jetzt in einem xUnit-Projekt. Für die beiden nicht exakt darstellbaren Umrechnungen prüfe mit einer Toleranz statt auf exakte Gleitkommagleichheit. Die Einrichtung wird in Stufe 6 wieder aufgegriffen.
+Führe jetzt die [Debugging-Übung](../Referenzen/Debugging.md) an einer Kopie deiner Temperaturmethode aus. Untersuche den absichtlich falschen Faktor `9 / 5` mit Haltepunkt, Parameteransicht und Schritt in die Methode. Notiere Erwartung, Beobachtung, Ursache und Korrektur für `0`, `100` und `-40`. Diese Fehlersuche gehört zur Pflichtaufgabe; spätere Aufgaben verwenden dieselbe Arbeitsweise.
+
+## Bonus: weitere Einheiten
+
+**Intention:** Übertrage die Trennung von Eingabe und Rechnung auf weitere Formeln. **Lernziel:** Du kannst eine zusätzliche reine Methode einbauen und ihren Faktor mit einem bekannten Beispiel prüfen.
+
+Ergänze Kilogramm → Pfund (`kg * 2.20462`) oder Liter → US-Gallonen (`l * 0.264172`). Menü, Eingabeprüfung und Rechenmethode bleiben getrennt.
+
+## Bonus: frühe automatisierte Tests
+
+**Intention:** Probiere die spätere automatische Absicherung reiner Methoden vorab aus. **Lernziel:** Du kannst drei Temperaturfälle als xUnit-Tests formulieren und ungenaue Gleitkommaergebnisse mit einer Toleranz vergleichen. Die Einrichtung folgt ausführlich in [Stufe 6, A02](../Stufe6/A02_Testing.md); sie ist hier optional und keine Voraussetzung für A02 Primzahlen.
+
+Automatisiere die drei Temperaturfälle in einem xUnit-Projekt. Für die beiden nicht exakt darstellbaren Umrechnungen prüfe mit einer Toleranz statt auf exakte Gleitkommagleichheit.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-2-methoden-und-fehlersuche). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

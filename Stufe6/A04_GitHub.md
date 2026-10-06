@@ -1,5 +1,20 @@
 # 🔴 Aufgabe A04: Bestehendes GitHub-Projekt und CI weiterentwickeln
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Webseite für dasselbe Adressbuch](A03_Webentwicklung.md)
+
+**Intention:** Änderungen im bestehenden Repository nachvollziehbar prüfen und zusammenführen.
+
+**Lernziele:**
+
+- Du kannst Issue, Branch, Diff und Pull Request zu einer Änderung verwenden.
+- Du kannst einen Build-Test-Workflow ausführen und einen fehlgeschlagenen Test erkennen.
+
+**Weiter im Pflichtpfad:** [Adressbuch mit Datenbank bereitstellen](A05_Deployment.md)
+
 ## Ziel und Voraussetzungen
 
 Dein Menüprojekt wird seit Stufe 3 mit Git verwaltet. Erweitere **dieses Repository**, statt es erneut zu initialisieren oder eine zweite Versionsgeschichte anzulegen. Jetzt ergänzt du Dokumentation, Branches, Reviews und automatisierte Prüfungen.
@@ -24,6 +39,24 @@ git push -u origin feature/contact-search
 ```
 
 Stage die tatsächlich geänderten Dateien, nicht nur die README. Wenn du ausnahmsweise bisher kein Repository hast, initialisiere einmal mit `git init`, lege zuerst `.gitignore` an und richte danach einen Remote ein. Ein vorhandener Remote wird nicht noch einmal mit `git remote add origin` angelegt.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Befehle benötigt ein frischer Checkout, um deine Änderung zu prüfen?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Die Pipeline führt Restore, Build und Test auf dem richtigen Solution-Pfad aus; ein nicht ausgeführter Test ist kein Nachweis.
+
+</details>
 
 <details>
 <summary>Build und Tests mit GitHub Actions</summary>
@@ -50,12 +83,24 @@ jobs:
 
 </details>
 
-## Optionale Qualitäts- und Sicherheitschecks
-
-Die [Bonus-Aufgabe A06](./A06_Qualitaetschecks_Bonus.md) ergänzt .NET-Analyser, Formatprüfung, NuGet Audit, Dependabot, SonarQube Cloud, CodeQL und Secret Scanning. Sie erklärt die kostenlosen Möglichkeiten für öffentliche und private Repositories und enthält kopierbare Konfigurationen.
-
 ## Selbst prüfen
 
 Ein fehlschlagender Test macht den Build rot. Ein erfolgreicher Commit wird grün. README-Startbefehle funktionieren aus einem frischen Checkout. Die `.gitignore` hält generierte Dateien und `.env` aus dem Diff. Das Issue enthält konkrete Beispiele, der Pull Request erklärt Verhalten und Prüfung.
 
-Zusatz: CONTRIBUTING, Lizenzentscheidung für öffentliche Projekte und automatisches Deployment erst nach einer funktionierenden manuellen Bereitstellung.
+## Bonus: Qualitäts- und Sicherheitschecks
+
+**Intention:** Ergänze Build und Tests um weitere Analysen. **Lernziel:** Du kannst nach Bonus A06 die gewählten Checks einrichten und ihre Ergebnisse begründet auswerten. Ohne diesen Bonus bleiben die Kernanforderungen an CI vollständig erfüllt.
+
+Die [Bonus-Aufgabe A06](./A06_Qualitaetschecks_Bonus.md) ergänzt .NET-Analyser, Formatprüfung, NuGet Audit, Dependabot, SonarQube Cloud, CodeQL und Secret Scanning. Sie erklärt die kostenlosen Möglichkeiten für öffentliche und private Repositories und enthält kopierbare Konfigurationen.
+
+## Bonus: Zusammenarbeit und Auslieferung
+
+**Intention:** Ergänze Regeln für weitere Mitwirkende und eine spätere automatische Auslieferung.
+
+**Lernziel:** Du kannst CONTRIBUTING und Lizenzentscheidung dokumentieren; automatisches Deployment setzt die erfolgreiche manuelle Bereitstellung aus A05 voraus.
+
+CONTRIBUTING, Lizenzentscheidung für öffentliche Projekte und automatisches Deployment erst nach einer funktionierenden manuellen Bereitstellung.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-6-http-tests-und-webseite). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

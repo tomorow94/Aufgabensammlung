@@ -1,5 +1,20 @@
 # 🔵 Aufgabe A05: List, HashSet und Dictionary
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Stoppuhr](A04_Stoppuhr.md)
+
+**Intention:** Sammlungen anhand ihrer Eigenschaften passend auswählen.
+
+**Lernziele:**
+
+- Du kannst Reihenfolge, Duplikate und Schlüsselzugriff an List, HashSet und Dictionary zeigen.
+- Du kannst Laufzeiten mit gleichen Daten vergleichen und Messgrenzen benennen.
+
+**Weiter im Pflichtpfad:** [Menüführung mit Klassen & Struktur](../Stufe3/A01_KlassenUndStruktur.md)
+
 ## Ziel und Voraussetzungen
 
 Nach Methoden und Stoppuhr vergleichst du Sammlungen. Beginne mit wenigen Einträgen; führe erst anschließend Messungen durch.
@@ -22,6 +37,24 @@ Nach Methoden und Stoppuhr vergleichst du Sammlungen. Beginne mit wenigen Eintr�
 ## Messung vorbereiten
 
 Eine einzelne Suche mit `ElapsedMilliseconds` ergibt oft `0 ms`. Verwende identische eindeutige Ausgangswerte, Aufwärmläufe, viele Anfragen, mehrere Wiederholungen und einen Release-Build ohne Debugger. Prüfe Treffer und Nichttreffer. Die Ergebnisse müssen verwendet werden. Miss nur die Suche, nicht Aufbau oder Ausgabe. Prüfe die Streuung; ein Wert ist kein allgemeines Leistungsgesetz.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Struktur soll Duplikate entfernen, welche einen Wert über einen Schlüssel finden?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Prüfe zuerst die Ergebnisse der Operationen; miss anschließend dieselben Operationen mit reproduzierbaren Daten außerhalb der Konsolenausgabe.
+
+</details>
 
 <details>
 <summary>Vollständiges Beispiel für Program.cs (.NET 10)</summary>
@@ -77,4 +110,14 @@ class Program
 
 Liste hat `3`, Set `2` Einträge. `berlin` wird gefunden, eine unbekannte Stadt nicht. Jeder gemessene Lauf mit 1000 Wiederholungen hat `3000` Treffer aus `4000` Anfragen. Unterschiedliche Trefferzahlen bedeuten, dass du nicht denselben Inhalt oder dieselben Abfragen verglichen hast. Wiederholte Zeiten dürfen schwanken.
 
-Zusatz: Zufallszahlen mit fester Startzahl (`new Random(42)`), unterschiedliche Duplikatraten, `BinarySearch` auf sortierten Listen. Bei genauer Performanceanalyse verwende später BenchmarkDotNet; diese Übung erklärt zunächst Datenstrukturen und grundlegende Messfehler.
+## Bonus: Messungen vertiefen
+
+**Intention:** Untersuche weitere Einflussgrößen und die Grenzen einfacher Zeitmessung.
+
+**Lernziel:** Du kannst Duplikatraten und sortierte Daten vergleichen; BenchmarkDotNet ist eine spätere zusätzliche Werkzeugvertiefung.
+
+Zufallszahlen mit fester Startzahl (`new Random(42)`), unterschiedliche Duplikatraten, `BinarySearch` auf sortierten Listen. Bei genauer Performanceanalyse verwende später BenchmarkDotNet; diese Übung erklärt zunächst Datenstrukturen und grundlegende Messfehler.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-2-methoden-und-fehlersuche). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

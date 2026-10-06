@@ -1,5 +1,21 @@
 # Aufgabe A01: Menüführung mit Klassen & Struktur
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [List, HashSet und Dictionary](../Stufe2/A05_Datenstrukturen.md)
+
+**Intention:** Bekannte Programme über Klassen in einem gemeinsamen Menü zusammenführen.
+
+**Lernziele:**
+
+- Du kannst zwei frühere Programme über Start-Methoden aufrufen.
+- Du kannst den einzigen Einstiegspunkt und die Rückkehr ins Menü erklären.
+- Du kannst den Projektstand in Git speichern und spätere Änderungen als Diff nachvollziehen.
+
+**Weiter im Pflichtpfad:** [Person, Eigenschaften, Konstruktor und Enum](A02_KlassePerson.md)
+
 ## Einleitung
 
 Bisher wurden einzelne Programme als eigenständige Konsolenanwendungen geschrieben. Diese Vorgehensweise eignet sich für den Einstieg, aber bei wachsender Anzahl von Programmen wird die Verwaltung und Erweiterung zunehmend unübersichtlich. Um dies zu verbessern, wird nun ein **strukturiertes Menü-Projekt** erstellt, das als zentraler Einstiegspunkt für alle bisherigen Programme dient.
@@ -59,6 +75,24 @@ In dieser Aufgabe sollen Sie eine **strukturierte Konsolenanwendung** entwickeln
 ## Beispielhafter Lösungsansatz
 
 Da wir ab Stufe 3 nicht mehr alle Details über das Projekt wissen, geben wir hier nur eine **mögliche Lösungsskizze** für die Umsetzung.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Main-Methode gehört zum Gesamtprojekt und welche bisherigen Programme werden Unterprogramme?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Nur das Hauptprojekt behält Main; verschiebe Unterprogramme in eigene Klassen und rufe deren Start-Methode aus dem Menü auf.
+
+</details>
 
 <details> <summary><strong>Lösungsvorschlag anzeigen</strong></summary>
   
@@ -143,11 +177,6 @@ namespace MenuApplication
 
 </details>
 
-## Erweiterungsmöglichkeiten
- - Dynamische Programmliste: Laden Sie die vorhandenen Klassen automatisch, statt sie manuell im switch-Statement zu hinterlegen.
- - Reflexion nutzen: Durch Reflection (Type.GetType()) könnten neue Programme automatisch im Menü erscheinen, ohne den Code ändern zu müssen.
- - GUI statt Konsole: Erweitern Sie das Projekt später mit Windows Forms oder WPF, um ein visuelles Menü zu erstellen.
-
 ## Abschluss
 
 Diese Aufgabe bildet die Grundlage für ein gut strukturiertes Projekt. Sie fördert Modularität, Wiederverwendbarkeit und Code-Organisation. In zukünftigen Aufgaben wird darauf aufgesetzt.
@@ -165,3 +194,17 @@ Starte mit Hallo Welt und einer Rechenaufgabe. Ersetze deren `Main()` durch eine
 ## Selbst prüfen
 
 Ein gültiger Menüpunkt startet sein Programm und kehrt anschließend ins Menü zurück. Ungültiger Text erzeugt eine Meldung. `0` beendet. Nur das Hauptprojekt enthält einen Einstiegspunkt; überprüfe, dass keine kopierten `Main()`-Methoden als zweite Einstiegspunkte verbleiben.
+
+## Bonus: Andere Registrierung und Oberfläche
+
+**Intention:** Untersuche zusätzliche Wege erst nach der grundlegenden Menüstruktur.
+
+**Lernziel:** Du kannst nach A04 explizite Registrierung und Reflection unterscheiden; eine Desktop-GUI erfordert zusätzliche UI-Kenntnisse außerhalb dieses Lernfadens.
+
+ - Dynamische Programmliste: Laden Sie die vorhandenen Klassen automatisch, statt sie manuell im switch-Statement zu hinterlegen.
+ - Reflexion nutzen: Durch Reflection (Type.GetType()) könnten neue Programme automatisch im Menü erscheinen, ohne den Code ändern zu müssen.
+ - **Desktopoberfläche außerhalb des Pflichtpfads:** Windows Forms oder WPF setzen zusätzliche UI-Kenntnisse voraus. Intention: dieselben Programme mit einer anderen Oberfläche aufrufen. Lernziel: bekannte `Start()`-Aufrufe auf Button-Ereignisse abbilden.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-3-struktur-und-versionsgeschichte). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

@@ -1,4 +1,19 @@
-# 🟡 Aufgabe A04: Hintergrundberechnung mit Fortschritt (optionale Vertiefung)
+# 🟡 Bonus A04: Hintergrundberechnung mit Fortschritt
+
+## Einordnung und Lernziele
+
+**Status:** Bonus (optional; keine Voraussetzung für spätere Pflichtaufgaben).
+
+**Voraussetzungen:** [Primzahlenprüfung](../Stufe2/A02_Primzahlen.md), [Hangman](A02_Hangman.md)
+
+**Intention:** Nebenläufigkeit an einer zusätzlichen längeren Berechnung untersuchen.
+
+**Lernziele:**
+
+- Du kannst CPU-Arbeit, Fortschritt und kooperativen Abbruch unterscheiden.
+- Du kannst erklären, weshalb async allein eine Rechnung nicht verlagert.
+
+**Weiter im Pflichtpfad:** [Einfaches Bankkonto-System](A03_Bankkonto.md)
 
 ## Ziel und Voraussetzungen
 
@@ -13,6 +28,24 @@ Diese Aufgabe ist optional. Du brauchst Methoden, Primzahlprüfung und Verständ
 3. Erlaube Abbruch über `q` mit `CancellationToken`.
 4. Teile nur einen Fortschrittswert. Aktualisiere ihn mit `Interlocked`, lies ihn mit `Volatile`.
 5. Warte am Ende auf die Aufgabe und behandle Abbruch gezielt. Halte keine Sperre während einer Eingabe und verwende keine Schleife ohne Wartepause zum Warten auf einen Zustand.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Arbeit dauert lange und wann kann sie einen Abbruch bemerken?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Verlagere CPU-Arbeit bewusst und prüfe das CancellationToken regelmäßig; speichere keine unbeaufsichtigten gemeinsamen Zustände.
+
+</details>
 
 <details>
 <summary>Lösungsvorschlag für Program.cs (.NET 10)</summary>
@@ -71,4 +104,14 @@ class Program
 
 Mit Grenze `10` ist das Ergebnis `4`, mit `100` ist es `25`. Bei großer Grenze bleibt die Anzeige aktiv; `q` beendet die Arbeit geordnet. Wiederholte vollständige Läufe liefern denselben Wert. Mit umgeleiteter Eingabe wird kein Konsolentastenzugriff versucht. Setze Haltepunkte in Hintergrund- und Hauptablauf und vergleiche die Threads im Debugger.
 
-Zusatz: Verwende `IProgress<int>` für Fortschrittsmeldungen; untersuche dann, auf welchem Kontext die Meldungen verarbeitet werden. Raw `Thread`, `lock` und `Monitor.Wait/Pulse` sind eine spätere Vertiefung, wenn tatsächlich mehrere Ausführungsstränge einen gemeinsamen Zustand koordinieren müssen.
+## Bonus: Weitere Fortschrittsmechanismen
+
+**Intention:** Untersuche eine zusätzliche Abstraktion für Fortschritt und gemeinsamen Zustand.
+
+**Lernziel:** Du kannst IProgress-Meldungen einem Ausführungskontext zuordnen; lock und Monitor sind weitere spätere Vertiefungen.
+
+Verwende `IProgress<int>` für Fortschrittsmeldungen; untersuche dann, auf welchem Kontext die Meldungen verarbeitet werden. Raw `Thread`, `lock` und `Monitor.Wait/Pulse` sind eine spätere Vertiefung, wenn tatsächlich mehrere Ausführungsstränge einen gemeinsamen Zustand koordinieren müssen.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-4-zustand-und-geschäftsregeln). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

@@ -1,5 +1,20 @@
 # 🟣 Aufgabe A03: Dasselbe Adressbuch mit EF Core und LINQ
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Adressbuch mit SQL Server und ADO.NET](A02_Datenbank.md)
+
+**Intention:** Direkte Datenbankzugriffe mit einem ORM nachvollziehen.
+
+**Lernziele:**
+
+- Du kannst das bestehende Modell mit einem DbContext speichern und per LINQ abfragen.
+- Du kannst eine vorhandene Tabelle von einem durch Migrationen verwalteten Schema unterscheiden.
+
+**Weiter im Pflichtpfad:** [Adressbuch als REST-API mit ASP.NET Core](../Stufe6/A01_REST_API.md)
+
 ## Ziel und Voraussetzungen
 
 Nach direktem SQL verwendest du **Entity Framework Core** als ORM. Es ordnet die Tabelle `Contacts` der Klasse `Person` zu. **LINQ** beschreibt Abfragen; Hinzufügen, Ändern und Löschen sind EF-Core-Operationen, keine LINQ-Abfragen.
@@ -29,6 +44,24 @@ Bei deinem eigenen Projekt installierst du stattdessen das Paket und legst Model
 ```shell
 dotnet add AddressBook.Ef package Microsoft.EntityFrameworkCore.SqlServer --version 10.0.0
 ```
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Teile ersetzt EF Core und welche fachlichen Regeln bleiben nötig?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Der Context verwaltet dieselben Kontakte; entscheide vor der Schemaeinrichtung zwischen bestehender Tabelle und frischem Migrationsweg.
+
+</details>
 
 <details>
 <summary>Context, Modell und Beispielabfragen</summary>
@@ -92,6 +125,16 @@ Bei einer bestehenden manuell verwalteten Datenbank ist zunächst eine geprüfte
 
 Ein Kontakt bekommt eine Datenbank-ID, Suche und Sortierung stimmen, Änderungen überleben Neustarts, eine fehlende ID wird behandelt. JSON-, SQL- und EF-Kontakte enthalten dieselben Eigenschaften. Schaue dir im Debugger den Zustand eines hinzugefügten und eines geänderten Objekts an. Prüfe die Suche auch bei null Treffern.
 
-Zusatz: Beziehungen und Paginierung. Beachte, dass SQLite-Tests SQL-Server-spezifische Datentypen, Constraints und Abfragen nicht vollständig prüfen; führe wichtige Datenbankfälle auch mit SQL Server aus.
+## Bonus: Beziehungen und größere Listen
+
+**Intention:** Erweitere das bestehende EF-Modell und begrenze größere Ergebnismengen.
+
+**Lernziel:** Du kannst Beziehungen und Paginierung untersuchen; zusätzliche SQL-Server-Testautomatisierung folgt in Bonus A08.
+
+Ergänze eine Beziehung oder Paginierung, nachdem die Kernfälle auf SQL Server funktionieren. Die spätere automatische Prüfung providerspezifischer Datentypen, Constraints und Migrationen behandelt [Stufe 6, Bonus A08](../Stufe6/A08_SQLServerTests_Bonus.md).
 
 Referenzen: [EF Core](https://learn.microsoft.com/en-us/ef/core/) und [Schemaerstellung](https://learn.microsoft.com/en-us/ef/core/managing-schemas/ensure-created).
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-5-daten-und-abfragen). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

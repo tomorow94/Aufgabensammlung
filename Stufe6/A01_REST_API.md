@@ -1,5 +1,20 @@
 # 🔴 Aufgabe A01: Adressbuch als REST-API mit ASP.NET Core
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Dasselbe Adressbuch mit EF Core und LINQ](../Stufe5/A03_ORMundLINQ.md)
+
+**Intention:** Die vorhandene Kontaktverwaltung über einen HTTP-Vertrag zugänglich machen.
+
+**Lernziele:**
+
+- Du kannst CRUD-Endpunkte mit passenden Statuscodes und validierten Eingaben bauen.
+- Du kannst Modell, Context und asynchrone Datenzugriffe weiterverwenden.
+
+**Weiter im Pflichtpfad:** [Unit- und Integrationstests für das Adressbuch](A02_Testing.md)
+
 ## Ziel und Voraussetzungen
 
 Stelle das Adressbuch aus Stufe 5 über HTTP bereit. Du verwendest **Person und AddressBookContext weiter**; die Kontakte bleiben in SQL Server. Das neue API-Projekt übernimmt die HTTP-Kommunikation, nicht eine zweite Kontaktliste im Speicher.
@@ -22,7 +37,7 @@ Neu sind HTTP, JSON, Controller, Dependency Injection und `async`/`await`. Ein C
 
 4. Verwende einen eigenen `ContactInput` für Eingaben. IDs vergibt die Datenbank; Clients können keine ID festlegen.
 5. Validiere Name, Alter, Enum, Telefonnummer und E-Mail. `[ApiController]` gibt bei ungültigen Eingaben automatisch HTTP 400 zurück.
-6. Dokumentiere die API mit OpenAPI. Die Sammlung nutzt `Microsoft.AspNetCore.OpenApi` passend zu .NET 10; ein zusätzliches interaktives Swagger-UI ist optional.
+6. Dokumentiere die API mit OpenAPI. Die Sammlung nutzt `Microsoft.AspNetCore.OpenApi` passend zu .NET 10; ein interaktives UI steht unter „Bonus“.
 
 ## Referenzanwendung starten
 
@@ -54,6 +69,24 @@ dotnet user-secrets set "ConnectionStrings:AddressBook" "DEIN_CONNECTION_STRING"
 
 User Secrets werden im Development-Modus gelesen. Für das lokale SQL-Zertifikat ist `TrustServerCertificate=True` erklärt in Stufe 5; veröffentlichte Datenbanken verwenden ein gültiges Zertifikat. Fehlerdetails und Passwörter gehören nicht in HTTP-Antworten.
 
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Daten liefert der Client und welche vergibt der Server?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+POST enthält ContactInput ohne ID; das gleiche Datenmodell wird gespeichert und der Server liefert 201 mit Location.
+
+</details>
+
 <details>
 <summary>Vollständige Lösung und Dateiaufteilung</summary>
 
@@ -79,4 +112,18 @@ In Postman: POST an `http://localhost:5000/api/contacts`, Body als JSON, Header 
 
 Neuer Kontakt → 201; gültiger Abruf → 200; Änderung/Löschung → 204; fehlende ID → 404. Leerer Name, Alter `-1`, Gender `99`, fehlende Telefonnummer oder fehlende/ungültige E-Mail → 400. Lösche einen älteren Kontakt und füge einen neuen hinzu: Keine vorhandene ID darf doppelt vergeben werden. Starte die API neu und prüfe die gespeicherten Daten.
 
-Zusatz: Suchparameter, Paginierung, Logging und später Authentifizierung. Die folgende Aufgabe automatisiert zunächst die vorhandenen Verträge.
+## Bonus: Weitere API-Funktionen
+
+**Intention:** Erweitere einen bestehenden HTTP-Vertrag gezielt.
+
+**Lernziel:** Du kannst Suchparameter und Paginierung definieren; Logging und Authentifizierung sind zusätzliche eigene Lernschritte.
+
+Suchparameter, Paginierung, Logging und später Authentifizierung. Die folgende Aufgabe automatisiert zunächst die vorhandenen Verträge.
+
+## Bonus: Interaktive API-Dokumentation
+
+**Intention:** Probiere eine zusätzliche Oberfläche für den vorhandenen OpenAPI-Vertrag aus. **Lernziel:** Du kannst eine passende UI einrichten und erklären, dass sie den API-Vertrag anzeigt, aber keine fachlichen Tests ersetzt. Die konkrete UI-Bibliothek und ihre kompatible Version recherchierst du zusätzlich; die Pflichtaufgabe funktioniert mit OpenAPI und REST-Client.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-6-http-tests-und-webseite). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

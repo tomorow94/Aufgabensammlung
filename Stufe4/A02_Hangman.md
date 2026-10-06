@@ -1,5 +1,20 @@
 # 🟡 Aufgabe A02: Hangman
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Tic Tac Toe – Einführung in Spielmechaniken, Arrays und Entscheidungslogik](A01_TicTacToe.md)
+
+**Intention:** Zeichenketten und Spielzustände ohne doppelte Verarbeitung verwalten.
+
+**Lernziele:**
+
+- Du kannst erratene Buchstaben speichern und sichtbare Wortteile erzeugen.
+- Du kannst falschen, wiederholten und ungültigen Versuchen unterschiedliche Folgen geben.
+
+**Weiter im Pflichtpfad:** [Einfaches Bankkonto-System](A03_Bankkonto.md)
+
 ## Ziel und Voraussetzungen
 
 Du kennst Arrays, Listen und Spielzustände aus Tic-Tac-Toe. Jetzt verarbeitest du Zeichenketten und einzelne Buchstaben. Der Computer wählt ein Wort; richtige Buchstaben werden aufgedeckt, falsche verringern die verbleibenden Versuche.
@@ -11,6 +26,24 @@ Du kennst Arrays, Listen und Spielzustände aus Tic-Tac-Toe. Jetzt verarbeitest 
 3. Bereits geratene Buchstaben und ungültige Eingaben verbrauchen keinen Versuch.
 4. Erlaube sieben Fehlversuche. Dafür brauchst du **acht Bilder**: Anfangszustand plus sieben Fehlerzustände.
 5. Nach Sieg oder Niederlage zeige das Wort an. Fehlermeldungen bleiben sichtbar.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Information brauchst du, um einen wiederholten Buchstaben zu erkennen?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Nutze eine Menge für schon geratene Buchstaben und vermindere Versuche nur bei einem neuen falschen Buchstaben.
+
+</details>
 
 <details>
 <summary>Lösungsvorschlag für Program.cs (.NET 10)</summary>
@@ -82,4 +115,16 @@ class Hangman
 
 Verwende zunächst das feste Wort `computer`, bevor du die Zufallsauswahl einschaltest. Sieben falsche unterschiedliche Buchstaben (`a b f g h i j`) ergeben eine Niederlage ohne Absturz. `C` deckt `c` auf; ein zweites `c` kostet nichts. `1`, eine leere Zeile und `ab` kosten keinen Versuch. Mit `c o m p u t e r` gewinnst du.
 
-Setze einen Haltepunkt in `DrawHangman()` und beobachte die Indizes `0–7`. Zusatz: Kategorien, mehrere Runden oder ein von einem zweiten Spieler eingegebenes Wort.
+Setze einen Haltepunkt in `DrawHangman()` und beobachte die Indizes `0–7`.
+
+## Bonus: Weitere Spielrunden
+
+**Intention:** Übertrage die Zustandsprüfung auf erweiterte Spielabläufe.
+
+**Lernziel:** Du kannst Runden neu initialisieren und Kategorien oder ein zweites Spielerwort einbauen, ohne alte Versuche zu übernehmen.
+
+Kategorien, mehrere Runden oder ein von einem zweiten Spieler eingegebenes Wort.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-4-zustand-und-geschäftsregeln). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

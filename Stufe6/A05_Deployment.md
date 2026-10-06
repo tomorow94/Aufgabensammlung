@@ -1,5 +1,20 @@
 # 🔴 Aufgabe A05: Adressbuch mit Datenbank bereitstellen
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Bestehendes GitHub-Projekt und CI weiterentwickeln](A04_GitHub.md)
+
+**Intention:** Die fertige Anwendung mit nachvollziehbarer Konfiguration lokal bereitstellen.
+
+**Lernziele:**
+
+- Du kannst App, Migration und SQL Server im beschriebenen Containerweg starten.
+- Du kannst Persistenz bei Neustart und Fehlerursachen anhand von Logs prüfen.
+
+**Weiter im Pflichtpfad:** Abschlussreflexion dieser Aufgabe und Dokumentation des fertigen Adressbuchs.
+
 ## Ziel und Voraussetzungen
 
 Du hast API, Tests und Frontend. Jetzt stellst du dieselbe Anwendung reproduzierbar bereit. Wähle zunächst **einen vollständigen Weg**: API und statische Webseite im selben Container, SQL Server als separater Dienst. Dadurch bleibt die API-Adresse im Frontend relativ und die Datenhaltung dauerhaft.
@@ -41,6 +56,24 @@ docker compose up --build -d
 
 Bei Fehlern schaue in die Logs des betroffenen Dienstes. Fehlende `.env`, ein unzulässiges Passwort, Portkonflikte und zu wenig Datenbankspeicher sind unterschiedliche Ursachen.
 
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welcher Dienst muss bereit sein, bevor Schema und Anwendung starten können?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Prüfe erst den Datenbank-Healthcheck, dann den Migrationsdienst und die App; Kontakte liegen im benannten Datenbank-Volume.
+
+</details>
+
 <details>
 <summary>Dateien und Buildschritte</summary>
 
@@ -65,12 +98,21 @@ Die Migration verwendet dieselben Kontaktfelder wie SQL, EF und API. Bereits man
 
 `docker compose down --volumes` entfernt auch die gespeicherten Daten. Nutze es nur, wenn du die Entwicklungsdaten ausdrücklich verwerfen willst.
 
-## Von lokal zu öffentlich
+## Abschlussreflexion
+
+Dokumentiere den Weg eines Kontakts vom Formular über HTTP und EF zur Tabelle. Welche Prüfungen laufen im Browser, welche im Server? Welche Daten bleiben bei Neustart erhalten? Welche Tests benötigen SQL Server? Halte Startbefehle, verwendete Versionen und offene Erweiterungen in deiner README fest.
+
+## Bonus: Öffentliches Hosting
+
+**Intention:** Untersuche die zusätzlichen Anforderungen einer öffentlich erreichbaren Bereitstellung.
+
+**Lernziel:** Du kannst HTTPS, Host-Konfiguration, Datenbankzugriff und Sicherung vom lokalen Containerstart unterscheiden. Dies ist keine Voraussetzung für den Abschluss des Pflichtpfads.
+
 
 Lokales Docker-Hosting ist noch keine öffentlich erreichbare Anwendung. Für einen eigenen Server benötigst du zusätzlich eine Domain, einen Reverse Proxy mit HTTPS, korrekt konfigurierte öffentliche Ports und eine Produktionsdatenbank mit geeigneter Lizenz. Verwende dort einen eingeschränkten Datenbankbenutzer, gültige Zertifikate, Backups und eine getestete Wiederherstellung. Das lokale Beispiel bindet absichtlich nur an `127.0.0.1`.
 
 Azure App Service kann die ASP.NET-Core-Anwendung ausführen; Azure SQL ist eine mögliche passende Datenbank. Netlify oder Vercel können das statische Frontend übernehmen, benötigen für diese Architektur aber zusätzlich einen geeigneten ASP.NET-Core-API-Host. Bei getrennten Hosts musst du die öffentliche HTTPS-API-URL und die erlaubte CORS-Origin konfigurieren. Diese Alternativen sind Vertiefungen und ersetzen nicht die vollständige lokale Startanleitung.
 
-## Abschlussreflexion
+## Passende Lernquellen
 
-Dokumentiere den Weg eines Kontakts vom Formular über HTTP und EF zur Tabelle. Welche Prüfungen laufen im Browser, welche im Server? Welche Daten bleiben bei Neustart erhalten? Welche Tests benötigen SQL Server? Halte Startbefehle, verwendete Versionen und offene Erweiterungen in deiner README fest.
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-6-http-tests-und-webseite). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

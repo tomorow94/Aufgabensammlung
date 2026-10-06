@@ -17,6 +17,75 @@ ROOT = Path(__file__).resolve().parents[1]
 FRAGMENT_DOCUMENTS = {"Stufe3/A01_KlassenUndStruktur.md"}
 
 
+def curriculum_check() -> None:
+    """Prüft Lernziele, Pflichtreihenfolge und die Trennung von Bonusaufgaben."""
+    tasks = {p.resolve(): p.read_text(encoding="utf-8") for p in sorted(ROOT.glob("Stufe*/A*.md"))}
+    required = [p for p, text in tasks.items() if "**Status:** Pflicht im Lernfaden." in text]
+    bonus = [p for p, text in tasks.items() if "**Status:** Bonus (optional;" in text]
+    errors = []
+    readme = (ROOT / "README.md").read_text(encoding="utf-8")
+    listed = {
+        (ROOT / unquote(target.split("#", 1)[0])).resolve()
+        for target in re.findall(r"\]\(([^\s)]+)\)", readme)
+        if not re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", target)
+    }
+    for path, text in tasks.items():
+        label = path.relative_to(ROOT)
+        if path not in required and path not in bonus:
+            errors.append(f"{label}: Pflicht-/Bonusstatus fehlt")
+        if path in required and path in bonus:
+            errors.append(f"{label}: widersprüchlicher Status")
+        metadata = re.search(r"^## Einordnung und Lernziele\n(.+?)(?=^## )", text, re.M | re.S)
+        if metadata is None:
+            errors.append(f"{label}: Einordnung fehlt")
+            continue
+        block = metadata.group(1)
+        for field in ("Voraussetzungen", "Intention", "Lernziele", "Weiter im Pflichtpfad"):
+            if f"**{field}:**" not in block:
+                errors.append(f"{label}: {field} fehlt")
+        if not re.search(r"^\*\*Intention:\*\* \S.+$", block, re.M):
+            errors.append(f"{label}: Intention ist leer")
+        if len(re.findall(r"^- Du kannst .+", block, re.M)) < 2:
+            errors.append(f"{label}: prüfbare Lernziele fehlen")
+        if "Hinweis 1: Denkanstoß" not in text or "Hinweis 2: Vorgehensweise" not in text:
+            errors.append(f"{label}: gestufte Hinweise fehlen")
+        if "## Passende Lernquellen" not in text:
+            errors.append(f"{label}: Leseempfehlung fehlt")
+        if path not in listed:
+            errors.append(f"{label}: nicht in README verlinkt")
+        if path in bonus and "Bonus A" not in text.splitlines()[0]:
+            errors.append(f"{label}: Bonustitel fehlt")
+        for section in re.split(r"(?=^## )", text, flags=re.M):
+            if section.startswith("## Bonus"):
+                if "**Intention:**" not in section or "**Lernziel:**" not in section:
+                    errors.append(f"{label}: Bonusabschnitt ohne Intention/Lernziel")
+        prerequisites = re.search(r"^\*\*Voraussetzungen:\*\* (.+)$", block, re.M)
+        if prerequisites and path in required:
+            for target in re.findall(r"\]\(([^\s)]+)\)", prerequisites.group(1)):
+                dependency = (path.parent / unquote(target)).resolve()
+                if dependency in bonus:
+                    errors.append(f"{label}: Pflichtaufgabe setzt Bonus voraus")
+                if dependency in required and required.index(dependency) >= required.index(path):
+                    errors.append(f"{label}: Voraussetzung liegt nicht vorher im Pflichtpfad")
+        onward = re.search(r"^\*\*Weiter im Pflichtpfad:\*\* (.+)$", block, re.M)
+        if onward:
+            targets = re.findall(r"\]\(([^\s)]+)\)", onward.group(1))
+            resolved = [(path.parent / unquote(t)).resolve() for t in targets]
+            if any(p not in required for p in resolved):
+                errors.append(f"{label}: Fortsetzung ist keine Pflichtaufgabe")
+            if path in required:
+                index = required.index(path)
+                expected = required[index + 1:index + 2]
+                if resolved != expected:
+                    errors.append(f"{label}: Fortsetzung überspringt einen Pflichtschritt")
+    expected_count = f"{len(required)} Pflichtaufgaben und {len(bonus)} eigenständige Bonus-Aufgaben"
+    if expected_count not in readme:
+        errors.append("README: Aufgabenanzahl stimmt nicht")
+    if errors:
+        raise RuntimeError("\n".join(errors))
+    print(f"Lernfaden, Lernziele und Bonus-Trennung: OK ({len(required)} Pflicht, {len(bonus)} Bonus)")
+
+
 def markdown_check() -> list[tuple[Path, str]]:
     examples = []
     errors = []
@@ -205,6 +274,7 @@ def main() -> None:
     parser.add_argument("--compile", action="store_true")
     args = parser.parse_args()
     examples = markdown_check()
+    curriculum_check()
     print("Markdown, lokale Links, ausklappbare Lösungen und Lernkontrollen: OK")
     if args.compile:
         compile_and_probe(examples)

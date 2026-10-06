@@ -1,5 +1,20 @@
 # 🟠 Aufgabe A03: Adressbuch mit Kontakten und Dateispeicherung
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Person, Eigenschaften, Konstruktor und Enum](A02_KlassePerson.md)
+
+**Intention:** Objekte in einer Sammlung verwalten und gemeinsam dauerhaft speichern.
+
+**Lernziele:**
+
+- Du kannst Kontakte hinzufügen, suchen und als JSON wieder laden.
+- Du kannst fachliche Prüfung und eindeutige IDs über einen Neustart erhalten.
+
+**Weiter im Pflichtpfad:** [Gemeinsame Schnittstelle und Menü](A04_BesseresMenu.md)
+
 ## Ziel und Voraussetzungen
 
 Erweitere die Personenklasse aus A02 zu einem Adressbuch. Ab hier bleibt dieses Datenmodell bis zum Abschlussprojekt gleich:
@@ -27,6 +42,24 @@ Du brauchst Listen, Dateizugriffe und Methoden. Neu ist **JSON**, ein Textformat
 ## Vorgehen
 
 Implementiere zuerst Hinzufügen und Anzeigen ohne Datei. Danach Suche, dann Speichern und Laden. Die Datei befindet sich relativ zum **Arbeitsverzeichnis**, das du mit `Directory.GetCurrentDirectory()` prüfen kannst.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Verantwortung hat das Menü und welche die Kontaktverwaltung?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Suchmethoden geben Kontakte zurück; beim Laden wird der nächste ID-Wert aus dem größten vorhandenen Wert abgeleitet.
+
+</details>
 
 <details>
 <summary>Lösungsskizze: Datenmodell und Sammlung</summary>
@@ -86,4 +119,16 @@ Diese Skizze ergänzt du um das Menü und die fachliche Eingabeprüfung. Eine Te
 | Datei fehlt | leeres Adressbuch |
 | beschädigtes JSON | verständliche Meldung; Datei nicht überschreiben |
 
-Setze einen Haltepunkt beim Hinzufügen und beobachte die Liste. Zusatz: Suche mit mehreren Treffern, Bearbeiten und Löschen. Wenn du IDs auch nach dem Löschen niemals wiederverwenden willst, speichere den fortlaufenden Zähler zusammen mit der Liste. Die spätere SQL-Datenbank erledigt dies selbst.
+Setze einen Haltepunkt beim Hinzufügen und beobachte die Liste.
+
+## Bonus: Weitere Kontaktaktionen
+
+**Intention:** Erweitere die vorhandene Kontaktverwaltung bei gleichen Regeln.
+
+**Lernziel:** Du kannst mehrere Suchtreffer, Bearbeiten oder Löschen implementieren und die ID-Vergabe nach dem Neustart prüfen.
+
+Suche mit mehreren Treffern, Bearbeiten und Löschen. Wenn du IDs auch nach dem Löschen niemals wiederverwenden willst, speichere den fortlaufenden Zähler zusammen mit der Liste. Die spätere SQL-Datenbank erledigt dies selbst.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-3-struktur-und-versionsgeschichte). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

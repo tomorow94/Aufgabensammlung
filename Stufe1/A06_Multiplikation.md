@@ -1,5 +1,20 @@
 # 🟢 Aufgabe A06: Multiplikation und Wiederholung
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Subtraktion und sichere Zahleneingabe](A05_Subtraktion.md)
+
+**Intention:** Eine geprüfte Berechnung kontrolliert wiederholen.
+
+**Lernziele:**
+
+- Du kannst eine while-Schleife mit einer Beenden-Option steuern.
+- Du kannst erklären, wann break und continue den Ablauf verändern.
+
+**Weiter im Pflichtpfad:** [Division](A07_Division.md)
+
 ## Ziel und Voraussetzungen
 
 Du kannst bereits Zahlen einlesen, vergleichen und mit `TryParse` prüfen. Jetzt wiederholst du eine Berechnung mit einer **`while`-Schleife**. Eine Schleife führt ihren Block erneut aus, solange ihre Bedingung wahr ist.
@@ -11,6 +26,24 @@ Du kannst bereits Zahlen einlesen, vergleichen und mit `TryParse` prüfen. Jetzt
 3. Nach einer Berechnung fragt das Programm, ob du weiterrechnen möchtest.
 
 `continue` startet den nächsten Schleifendurchlauf. `break` beendet die Schleife. Der Vergleich mit `OrdinalIgnoreCase` akzeptiert `j` und `J`.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Eingabe soll die Wiederholung beenden, welche nur den aktuellen Versuch?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Prüfe Beenden vor der Rechnung; ungültige Eingabe überspringt den Versuch, gültige Eingabe führt zur Multiplikation.
+
+</details>
 
 <details>
 <summary>Lösungsvorschlag für Program.cs (.NET 10)</summary>
@@ -57,4 +90,16 @@ class Program
 | `abc`, danach gültige Zahlen | Meldung, anschließend neue Eingabe |
 | Antwort `J` | weitere Berechnung |
 
-Setze einen Haltepunkt am Schleifenanfang. Verfolge, wohin `continue` und `break` springen. Zusatz: Zähle die erfolgreichen Berechnungen.
+Setze einen Haltepunkt am Schleifenanfang. Verfolge, wohin `continue` und `break` springen.
+
+## Bonus: Berechnungen zählen
+
+**Intention:** Speichere zusätzliche Informationen über Schleifendurchläufe.
+
+**Lernziel:** Du kannst nur erfolgreiche Rechnungen zählen und den Zähler nach mehreren Versuchen prüfen.
+
+Zähle die erfolgreichen Berechnungen.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-1-eingaben-und-ablauf). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

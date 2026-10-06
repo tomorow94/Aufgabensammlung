@@ -1,5 +1,20 @@
 # 🟣 Aufgabe A02: Adressbuch mit SQL Server und ADO.NET
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Sortieralgorithmen fair vergleichen](A01_Sortieralgorithmen.md)
+
+**Intention:** Dasselbe Kontaktmodell in einer relationalen Datenbank speichern.
+
+**Lernziele:**
+
+- Du kannst SQL-CRUD und parametrisierte ADO.NET-Befehle ausführen.
+- Du kannst Datenbank-ID, Persistenz und Eingabeprüfung getrennt erklären.
+
+**Weiter im Pflichtpfad:** [Dasselbe Adressbuch mit EF Core und LINQ](A03_ORMundLINQ.md)
+
 ## Ziel und Voraussetzungen
 
 Das Adressbuch aus Stufe 3 speichert bisher eine JSON-Datei. Jetzt speicherst du **dieselben Kontakte mit denselben Eigenschaften** in einer relationalen Datenbank. Du lernst SQL zunächst direkt und danach aus C# über ADO.NET.
@@ -49,6 +64,24 @@ DELETE FROM Contacts WHERE Id = 1;
 ```
 
 Die Beispieldatei verwendet in allen Teilen `Id`, nicht wechselnd `CustomerID` oder `ID`. Passe `1` an die tatsächlich vergebene ID an.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Wer vergibt die ID und wie gelangt ein Name sicher in eine SQL-Abfrage?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+IDENTITY vergibt die ID; übergib Eingaben als Parameter und prüfe das Ergebnis nach einem Programmneustart.
+
+</details>
 
 <details>
 <summary>Vollständiges kleines ADO.NET-Beispiel für Program.cs</summary>
@@ -101,6 +134,16 @@ class Program
 
 Nach Hinzufügen existiert der Kontakt mit positiver ID. Änderungen sind nach einem Neustart vorhanden. Ein Name mit Apostroph (`O'Connor`) funktioniert als Parameter. Eine fehlende ID verändert null Zeilen. Telefonnummern behalten führende Nullen. Ungültige Eingaben werden vor dem SQL-Aufruf abgewiesen. Stoppe den SQL-Server-Dienst und prüfe die Fehlermeldung.
 
-Zusatz: Importiere JSON-Kontakte aus Stufe 3, wobei die Datenbank neue IDs vergibt. Ergänze anschließend eine zweite Tabelle mit Fremdschlüssel und untersuche `JOIN`.
+## Bonus: Import und Beziehungen
+
+**Intention:** Erweitere die Datenhaltung über eine einzelne Kontakttabelle hinaus.
+
+**Lernziel:** Du kannst einen JSON-Import mit neuen Datenbank-IDs und später eine Beziehung mit Fremdschlüssel nachvollziehen.
+
+Importiere JSON-Kontakte aus Stufe 3, wobei die Datenbank neue IDs vergibt. Ergänze anschließend eine zweite Tabelle mit Fremdschlüssel und untersuche `JOIN`.
 
 Referenz: [Microsoft.Data.SqlClient](https://learn.microsoft.com/en-us/sql/connect/ado-net/introduction-microsoft-data-sqlclient-namespace).
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-5-daten-und-abfragen). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

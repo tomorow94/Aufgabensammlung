@@ -1,5 +1,20 @@
 # 🟢 Aufgabe A02: Texteingabe und -ausgabe
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Hallo Welt](A01_HalloWelt.md)
+
+**Intention:** Eine eingegebene Zeichenkette in einer Ausgabe wiederverwenden.
+
+**Lernziele:**
+
+- Du kannst einen Text einlesen, speichern und in eine Begrüßung einsetzen.
+- Du kannst leere Eingabe und das Ende des Eingabestroms unterscheiden.
+
+**Weiter im Pflichtpfad:** [Addieren](A03_Addieren.md)
+
 ## Ziel der Aufgabe
 
 Du schreibst ein Programm, das eine **Benutzereingabe** abfragt und sie verwendet, um eine **personalisierte Begrüßung** auszugeben.
@@ -14,6 +29,24 @@ Diese Aufgabe zeigt dir, wie du Eingaben über die Konsole entgegennehmen und we
 - Wie man mit **Zeichenketten-Interpolation** arbeitet
 
 ---
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Information muss zwischen Eingabe und Ausgabe erhalten bleiben?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Speichere ReadLine in einer Variablen; prüfe vor der Verarbeitung, ob die Eingabe null oder leer ist.
+
+</details>
 
 ## Schritt-für-Schritt-Anleitung
 
@@ -65,7 +98,7 @@ class Program
 
 ---
 
-## 💡 Probiere selbst:
+## Weiterüben im Pflichtpfad
 
 - Ändere die Begrüßung in einen anderen Satz.
 - Füge eine zweite Frage hinzu (z. B. Alter) und gib diese auch aus:
@@ -74,6 +107,17 @@ class Program
   string alter = Console.ReadLine() ?? "";
   Console.WriteLine($"Du bist {alter} Jahre alt.");
   ```
+
+
+## Selbst prüfen
+
+`Anna` ergibt die Begrüßung mit Anna. Leere Eingaben werden in der Erweiterung erneut abgefragt. Prüfe mehrere Leerzeichen und den Abbruch der Eingabe. Beobachte `name` im Debugger.
+
+## Bonus: Eingabe wiederholen (nach A06)
+
+**Intention:** Erprobe später eine wiederholte Nachfrage.
+
+**Lernziel:** Nach A06 kannst du eine leere Eingabe mit einer while-Schleife erneut abfragen.
 
 - Sorge dafür, dass leere Eingaben nicht akzeptiert werden:
   ```csharp
@@ -119,7 +163,6 @@ class Program
 
 > 🧠 Mit dieser Aufgabe verstehst du, wie Programme mit dem Benutzer "sprechen". Du wirst das bald für Menüführung, Formulare und Spielsteuerung brauchen!
 
+## Passende Lernquellen
 
-## Selbst prüfen
-
-`Anna` ergibt die Begrüßung mit Anna. Leere Eingaben werden in der Erweiterung erneut abgefragt. Prüfe mehrere Leerzeichen und den Abbruch der Eingabe. Beobachte `name` im Debugger.
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-1-eingaben-und-ablauf). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

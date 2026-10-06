@@ -10,3 +10,5 @@ publish/
 *.db-shm
 *.db-wal
 .build/
+__pycache__/
+*.pyc

@@ -1,5 +1,20 @@
 # 🟠 Aufgabe A02: Person, Eigenschaften, Konstruktor und Enum
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Menüführung mit Klassen & Struktur](A01_KlassenUndStruktur.md)
+
+**Intention:** Ein wiederverwendbares Kontaktmodell mit eigenen Objektzuständen aufbauen.
+
+**Lernziele:**
+
+- Du kannst Person-Objekte über Eigenschaften und Konstruktoren erstellen.
+- Du kannst Enum-Werte und unterschiedliche Zustände zweier Objekte erklären.
+
+**Weiter im Pflichtpfad:** [Adressbuch mit Kontakten und Dateispeicherung](A03_EinfachesAdressbuch.md)
+
 ## Ziel und Voraussetzungen
 
 Du kennst Methoden und das Menüprojekt. Eine **Klasse** beschreibt die Daten und das Verhalten ihrer **Objekte**. Eine Eigenschaft wie `Name` gehört zu einem bestimmten Objekt; eine Methode wie `Greet()` kann dessen Daten verwenden.
@@ -12,6 +27,24 @@ Ein **Konstruktor** wird beim Erstellen mit `new` aufgerufen. Ein **Enum** benen
 2. Definiere `GenderType` vollständig und erstelle mehrere Personen.
 3. Lass jede Person `Greet()` ausführen. Überprüfe ein negatives Alter.
 4. Trenne Dateien für `Person`, `GenderType` und das Programm, sobald das Beispiel läuft.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche Werte gehören zu jeder Person und welche mögliche Angabe soll das Enum beschreiben?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Lege Eigenschaften pro Objekt fest; Unknown an Position 0 bezeichnet eine noch nicht gesetzte Angabe.
+
+</details>
 
 <details>
 <summary>Vollständiges Einstiegsbeispiel für Program.cs (.NET 10)</summary>
@@ -61,4 +94,14 @@ Zwei Personen behalten unterschiedliche Namen und Alter. `Unknown` hat den Zahle
 
 Das Adressbuch ergänzt im nächsten Schritt `Id`, `PhoneNumber` und `Email`. Für dessen bearbeitbare und serialisierbare Kontakte werden die Eigenschaften bewusst auf `get; set;` umgestellt; die Eingaben prüft dann die Anwendung. Erkläre den Unterschied zu den hier unveränderlichen Eigenschaften.
 
-Zusatz: Ein neutrales Enum wie `ContactCategory` eignet sich für eigene Kategorien. Erweitere die Ausgabe oder untersuche zwei Referenzen auf dasselbe Objekt.
+## Bonus: Objekte und Referenzen untersuchen
+
+**Intention:** Erweitere das Modellverständnis durch weitere Objektbeziehungen.
+
+**Lernziel:** Du kannst zwei Referenzen auf dasselbe Objekt von zwei unabhängigen Objekten unterscheiden.
+
+Ein neutrales Enum wie `ContactCategory` eignet sich für eigene Kategorien. Erweitere die Ausgabe oder untersuche zwei Referenzen auf dasselbe Objekt.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-3-struktur-und-versionsgeschichte). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

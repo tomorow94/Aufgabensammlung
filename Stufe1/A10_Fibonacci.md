@@ -1,5 +1,20 @@
 # 🟢 Aufgabe A10: Fibonacci als Zahlenfolge
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Zahlenraten](A09_Zahlenraten.md)
+
+**Intention:** Eine Folge durch wiederholte Zustandsänderungen erzeugen.
+
+**Lernziele:**
+
+- Du kannst die nächsten Fibonacci-Werte mit zwei vorherigen Werten berechnen.
+- Du kannst Anzahl, Startwerte und die int-Grenze des Beispiels begründen.
+
+**Weiter im Pflichtpfad:** [Umrechnung von Einheiten](../Stufe2/A01_UmrechnungVonEinheiten.md)
+
 ## Ziel und Voraussetzungen
 
 Du kennst Schleifen und Variablen. Jetzt lernst du die **`for`-Schleife** an einer Zahlenfolge: Jeder neue Wert ist die Summe der beiden vorherigen. Wir beginnen mit `0, 1, 1, 2, 3, 5, …`.
@@ -11,6 +26,24 @@ Du kennst Schleifen und Variablen. Jetzt lernst du die **`for`-Schleife** an ein
 3. Behandle `1`, `2`, ungültigen Text und Werte außerhalb des Bereichs.
 
 `int` reicht für `F(0)` bis `F(46)`; `F(47)` ist zu groß. Da wir bei null anfangen, entsprechen 47 ausgegebene Werte den Indizes `0–46`. Große Zahlenbereiche sind eine spätere Erweiterung mit `long` oder `BigInteger`.
+
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welche zwei Werte müssen für den nächsten Schritt erhalten bleiben?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Berechne die Summe vor dem Verschieben der beiden Variablen; gib insgesamt genau die verlangte Anzahl Werte aus.
+
+</details>
 
 <details>
 <summary>Lösungsvorschlag für Program.cs (.NET 10)</summary>
@@ -61,4 +94,8 @@ class Program
 
 Beobachte `previous`, `current` und `next` mit F10. `checked` meldet einen Ganzzahlüberlauf, statt unbemerkt falsche Zahlen zu erzeugen.
 
-Nach den Datenstrukturen in Stufe 2 folgt die optionale [Fibonacci-Pyramide](../Stufe2/A06_FibonacciPyramide.md). Dort übst du Listen, verschachtelte Schleifen und Methoden getrennt vom ersten Einstieg.
+**Bonus nach Stufe 2, A05:** Die [Fibonacci-Pyramide](../Stufe2/A06_FibonacciPyramide.md) untersucht eine zusätzliche Darstellung. Intention: bekannte Berechnung und Ausgabe trennen. Lernziel: Methoden, Listen und verschachtelte Schleifen verbinden. Zum Pflichtpfad gehst du zunächst mit Stufe 2, A01 weiter.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-1-eingaben-und-ablauf). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

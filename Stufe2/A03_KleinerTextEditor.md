@@ -1,5 +1,20 @@
 # 🔵 Aufgabe A03: Kleiner Text-Editor
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Primzahlenprüfung](A02_Primzahlen.md)
+
+**Intention:** Den Übergang von flüchtigem Text zu dauerhafter Speicherung verstehen.
+
+**Lernziele:**
+
+- Du kannst Text speichern und nach einem Neustart wieder laden.
+- Du kannst fehlende Datei, Arbeitsverzeichnis und Schreibfehler nachvollziehen.
+
+**Weiter im Pflichtpfad:** [Stoppuhr](A04_Stoppuhr.md)
+
 ## Ziel der Aufgabe
 
 Erstelle ein einfaches Konsolenprogramm, das Texte in eine Datei speichert und wieder laden kann. Du vertiefst dabei das Arbeiten mit **Dateien**, **Benutzereingaben** und **einfacher Menüführung**.
@@ -91,20 +106,23 @@ Diese Aufgabe verlangt, dass du den Code **selbst schreibst**, orientiere dich d
 
 ---
 
-## Weiterführende Ideen
+## Gestufte Hinweise
 
-* Gib dem Benutzer einfaches Feedback durch Meldungen nach Abschließen einer Aktion wie `"Text wurde erfolgreich in '{pfad}' gespeichert."`.
-* Gib dem Benutzer die Möglichkeit, **Dateinamen selbst einzugeben**.
-* Ergänze die Option, einen vorhandenen Text zu **bearbeiten und erneut zu speichern**.
-* Ermögliche das **Löschen** einer Datei.
-* Unterstütze das Speichern mehrerer Texte in verschiedenen Dateien.
-* Nutze **mehrere Methoden** zur sauberen Strukturierung (z. B. `TextSpeichern()`, `TextLaden()`).
-* Ermöglichen Sie dem Benutzer, einfache **Formatierungen** wie Zeilenumbrüche oder Absätze einzufügen.
----
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
 
-> 💡 **Diese Aufgabe bildet die Grundlage für spätere Projekte mit Dateiverwaltung, z. B. Adressbuch oder Notizsystem.**
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
 
----
+Wohin zeigt ein relativer Dateipfad bei deinem Programmstart?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Zeige den vollständigen Pfad an und trenne Speichern von Laden; bestehender Inhalt wird bei WriteAllText überschrieben.
+
+</details>
 
 <details>
 <summary><strong>Möglicher Lösungsvorschlag anzeigen</strong></summary>
@@ -201,3 +219,26 @@ namespace KleinerTextEditor
 ## Selbst prüfen
 
 Speichere zwei Zeilen, starte neu und lade sie wieder. Eine fehlende Datei ergibt eine Meldung. Zeige den vollständigen Pfad an und ändere das Arbeitsverzeichnis: Der relative Speicherort verändert sich. Erneutes Speichern überschreibt den bisherigen Inhalt; weise darauf hin oder frage vorher nach. Eine schreibgeschützte Datei ergibt eine verständliche Fehlermeldung.
+
+## Bonus: Mehrere Dateien verwalten
+
+**Intention:** Erweitere den einfachen Speicherablauf um zusätzliche Dateiaktionen.
+
+**Lernziel:** Du kannst Dateinamen wählen, bestehende Texte bearbeiten und die Folgen von Überschreiben oder Löschen erklären.
+
+
+* Gib dem Benutzer einfaches Feedback durch Meldungen nach Abschließen einer Aktion wie `"Text wurde erfolgreich in '{pfad}' gespeichert."`.
+* Gib dem Benutzer die Möglichkeit, **Dateinamen selbst einzugeben**.
+* Ergänze die Option, einen vorhandenen Text zu **bearbeiten und erneut zu speichern**.
+* Ermögliche das **Löschen** einer Datei.
+* Unterstütze das Speichern mehrerer Texte in verschiedenen Dateien.
+* Ermöglichen Sie dem Benutzer, einfache **Formatierungen** wie Zeilenumbrüche oder Absätze einzufügen.
+---
+
+> 💡 **Diese Aufgabe bildet die Grundlage für spätere Projekte mit Dateiverwaltung, z. B. Adressbuch oder Notizsystem.**
+
+---
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-2-methoden-und-fehlersuche). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

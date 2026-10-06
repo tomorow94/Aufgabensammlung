@@ -1,5 +1,20 @@
 # 🔵 Aufgabe A04: Stoppuhr
 
+## Einordnung und Lernziele
+
+**Status:** Pflicht im Lernfaden.
+
+**Voraussetzungen:** [Kleiner Text-Editor](A03_KleinerTextEditor.md)
+
+**Intention:** Zeitmessung und Zustandswechsel einer vorhandenen Bibliotheksklasse nutzen.
+
+**Lernziele:**
+
+- Du kannst Stopwatch starten, stoppen und zurücksetzen.
+- Du kannst den Unterschied zwischen Fortsetzen und Zurücksetzen beobachten.
+
+**Weiter im Pflichtpfad:** [List, HashSet und Dictionary](A05_Datenstrukturen.md)
+
 ## Ziel der Aufgabe
 
 Erstelle ein einfaches Konsolenprogramm, das wie eine **Stoppuhr** funktioniert. Du lernst, wie du mit **Zeitmessung**, **Menüsteuerung** und **Methoden** arbeitest.
@@ -91,16 +106,23 @@ Die Auswahl erfolgt über eine Menüführung mit `switch` und wird in einer Schl
 
 ---
 
-## Weiterführende Ideen
+## Gestufte Hinweise
 
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
 
-* Gib dem Benutzer die Möglichkeit **Zwischenzeiten** zu erfassen, die separat in einer Liste gespeichert werden
-* Gib dem Benutzer die Möglichkeit, die **Zwischenzeiten** einzusehen
-* Ermögliche das Speichern der Zeitwerte in einer Datei
-* Implementiere eine Funktion, die nach einer gewissen Zeit automatisch stoppt (Timer)
-* Baue eine einfache **GUI** mit **Windows Forms** oder **WPF**
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
 
----
+Was soll ein zweiter Start während einer laufenden Messung bewirken?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Prüfe IsRunning; Reset setzt die Messung auf null, Start nach Stop setzt sie fort.
+
+</details>
 
 <details>
 <summary><strong>Lösungsvorschlag anzeigen</strong></summary>
@@ -182,3 +204,23 @@ namespace Stoppuhr
 ## Selbst prüfen
 
 Start → kurz warten → Stop → Anzeige ergibt eine positive Zeit. Während Stop verändert sich die Zeit nicht. Ein weiterer Start setzt die Messung fort. Reset setzt Zeit auf null und stoppt die Uhr. Doppelter Start/Stop führt nicht zum Absturz. Für einen Neustart mit sofortiger Messung gibt es `Restart()`.
+
+## Bonus: Zwischenzeiten
+
+**Intention:** Verbinde Zeitmessung mit weiteren Daten und einer optionalen Darstellung.
+
+**Lernziel:** Du kannst nach A05 Zwischenzeiten als Liste verwalten und mit dem Datei-Wissen aus A03 speichern.
+
+
+
+* Gib dem Benutzer die Möglichkeit **Zwischenzeiten** zu erfassen, die separat in einer Liste gespeichert werden
+* Gib dem Benutzer die Möglichkeit, die **Zwischenzeiten** einzusehen
+* Ermögliche das Speichern der Zeitwerte in einer Datei
+* **Bonus nach zusätzlicher Recherche:** Untersuche einen Timer. Intention: zeitgesteuerte Ereignisse kennenlernen. Lernziel: Zeitmessung von automatischem Auslösen unterscheiden.
+* **Bonus außerhalb des Konsolenpfads:** Eine Windows-Forms- oder WPF-Oberfläche setzt weitere UI-Kenntnisse voraus. Intention: eine andere Darstellung erproben. Lernziel: bekannte Stoppuhr-Aktionen auf Ereignisse einer Desktopoberfläche abbilden.
+
+---
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-2-methoden-und-fehlersuche). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.

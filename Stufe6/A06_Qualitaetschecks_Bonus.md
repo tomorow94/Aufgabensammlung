@@ -1,5 +1,20 @@
 # 🔴 Bonus A06: Kostenlose Qualitäts- und Sicherheitschecks auf GitHub
 
+## Einordnung und Lernziele
+
+**Status:** Bonus (optional; keine Voraussetzung für spätere Pflichtaufgaben).
+
+**Voraussetzungen:** [Unit- und Integrationstests für das Adressbuch](A02_Testing.md), [Bestehendes GitHub-Projekt und CI weiterentwickeln](A04_GitHub.md)
+
+**Intention:** Die Aussage und Grenzen zusätzlicher automatischer Analysen bewerten.
+
+**Lernziele:**
+
+- Du kannst passende kostenlose Checks für dein Repository auswählen und konfigurieren.
+- Du kannst einen Befund prüfen und Scan-Erfolg von einem Quality Gate unterscheiden.
+
+**Weiter im Pflichtpfad:** [Adressbuch mit Datenbank bereitstellen](A05_Deployment.md)
+
 ## Ziel und Voraussetzungen
 
 Du hast die Tests und GitHub Actions aus [A04](./A04_GitHub.md) eingerichtet. Ergänze dein bestehendes Adressbuch um automatische Prüfungen und lerne, ihre Ergebnisse zu bewerten. Diese Aufgabe ist optional; beginne mit einem kleinen, verständlichen Satz von Checks.
@@ -95,6 +110,24 @@ Dieser Befehl untersucht die Git-Historie; `gitleaks dir --redact .` untersucht 
 
 Bei einem echten Fund sperrst bzw. rotierst du die Zugangsdaten beim Anbieter. Eine Datei zu löschen macht ein veröffentlichtes Geheimnis nicht wieder geheim. Dokumentiere im Issue oder PR nur den Fundort und die Behebung, nicht den geheimen Wert.
 
+## Gestufte Hinweise
+
+Versuche zuerst eine eigene Lösung. Öffne bei Bedarf zunächst Hinweis 1 und erst danach Hinweis 2; die vorhandenen Beispiele bzw. Referenzen dienen anschließend zum Vergleichen.
+
+<details>
+<summary>Hinweis 1: Denkanstoß</summary>
+
+Welchen Fehler soll der neue Check erkennen, den dein Build allein nicht erkennt?
+
+</details>
+
+<details>
+<summary>Hinweis 2: Vorgehensweise</summary>
+
+Beginne mit einem lokalen .NET-Check; aktiviere einen Dienst erst mit passendem Tarif, Projektpfad und einer klaren Auswertung.
+
+</details>
+
 ## Selbst prüfen
 
 - Eine absichtlich veränderte Einrückung lässt die Formatprüfung scheitern. Nach der Korrektur wird sie grün.
@@ -105,3 +138,7 @@ Bei einem echten Fund sperrst bzw. rotierst du die Zugangsdaten beim Anbieter. E
 - Du kannst erklären, warum ein grüner Scan fachliche Tests und ein Review weiterhin braucht.
 
 Abgabe: Konfiguration, mindestens ein nachvollziehbarer Verbesserungs-PR und eine kurze Auswertung der Ergebnisse. Aktiviere zunächst wenige Checks und baue sie aus, wenn du ihre Meldungen sinnvoll bearbeiten kannst.
+
+## Passende Lernquellen
+
+[Leseempfehlung für diesen Lernschritt](../Referenzen/Lernquellen.md#stufe-6-http-tests-und-webseite). Wähle den dort genannten Abschnitt zur aktuellen Aufgabe und probiere ihn in deinem eigenen Programm aus.
