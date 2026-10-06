@@ -42,6 +42,8 @@ Die [Debugging-Arbeitsweise](./Referenzen/Debugging.md) wird in Stufe 2, A01 pra
 
 ## Aufgaben und empfohlene Reihenfolge
 
+Bonus-Aufgaben stehen direkt bei der passenden Stufe. Bearbeite sie erst nach ihren Voraussetzungen und kehre anschließend zum angegebenen Pflichtschritt zurück. Du kannst alle Bonus-Aufgaben auslassen; die Aufgabennummern bleiben erhalten.
+
 ### 🟢 Grundlagen
 
 Erste Programme, Eingaben, Bedingungen und Schleifen. Der Zahlenvergleich kommt vor den komplexeren Programmen.
@@ -67,6 +69,12 @@ Eigene Planung, reine Methoden, Debugging, Dateizugriffe, Zeitmessung und faire 
 - [Aufgabe A04: Stoppuhr](./Stufe2/A04_Stoppuhr.md)
 - [Aufgabe A05: List, HashSet und Dictionary](./Stufe2/A05_Datenstrukturen.md)
 
+#### Bonus (optional)
+
+| Bonus | Voraussetzungen | Intention und Lernziel |
+| --- | --- | --- |
+| [Bonus A06: Fibonacci-Pyramide](./Stufe2/A06_FibonacciPyramide.md) | Fibonacci und Sammlungen | Methoden, Listen und verschachtelte Schleifen in einer zusätzlichen Darstellung verbinden |
+
 ### 🟠 Objektorientierung und Adressbuch
 
 Klassen, Objekte, Eigenschaften und Schnittstellen. Das Adressbuch beginnt in der Konsole, erhält Dateispeicherung und wird anschließend ohne Verhaltensänderung aufgeräumt.
@@ -84,6 +92,12 @@ Tic-Tac-Toe, Hangman und gekapselte Kontologik festigen gültige Zustandsänderu
 - [Aufgabe A01: Tic Tac Toe – Einführung in Spielmechaniken, Arrays und Entscheidungslogik](./Stufe4/A01_TicTacToe.md)
 - [Aufgabe A02: Hangman](./Stufe4/A02_Hangman.md)
 - [Aufgabe A03: Einfaches Bankkonto-System](./Stufe4/A03_Bankkonto.md)
+
+#### Bonus (optional)
+
+| Bonus | Voraussetzungen | Intention und Lernziel |
+| --- | --- | --- |
+| [Bonus A04: Hintergrundberechnung](./Stufe4/A04_Hintergrundaufgabe.md) | Methoden, Primzahlen und Spielzustände | CPU-Arbeit, Fortschritt und kooperativen Abbruch unterscheiden |
 
 ### 🟣 Algorithmen und Datenbanken
 
@@ -103,17 +117,13 @@ Dasselbe Modell und dieselbe Datenhaltung über HTTP, Tests, Webseite, CI und De
 - [Aufgabe A04: Bestehendes GitHub-Projekt und CI weiterentwickeln](./Stufe6/A04_GitHub.md)
 - [Aufgabe A05: Adressbuch mit Datenbank bereitstellen](./Stufe6/A05_Deployment.md)
 
-## Bonus: optionale Abzweigungen
-
-Die Nummern der bestehenden Aufgaben bleiben erhalten. Bearbeite die folgenden Aufgaben erst nach ihren Voraussetzungen; kehre danach zum angegebenen Pflichtschritt zurück. Du kannst alle Bonus-Aufgaben auslassen.
+#### Bonus (optional)
 
 | Bonus | Voraussetzungen | Intention und Lernziel |
 | --- | --- | --- |
-| [Stufe 2, A06: Fibonacci-Pyramide](./Stufe2/A06_FibonacciPyramide.md) | Fibonacci und Sammlungen | Methoden, Listen und verschachtelte Schleifen in einer zusätzlichen Darstellung verbinden |
-| [Stufe 4, A04: Hintergrundberechnung](./Stufe4/A04_Hintergrundaufgabe.md) | Methoden, Primzahlen und Spielzustände | CPU-Arbeit, Fortschritt und kooperativen Abbruch unterscheiden |
-| [Stufe 6, A06: Qualitätschecks](./Stufe6/A06_Qualitaetschecks_Bonus.md) | Tests und GitHub Actions | kostenlose Analysen einrichten, Befunde bewerten und ihre Grenzen erklären |
-| [Stufe 6, A07: Barrierefreiheit](./Stufe6/A07_Barrierefreiheit_Bonus.md) | funktionierende Webseite mit grundlegender Tastaturbedienung | zusätzliche Bedienweisen, zugeordnete Fehler und dynamische Meldungen prüfen |
-| [Stufe 6, A08: SQL-Server-Tests](./Stufe6/A08_SQLServerTests_Bonus.md) | EF, Migrationen, HTTP-Tests und lokale Testinstanz | providerspezifisches Verhalten und Migrationen mit isolierten Datenbanken absichern |
+| [Bonus A06: Qualitätschecks](./Stufe6/A06_Qualitaetschecks_Bonus.md) | Tests und GitHub Actions | kostenlose Analysen einrichten, Befunde bewerten und ihre Grenzen erklären |
+| [Bonus A07: Barrierefreiheit](./Stufe6/A07_Barrierefreiheit_Bonus.md) | funktionierende Webseite mit grundlegender Tastaturbedienung | zusätzliche Bedienweisen, zugeordnete Fehler und dynamische Meldungen prüfen |
+| [Bonus A08: SQL-Server-Tests](./Stufe6/A08_SQLServerTests_Bonus.md) | EF, Migrationen, HTTP-Tests und lokale Testinstanz | providerspezifisches Verhalten und Migrationen mit isolierten Datenbanken absichern |
 
 ## Prüfen statt nur kopieren
 
