@@ -140,7 +140,7 @@ python tools/validate_material.py --compile
 
 Die automatisierten API-Tests benötigen keinen lokalen SQL Server; sie verwenden pro Test eine isolierte relationale SQLite-Datenbank. SQL-Server-Migrationen und das Docker-Deployment werden zusätzlich in der jeweiligen Entwicklungsumgebung geprüft. Mit optionalem Node.js (20+) kannst du zusätzlich `node --test tools/frontend.test.cjs` ausführen; die Tests prüfen Formularerhalt bei Fehlern und HTTP-Statusbehandlung. Die Webseite selbst benötigt weiterhin kein Node.js.
 
-Die Materialprüfung kontrolliert lokale Links, Markdown-Codeblöcke, vollständige Konsolenbeispiele und bekannte Grenzfälle. Sie prüft außerdem Lernziele, Hinweise, Aufgabenanzahl und die Reihenfolge des Pflichtpfads; Pflichtaufgaben dürfen keinen Bonus voraussetzen. Bonusabschnitte benötigen Intention und Lernziel. Fragmente werden als solche behandelt.
+Die Materialprüfung kontrolliert lokale Links einschließlich Abschnittsankern und genauer Pfadschreibweise, Markdown-Codeblöcke, vollständige Konsolenbeispiele und bekannte Grenzfälle. Sie prüft außerdem Lernziele, Hinweise, Aufgabenanzahl und die Reihenfolge des Pflichtpfads in Aufgaben und README; Pflichtaufgaben dürfen keinen Bonus voraussetzen. Bonusabschnitte benötigen Intention und Lernziel. Fragmente werden als solche behandelt. Externe Webseiten und deren Verfügbarkeit werden dabei nicht automatisch geprüft.
 
 ## Referenzen
 

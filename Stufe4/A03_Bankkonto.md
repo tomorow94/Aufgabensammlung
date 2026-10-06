@@ -46,7 +46,7 @@ Dabei lernen Sie:
      - Programm beenden
 
 3. **Eingabevalidierung**
-   - Es soll sichergestellt werden, dass keine negativen Beträge eingezahlt oder abgehoben werden.
+   - Ein- und Auszahlungen müssen größer als `0` sein; negative Beträge und `0` werden abgewiesen.
    - Das Konto darf nicht ins **Minus** fallen.
 
 ---

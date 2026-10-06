@@ -32,18 +32,20 @@ Die Felder und der Tabellenname bleiben aus A02 erhalten. Wechsle nicht zu einem
 
 ## Projekt vorbereiten
 
-Vom Wurzelordner deiner eigenen Sammlung aus:
+Für deine eigene Umsetzung erstellst du im Ordner deiner Projekte eine Konsolenanwendung und installierst das Paket. Übernimm dein Kontaktmodell aus Stufe 3 und lege den Context selbst an:
 
 ```shell
 dotnet new console -n AddressBook.Ef --framework net10.0
+dotnet add AddressBook.Ef package Microsoft.EntityFrameworkCore.SqlServer --version 10.0.0
+```
+
+Wenn du stattdessen das folgende Referenzbeispiel ausprobieren möchtest, erstelle `AddressBook.Ef` vom Wurzelordner **dieser Aufgabensammlung** aus und referenziere das mitgelieferte Datenprojekt:
+
+```shell
 dotnet add AddressBook.Ef reference Beispiele/Adressbuch/Data/Data.csproj
 ```
 
-Bei deinem eigenen Projekt installierst du stattdessen das Paket und legst Modell und Context selbst an:
-
-```shell
-dotnet add AddressBook.Ef package Microsoft.EntityFrameworkCore.SqlServer --version 10.0.0
-```
+Die Referenz zum Datenprojekt stellt dessen EF-Paket und das Modell transitiv bereit. Die folgenden `using AddressBook.Core;` und `using AddressBook.Data;` beziehen sich auf diese Referenz; bei deiner eigenen Umsetzung verwendest du deine eigenen Namespaces.
 
 ## Gestufte Hinweise
 
@@ -102,7 +104,7 @@ Das Beispiel setzt die bereits angelegte Tabelle aus A02 voraus. Es erstellt und
 
 ## Schemaerstellung und Migrationen
 
-Ein ORM legt Tabellen **nicht allein durch die Klassendefinition** an. Die vorhandene Tabelle aus A02 kann ohne Neuerstellung verwendet werden. Für eine **frische** Datenbank enthält die Referenzanwendung eine initiale Migration:
+Ein ORM legt Tabellen **nicht allein durch die Klassendefinition** an. Die vorhandene Tabelle aus A02 kann ohne Neuerstellung verwendet werden. Für eine **frische** Datenbank enthält die Referenzanwendung eine Initialmigration und eine anschließende Migration für die Alters- und Enum-Regeln. `database update` wendet beide an. Vom Wurzelordner dieser Aufgabensammlung aus:
 
 ```shell
 cd Beispiele/Adressbuch
@@ -112,7 +114,7 @@ dotnet ef database update --project Data --startup-project Api
 
 Führe die initiale Migration nicht auf der bereits manuell angelegten `Contacts`-Tabelle aus: Sie würde dieselbe Tabelle erneut anlegen wollen. Für das Testen der Referenzmigration wähle mit der Umgebungsvariable `ConnectionStrings__AddressBook` eine neue Datenbank, z. B. `AddressBookMigrationDemo`. Die API kann die vorhandene A02-Datenbank unabhängig davon normal verwenden.
 
-Wenn du danach das Schema ändern willst, lege eine weitere Migration an:
+**Bonus: Schemaänderung.** **Intention:** Untersuche die Weiterentwicklung einer bereits durch Migrationen verwalteten Datenbank. **Lernziel:** Du kannst eine Modelländerung als Migration erzeugen und auf eine Entwicklungsdatenbank anwenden. Wenn du beispielsweise ein Notizfeld ergänzen willst, ändere zuerst das Modell und dessen Konfiguration und lege dann eine weitere Migration an. Ohne Modelländerung würde die neue Migration keine entsprechende Spalte hinzufügen. Die folgenden Befehle laufen weiterhin in `Beispiele/Adressbuch`:
 
 ```shell
 dotnet ef migrations add AddContactNote --project Data --startup-project Api

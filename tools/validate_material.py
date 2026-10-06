@@ -1,20 +1,67 @@
 """Prüft Lehrmaterial und ausführbare Konsolenbeispiele ohne zusätzliche Python-Pakete.
 
 Vom Repository-Wurzelordner: python tools/validate_material.py --compile
-Zuvor die Adressbuch-Solution bauen, damit deren Referenzen verfügbar sind.
+Zuvor die Adressbuch-Solution in Release bauen, damit deren Referenzen verfügbar sind:
+dotnet build Beispiele/Adressbuch/Adressbuch.slnx --configuration Release
 """
 from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import subprocess
 import tempfile
+import unicodedata
 from pathlib import Path
 from urllib.parse import unquote
 
 ROOT = Path(__file__).resolve().parents[1]
 FRAGMENT_DOCUMENTS = {"Stufe3/A01_KlassenUndStruktur.md"}
+
+
+def markdown_anchors(text: str) -> set[str]:
+    """Abschnittsanker der hier verwendeten ATX-Überschriften (GitHub-Regeln)."""
+    anchors: set[str] = set()
+    in_code = False
+    for line in text.splitlines():
+        if re.match(r"^\s*`{3,}", line):
+            in_code = not in_code
+            continue
+        if in_code:
+            continue
+        heading = re.match(r"^#{1,6}\s+(.+?)(?:\s+#+)?\s*$", line)
+        if heading:
+            title = re.sub(r"\[([^\]]+)\]\([^)]*\)", r"\1", heading.group(1)).lower()
+            title = re.sub(r"\*+|`+|~+", "", title)
+            title = re.sub(r"(?<!\w)_([^_]+)_(?!\w)", r"\1", title)
+            base = "".join(c for c in title if c in " -_" or unicodedata.category(c)[0] in "LNM")
+            base = base.replace(" ", "-")
+            anchor = base
+            suffix = 0
+            while anchor in anchors:
+                suffix += 1
+                anchor = f"{base}-{suffix}"
+            anchors.add(anchor)
+    # Benutzerdefinierte Anker zählen nicht für die Nummerierung der Überschriften.
+    for tag in re.findall(r"<a\s+[^>]*>", text):
+        anchors.update(re.findall(r'(?:name|id)=["\']([^"\']+)["\']', tag))
+    return anchors
+
+
+def exact_local_case(path: Path) -> bool:
+    """Erkennt auch unter Windows Pfade, die auf Linux/GitHub falsch wären."""
+    normalized = Path(os.path.normpath(path))
+    try:
+        parts = normalized.relative_to(ROOT).parts
+    except ValueError:
+        return False
+    current = ROOT
+    for part in parts:
+        if part not in {entry.name for entry in current.iterdir()}:
+            return False
+        current /= part
+    return True
 
 
 def curriculum_check() -> None:
@@ -81,6 +128,14 @@ def curriculum_check() -> None:
     expected_count = f"{len(required)} Pflichtaufgaben und {len(bonus)} eigenständige Bonus-Aufgaben"
     if expected_count not in readme:
         errors.append("README: Aufgabenanzahl stimmt nicht")
+    readme_required = [
+        (ROOT / unquote(target.split("#", 1)[0])).resolve()
+        for target in re.findall(r"\]\(([^\s)]+)\)", readme)
+        if not re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", target)
+        and (ROOT / unquote(target.split("#", 1)[0])).resolve() in required
+    ]
+    if readme_required != required:
+        errors.append("README: Pflichtaufgaben fehlen, sind doppelt oder stehen nicht in Lernreihenfolge")
     if errors:
         raise RuntimeError("\n".join(errors))
     print(f"Lernfaden, Lernziele und Bonus-Trennung: OK ({len(required)} Pflicht, {len(bonus)} Bonus)")
@@ -89,6 +144,9 @@ def curriculum_check() -> None:
 def markdown_check() -> list[tuple[Path, str]]:
     examples = []
     errors = []
+    anchor_cache: dict[Path, set[str]] = {}
+    links = 0
+    section_links = 0
     for path in sorted(ROOT.rglob("*.md")):
         if any(part in {".git", ".build", "bin", "obj"} for part in path.parts):
             continue
@@ -118,11 +176,25 @@ def markdown_check() -> list[tuple[Path, str]]:
                 errors.append(f"{path.relative_to(ROOT)}:{number}: unerwartetes </details>")
                 details = 0
             for target in re.findall(r"\]\(([^\s)]+)(?:\s+[^)]*)?\)", line):
-                if re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", target) or target.startswith("#"):
+                if re.match(r"[a-zA-Z][a-zA-Z0-9+.-]*:", target) or target.startswith("//"):
                     continue
-                local = unquote(target.split("#", 1)[0]).strip("<>")
-                if local and not (path.parent / local).exists():
+                local, _, fragment = target.strip("<>").partition("#")
+                local = unquote(local)
+                destination = path if not local else (
+                    (ROOT / local.lstrip("/")) if local.startswith("/") else (path.parent / local)
+                )
+                links += 1
+                if not destination.exists():
                     errors.append(f"{path.relative_to(ROOT)}:{number}: defekter Link {target}")
+                    continue
+                if not exact_local_case(destination):
+                    errors.append(f"{path.relative_to(ROOT)}:{number}: falsche Pfadschreibweise {target}")
+                if fragment and destination.suffix.lower() == ".md":
+                    section_links += 1
+                    if destination not in anchor_cache:
+                        anchor_cache[destination] = markdown_anchors(destination.read_text(encoding="utf-8"))
+                    if unquote(fragment) not in anchor_cache[destination]:
+                        errors.append(f"{path.relative_to(ROOT)}:{number}: fehlender Abschnitt {target}")
         if in_code:
             errors.append(f"{path.relative_to(ROOT)}: nicht geschlossener Codeblock")
         if details:
@@ -131,6 +203,7 @@ def markdown_check() -> list[tuple[Path, str]]:
             errors.append(f"{path.relative_to(ROOT)}: Lernkontrolle fehlt")
     if errors:
         raise RuntimeError("\n".join(errors))
+    print(f"Lokale Verweise inklusive Pfadschreibweise: OK ({links}, davon {section_links} Abschnittsverweise)")
     return examples
 
 
@@ -150,7 +223,7 @@ def dotnet_references() -> tuple[Path, list[Path]]:
     # Referenzen aus dem vorher gebauten Abschlussprojekt für SQL- und EF-Beispiele.
     assets_path = ROOT / "Beispiele/Adressbuch/Api/obj/project.assets.json"
     if not assets_path.exists():
-        raise RuntimeError("Zuerst dotnet build Beispiele/Adressbuch/Adressbuch.slnx ausführen.")
+        raise RuntimeError("Zuerst dotnet build Beispiele/Adressbuch/Adressbuch.slnx --configuration Release ausführen.")
     assets = json.loads(assets_path.read_text(encoding="utf-8"))
     for target in assets["targets"].values():
         for name, library in target.items():

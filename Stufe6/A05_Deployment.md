@@ -28,7 +28,7 @@ Voraussetzungen: Docker mit Linux-Containern (unter Windows etwa Docker Desktop 
 3. Erstelle das Datenbankschema durch eine Migration, bevor die Anwendung startet.
 4. Speichere die Datenbank in einem Volume, damit Daten Containerneustarts überleben.
 5. Konfiguriere Verbindung und Passwort außerhalb des Quellcodes.
-6. Prüfe Hinzufügen, Neustart, Lesen, Bearbeiten und Löschen.
+6. Prüfe Hinzufügen, Neustart, Lesen und Löschen über die Webseite. Prüfe Bearbeiten mit einem PUT-Request aus [A01](./A01_REST_API.md); die Bearbeitungsoberfläche aus dem Bonus zu A03 ist dafür keine Voraussetzung.
 
 ## Vollständiger lokaler Weg
 

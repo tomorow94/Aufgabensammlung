@@ -18,7 +18,7 @@
 
 ## Einleitung
 
-Bisher wurden einzelne Programme als eigenständige Konsolenanwendungen geschrieben. Diese Vorgehensweise eignet sich für den Einstieg, aber bei wachsender Anzahl von Programmen wird die Verwaltung und Erweiterung zunehmend unübersichtlich. Um dies zu verbessern, wird nun ein **strukturiertes Menü-Projekt** erstellt, das als zentraler Einstiegspunkt für alle bisherigen Programme dient.
+Bisher wurden einzelne Programme als eigenständige Konsolenanwendungen geschrieben. Diese Vorgehensweise eignet sich für den Einstieg, aber bei wachsender Anzahl von Programmen wird die Verwaltung und Erweiterung zunehmend unübersichtlich. Um dies zu verbessern, wird nun ein **strukturiertes Menü-Projekt** erstellt, das als zentraler Einstiegspunkt für schrittweise übernommene Programme dient.
 
 ### **Warum verwenden wir eine Ordnerstruktur und mehrere Klassen?**
 - **Modularität:** Jedes Programm wird als separate **Klasse** organisiert, was eine saubere Trennung von Verantwortlichkeiten ermöglicht.
@@ -32,7 +32,7 @@ Bisher wurden einzelne Programme als eigenständige Konsolenanwendungen geschrie
 - **Bessere Lesbarkeit für andere Entwickler:** Falls das Projekt später öffentlich gemacht oder mit anderen Entwicklern geteilt wird, ist ein englischer Code allgemein verständlicher.
 
 ### **Versionsverwaltung mit GitHub**
-Dieses Projekt wird das erste sein, das mit **GitHub** verwaltet wird. Dadurch lernen Sie:
+Dein eigenes Menüprojekt wird ab hier mit **Git und GitHub** verwaltet. Falls du bereits in einem Repository arbeitest, führe dessen Versionsgeschichte weiter. Dadurch lernst du:
 - **Versionskontrolle:** Änderungen werden nachvollziehbar gespeichert.
 - **Backup und Zusammenarbeit:** Der Code kann jederzeit wiederhergestellt oder mit anderen geteilt werden.
 - **Commit-Struktur und Branching:** Änderungen können schrittweise erfasst und dokumentiert werden.
@@ -41,7 +41,7 @@ Dieses Projekt wird das erste sein, das mit **GitHub** verwaltet wird. Dadurch l
 
 ## Ziel
 
-In dieser Aufgabe sollen Sie eine **strukturierte Konsolenanwendung** entwickeln, die als Menü für bisherige Programme dient. Dabei werden alle bisherigen Programme als **eigene Klassen** in einem neuen "Menü-Projekt" abgelegt. Dadurch wird das **Verständnis für Klassen, Methoden und eine sinnvolle Code-Struktur** vertieft.
+In dieser Aufgabe entwickelst du eine **strukturierte Konsolenanwendung**, die als Menü für bisherige Programme dient. Zunächst werden zwei Programme aus dem Pflichtpfad als **eigene Klassen** in einem neuen „Menü-Projekt“ abgelegt. Weitere Programme kannst du danach ergänzen; ausgelassene Bonus-Aufgaben musst du dafür nicht nachholen. Dadurch wird das **Verständnis für Klassen, Methoden und eine sinnvolle Code-Struktur** vertieft.
 
 ## Anforderungen
 
@@ -50,7 +50,7 @@ In dieser Aufgabe sollen Sie eine **strukturierte Konsolenanwendung** entwickeln
    - Definieren Sie eine **sinnvolle Ordnerstruktur**, in der die bisherigen Programme abgelegt werden.
 
 2. **Bisherige Programme als eigene Klassen einbinden**
-   - Zunächst zwei bisherige Programme (z. B. "Hello World", "Guess the Number", "Stopwatch") soll in einer eigenen **Klasse** innerhalb des Menü-Projekts liegen.
+   - Übernimm zunächst zwei bisherige Programme (z. B. "Hello World" und "Guess the Number"), jeweils in eine eigene **Klasse** innerhalb des Menü-Projekts. Weitere Programme folgen schrittweise.
    - Jede dieser Klassen muss eine **öffentliche Methode `Start()`** enthalten, die das jeweilige Programm startet.
 
 3. **Menüführung implementieren**
@@ -59,7 +59,7 @@ In dieser Aufgabe sollen Sie eine **strukturierte Konsolenanwendung** entwickeln
    - Die Programme werden durch die **jeweilige `Start()`-Methode** aufgerufen.
 
 4. **Code-Struktur & Ordnerorganisation**
-   - Erstellen Sie einen Ordner `Programs`, in dem alle bisherigen Programme als **eigene Klassen** abgelegt werden.
+   - Erstelle einen Ordner `Programs` für die übernommenen Programmklassen.
    - Strukturieren Sie den Code **modular**, sodass das Menü leicht erweiterbar bleibt.
 
 ---
@@ -183,8 +183,8 @@ Diese Aufgabe bildet die Grundlage für ein gut strukturiertes Projekt. Sie för
 
 Nächster Schritt:
 
-- Erstellen Sie ein privates Repository auf GitHub, um die Versionskontrolle für dieses Projekt einzuführen.
-- Fügen Sie alle Projektdateien hinzu und machen Sie den ersten Commit.
+- Erstelle für dein eigenes Projekt ein privates Repository auf GitHub, falls noch keines vorhanden ist. Initialisiere ein vorhandenes Repository nicht erneut.
+- Lege vor dem ersten Commit eine `.gitignore` an, insbesondere für `bin`, `obj` und `.vs`. Füge die Quelldateien und Projektdateien hinzu.
 - Dokumentieren Sie Änderungen mit sinnvollen Commit-Nachrichten.
 
 ## Schrittweise Übernahme
@@ -202,7 +202,7 @@ Ein gültiger Menüpunkt startet sein Programm und kehrt anschließend ins Menü
 **Lernziel:** Du kannst nach A04 explizite Registrierung und Reflection unterscheiden; eine Desktop-GUI erfordert zusätzliche UI-Kenntnisse außerhalb dieses Lernfadens.
 
  - Dynamische Programmliste: Laden Sie die vorhandenen Klassen automatisch, statt sie manuell im switch-Statement zu hinterlegen.
- - Reflexion nutzen: Durch Reflection (Type.GetType()) könnten neue Programme automatisch im Menü erscheinen, ohne den Code ändern zu müssen.
+ - Reflection nutzen: Untersuche nach A04 die Typen einer Assembly und filtere gezielt die Implementierungen deiner Schnittstelle. `Type.GetType()` löst einen bekannten Typnamen auf; es entdeckt keine Programmliste automatisch.
  - **Desktopoberfläche außerhalb des Pflichtpfads:** Windows Forms oder WPF setzen zusätzliche UI-Kenntnisse voraus. Intention: dieselben Programme mit einer anderen Oberfläche aufrufen. Lernziel: bekannte `Start()`-Aufrufe auf Button-Ereignisse abbilden.
 
 ## Passende Lernquellen

@@ -138,6 +138,7 @@ namespace KleinerTextEditor
         static void Main(string[] args)
         {
             string dateiPfad = "textdatei.txt";
+            Console.WriteLine($"Dateipfad: {Path.GetFullPath(dateiPfad)}");
             while (true)
             {
                 Console.WriteLine("Kleiner Text-Editor");
@@ -180,6 +181,7 @@ namespace KleinerTextEditor
             try
             {
                 // WriteAllText überschreibt eine bereits vorhandene Datei vollständig.
+                if (File.Exists(pfad)) Console.WriteLine("Die vorhandene Datei wird überschrieben.");
                 File.WriteAllText(pfad, text);
                 Console.WriteLine($"Text wurde erfolgreich in '{pfad}' gespeichert.");
             }
@@ -227,12 +229,11 @@ Speichere zwei Zeilen, starte neu und lade sie wieder. Eine fehlende Datei ergib
 **Lernziel:** Du kannst Dateinamen wählen, bestehende Texte bearbeiten und die Folgen von Überschreiben oder Löschen erklären.
 
 
-* Gib dem Benutzer einfaches Feedback durch Meldungen nach Abschließen einer Aktion wie `"Text wurde erfolgreich in '{pfad}' gespeichert."`.
 * Gib dem Benutzer die Möglichkeit, **Dateinamen selbst einzugeben**.
 * Ergänze die Option, einen vorhandenen Text zu **bearbeiten und erneut zu speichern**.
 * Ermögliche das **Löschen** einer Datei.
 * Unterstütze das Speichern mehrerer Texte in verschiedenen Dateien.
-* Ermöglichen Sie dem Benutzer, einfache **Formatierungen** wie Zeilenumbrüche oder Absätze einzufügen.
+* **Zusätzliche Textgestaltung:** Verwende ein ausdrückliches Abschlusswort für die Eingabe, sodass auch leere Absätze gespeichert werden können. Mehrere Textzeilen gehören bereits zum normalen Speichern; im Beispiel beendet eine leere Zeile die Eingabe.
 ---
 
 > 💡 **Diese Aufgabe bildet die Grundlage für spätere Projekte mit Dateiverwaltung, z. B. Adressbuch oder Notizsystem.**

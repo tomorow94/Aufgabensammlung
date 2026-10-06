@@ -1,5 +1,7 @@
 # C# Cheat Sheet – Grundlagen & Syntax
 
+Die kurzen Codeblöcke zeigen einzelne Syntaxbausteine und sind überwiegend Fragmente für eine vorhandene Methode oder Klasse. Das vereinfachte Klassenbeispiel ist kein Ersatz für das gemeinsame [Kontaktmodell ab Stufe 3](../Stufe3/A03_EinfachesAdressbuch.md#ziel-und-voraussetzungen).
+
 ## Inhaltsverzeichnis
 
 - [Grundstruktur eines Programms](#grundstruktur-eines-programms)
@@ -155,7 +157,7 @@ HashSet<int> uniqueZahlen = new HashSet<int> { 1, 2, 3 };
 class Person
 {
     public string Name = "";
-    public int Alter;
+    public int Age;
 
     public void Begruessen()
     {

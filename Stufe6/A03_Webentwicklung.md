@@ -41,7 +41,7 @@ dotnet run --project Beispiele/Adressbuch/Api -- --urls http://localhost:5000
 
 Öffne `http://localhost:5000`. Die Datenbankvorbereitung steht in A01; die Webseite wird nicht direkt als `file://` geöffnet.
 
-**Separate Herkunft als Untersuchung:** Starte im Ordner `Api/wwwroot` einen lokalen statischen Server, z. B. mit Python:
+**Bonus: Separate Herkunft als Untersuchung.** **Intention:** Untersuche die Browserregeln bei getrennten Hosts oder Ports. **Lernziel:** Du kannst Origin, CORS und einen Preflight am eigenen Request erklären. Der gemeinsame Start oben erfüllt die Pflichtaufgabe vollständig. Starte für diese Vertiefung im Ordner `Beispiele/Adressbuch/Api/wwwroot` einen lokalen statischen Server, z. B. mit Python:
 
 ```shell
 python -m http.server 5500 --bind localhost
@@ -91,9 +91,9 @@ Das Script wird mit `defer` geladen, sodass die DOM-Elemente bereits verfügbar 
 | POST erfolgreich, danach Listenabruf fehlgeschlagen | Meldung unterscheidet gespeicherten Kontakt und fehlende Aktualisierung |
 | Name enthält `<b>Alice</b>` | Text erscheint als Text, nicht als HTML |
 | Bedienung nur mit Tastatur | Formular und Buttons erreichbar, Fokus sichtbar |
-| separater Server auf 5500 | Preflight und Request funktionieren |
+| **Bonus:** separater Server auf 5500 | Preflight und Request funktionieren |
 
-Öffne im Browser die Netzwerkansicht: Prüfe JSON-Felder, Statuscode, OPTIONS und Antwortinhalt. Node.js, npm und ein Frontendframework sind für diese einfache Webseite nicht erforderlich.
+Öffne im Browser die Netzwerkansicht: Prüfe JSON-Felder, Statuscode und Antwortinhalt; im Bonusversuch mit separater Herkunft zusätzlich den OPTIONS-Preflight. Node.js, npm und ein Frontendframework sind für diese einfache Webseite nicht erforderlich.
 
 Grundlegende Beschriftungen, native Buttons und sichtbarer Fokus sind Teil dieser Pflichtaufgabe. Die zusätzliche Prüfung dynamischer Meldungen, Feldfehler und Screenreader-Bedienung folgt in [Bonus A07](./A07_Barrierefreiheit_Bonus.md).
 

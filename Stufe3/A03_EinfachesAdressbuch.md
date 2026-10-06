@@ -64,7 +64,7 @@ Suchmethoden geben Kontakte zurück; beim Laden wird der nächste ID-Wert aus de
 <details>
 <summary>Lösungsskizze: Datenmodell und Sammlung</summary>
 
-Das vollständige Datenmodell liegt in [Person.cs](../Beispiele/Adressbuch/Core/Person.cs). Kopiere es und entferne für dein einfaches Konsolenprojekt gegebenenfalls die Namespace-Zeile. `GenderType` ersetzt die Definition aus A02; definiere das Enum nur einmal.
+Das vollständige Datenmodell liegt in [Person.cs](../Beispiele/Adressbuch/Core/Person.cs). Kopiere es und entferne für dein einfaches Konsolenprojekt gegebenenfalls die Namespace-Zeile sowie `using AddressBook.Core;` aus der folgenden Skizze. Wenn du den Namespace beibehältst, bleibt auch das `using` erhalten. `GenderType` ersetzt die Definition aus A02; definiere das Enum nur einmal.
 
 ```csharp
 using System;
@@ -102,7 +102,7 @@ public class AddressBook
 
 Diese Skizze ergänzt du um das Menü und die fachliche Eingabeprüfung. Eine Telefonnummer darf nicht leer sein. Prüfe die E-Mail etwa mit `EmailAddressAttribute` aus `System.ComponentModel.DataAnnotations`. Vor dem Hinzufügen und nach dem Laden müssen die Kontakte dieselben Regeln erfüllen. Fehler beim Lesen (`IOException`, `JsonException`, `InvalidDataException`) werden im Menü sichtbar angezeigt; eine beschädigte Datei soll nicht still überschrieben werden.
 
-`DisplayAll()` kann über `GetAll()` iterieren. Für Menü-Aktionen nutzt du ab A04 `Start()` statt zusätzlicher `Main`-Methoden. Neue Kontakte erhalten IDs durch `AddressBook`; bei Datenbanken übernimmt dies später `IDENTITY`.
+`DisplayAll()` kann über `GetAll()` iterieren. Für Menü-Aktionen nutzt du bereits seit A01 `Start()` statt zusätzlicher `Main`-Methoden; A04 ergänzt dafür die gemeinsame Schnittstelle. Neue Kontakte erhalten IDs durch `AddressBook`; bei Datenbanken übernimmt dies später `IDENTITY`.
 
 </details>
 

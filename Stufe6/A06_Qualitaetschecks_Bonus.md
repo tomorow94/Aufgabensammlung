@@ -45,7 +45,7 @@ GitHub Actions auf **Standard-Runnern** ist für öffentliche Repositories koste
 2. Ergänze zuerst .NET-Formatprüfung, Compilerwarnungen und NuGet Audit. Richte anschließend Dependabot ein.
 3. Wähle eine zusätzliche Analyse: SonarQube Cloud oder, bei einem öffentlichen Repository, CodeQL. Untersuche mindestens einen tatsächlichen Befund; wenn keine vorliegen, erkläre anhand einer dokumentierten Regel, was das Werkzeug erkennen kann.
 4. Prüfe Zugangsdaten mit GitHub Secret Scanning oder lokal mit Gitleaks. Verwende für Experimente ausschließlich künstliche Testdaten.
-5. Behebe einen nachvollziehbaren Befund in einem eigenen Pull Request. Erkläre Auswirkung, Änderung und Prüfung. Begründe eine eventuelle Fehlalarm-Einstufung konkret.
+5. Behebe einen nachvollziehbaren Befund in einem eigenen Pull Request. Falls kein echter Befund vorliegt, verbessere stattdessen die Check-Konfiguration oder ihre Dokumentation in einem Pull Request und erkläre einen Befund anhand einer dokumentierten Regel. Erkläre Auswirkung, Änderung und Prüfung. Begründe eine eventuelle Fehlalarm-Einstufung konkret.
 6. Beschreibe die aktivierten Checks und ihre Grenzen in deiner README. Ergänze Status-Badges erst nach erfolgreichen echten Läufen.
 
 ## 1. .NET-Prüfungen ohne zusätzlichen Dienst
@@ -137,7 +137,7 @@ Beginne mit einem lokalen .NET-Check; aktiviere einen Dienst erst mit passendem 
 - Die README nennt gewählte Checks, den passenden kostenlosen Tarif und etwaige CI-Kontingente. Tokens sind nicht Teil des Diffs.
 - Du kannst erklären, warum ein grüner Scan fachliche Tests und ein Review weiterhin braucht.
 
-Abgabe: Konfiguration, mindestens ein nachvollziehbarer Verbesserungs-PR und eine kurze Auswertung der Ergebnisse. Aktiviere zunächst wenige Checks und baue sie aus, wenn du ihre Meldungen sinnvoll bearbeiten kannst.
+Abgabe: Konfiguration, mindestens ein nachvollziehbarer Verbesserungs-PR (Befundbehebung oder Verbesserung der Checks/Dokumentation) und eine kurze Auswertung der Ergebnisse. Aktiviere zunächst wenige Checks und baue sie aus, wenn du ihre Meldungen sinnvoll bearbeiten kannst.
 
 ## Passende Lernquellen
 

@@ -111,7 +111,9 @@ class Program
 
 ## Selbst prüfen
 
-`Anna` ergibt die Begrüßung mit Anna. Leere Eingaben werden in der Erweiterung erneut abgefragt. Prüfe mehrere Leerzeichen und den Abbruch der Eingabe. Beobachte `name` im Debugger.
+`Anna` ergibt die Begrüßung mit Anna. Prüfe auch eine leere Eingabe, mehrere Leerzeichen und das Ende des Eingabestroms. Das Einstiegsbeispiel gibt für einen leeren Namen `Hallo, !` aus und beendet sich beim Ende des Eingabestroms. Beobachte `name` im Debugger.
+
+**Bonus-Prüfung nach A06:** Die Erweiterung fragt bei einer leeren Eingabe erneut nach und beendet sich bei einem geschlossenen Eingabestrom.
 
 ## Bonus: Eingabe wiederholen (nach A06)
 

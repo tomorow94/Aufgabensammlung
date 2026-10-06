@@ -17,4 +17,5 @@ jobs:
       - run: dotnet build Beispiele/Adressbuch/Adressbuch.slnx --configuration Release --no-restore
       - run: dotnet test Beispiele/Adressbuch/Adressbuch.slnx --configuration Release --no-build
       - run: python3 tools/validate_material.py --compile
+      - run: python3 -m unittest discover -s tools -p "test_*.py"
       - run: node --test tools/frontend.test.cjs

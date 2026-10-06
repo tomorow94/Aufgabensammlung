@@ -32,7 +32,7 @@ Ein Fremdschlüssel wäre beispielsweise `Notes.ContactId`, der auf `Contacts.Id
 1. Lege in SSMS eine Datenbank **AddressBook** an und wähle sie als aktive Datenbank.
 2. Führe [schema.sql](../Beispiele/Adressbuch/schema.sql) genau einmal aus. Es enthält dieselben Spalten wie das Modell in Stufe 3; Pflichtfelder sind auch in der Datenbank `NOT NULL`.
 3. Übe `INSERT`, `SELECT`, `UPDATE`, `DELETE` zunächst in SSMS mit erfundenen Kontakten.
-4. Erstelle ein Konsolenprojekt mit .NET 10 und installiere den aktuellen SQL-Server-Treiber:
+4. Erstelle ein Konsolenprojekt mit .NET 10 und installiere den SQL-Server-Treiber im festgelegten Beispielstand:
 
 ```shell
 dotnet new console -n AddressBook.Sql --framework net10.0
