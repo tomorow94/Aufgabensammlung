@@ -17,7 +17,7 @@
 
 ## Ziel und Voraussetzungen
 
-Stelle das Adressbuch aus Stufe 5 über HTTP bereit. Du verwendest **Person und AddressBookContext weiter**; die Kontakte bleiben in SQL Server. Das neue API-Projekt übernimmt die HTTP-Kommunikation, nicht eine zweite Kontaktliste im Speicher.
+Stelle das Adressbuch aus Stufe 5 über HTTP bereit. Du verwendest **Person und AddressBookContext weiter**; die Kontakte bleiben in SQL Server. Das API-Projekt übernimmt die HTTP-Kommunikation und greift über den Context auf diese Daten zu.
 
 Neu sind HTTP, JSON, Controller, Dependency Injection und `async`/`await`. Ein Controller erhält seinen Context über den Konstruktor. EF Core führt Datenbankzugriffe asynchron aus; `await` wartet auf das Ergebnis. Anders als bei CPU-Arbeit ist dafür kein `Task.Run` nötig.
 
@@ -96,7 +96,7 @@ POST enthält ContactInput ohne ID; das gleiche Datenmodell wird gespeichert und
 - [Program.cs](../Beispiele/Adressbuch/Api/Program.cs): DI, OpenAPI, CORS und statische Dateien.
 - [ContactsController.cs](../Beispiele/Adressbuch/Api/Controllers/ContactsController.cs): vollständiges CRUD mit EF Core.
 
-Die Datenbank erzeugt IDs unabhängig von der aktuellen Anzahl von Kontakten. Jeder HTTP-Request erhält einen eigenen Context. Es gibt keine gemeinsame ungeschützte `static List` und keinen Ersatz von Datenbank-IDs durch `Count + 1`.
+Die Datenbank erzeugt die Kontakt-IDs. Jeder HTTP-Request erhält einen eigenen Context für seine Datenbankzugriffe.
 
 </details>
 

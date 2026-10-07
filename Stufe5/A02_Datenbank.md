@@ -19,7 +19,7 @@
 
 Das Adressbuch aus Stufe 3 speichert bisher eine JSON-Datei. Jetzt speicherst du **dieselben Kontakte mit denselben Eigenschaften** in einer relationalen Datenbank. Du lernst SQL zunächst direkt und danach aus C# über ADO.NET.
 
-Installiere SQL Server Express und SSMS getrennt. SSMS ist ein Verwaltungsprogramm, nicht die Datenbank-Engine. Ein üblicher Instanzname ist `localhost\SQLEXPRESS`; prüfe den tatsächlich installierten Namen. Verbinde dich lokal mit Windows-Authentifizierung. Die Befehle laufen im Terminal; `Install-Package` wäre dagegen ein Befehl der Visual-Studio-Paket-Manager-Konsole.
+Installiere SQL Server Express als Datenbank-Engine und SSMS als Verwaltungsprogramm getrennt. Ein üblicher Instanzname ist `localhost\SQLEXPRESS`; prüfe den tatsächlich installierten Namen. Verbinde dich lokal mit Windows-Authentifizierung. Die folgenden `dotnet`-Befehle laufen im Terminal.
 
 ## Datenmodell
 
@@ -63,7 +63,7 @@ UPDATE Contacts SET Email = N'alice.neu@example.com' WHERE Id = 1;
 DELETE FROM Contacts WHERE Id = 1;
 ```
 
-Die Beispieldatei verwendet in allen Teilen `Id`, nicht wechselnd `CustomerID` oder `ID`. Passe `1` an die tatsächlich vergebene ID an.
+Verwende bei UPDATE und DELETE die tatsächlich vergebene Kontakt-ID anstelle der Beispiel-ID `1`.
 
 ## Gestufte Hinweise
 

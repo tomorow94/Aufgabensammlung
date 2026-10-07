@@ -19,7 +19,7 @@
 
 Nach direktem SQL verwendest du **Entity Framework Core** als ORM. Es ordnet die Tabelle `Contacts` der Klasse `Person` zu. **LINQ** beschreibt Abfragen; Hinzufügen, Ändern und Löschen sind EF-Core-Operationen, keine LINQ-Abfragen.
 
-Die Felder und der Tabellenname bleiben aus A02 erhalten. Wechsle nicht zu einem neuen Kundenmodell. Du brauchst SQL-Grundlagen, Klassen, Listen und Methoden; Lambda-Ausdrücke wie `p => p.Name` bedeuten hier „für jedes p dessen Name“.
+Verwende die Kontaktfelder und den Tabellennamen aus A02 weiter. Du brauchst SQL-Grundlagen, Klassen, Listen und Methoden; Lambda-Ausdrücke wie `p => p.Name` bedeuten hier „für jedes p dessen Name“.
 
 ## Anforderungen
 

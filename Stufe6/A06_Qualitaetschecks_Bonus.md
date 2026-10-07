@@ -30,7 +30,7 @@ Kostenstand: **6. Oktober 2026**. Prüfe die verlinkten Bedingungen bei der Einr
 | .NET-Analyser und `dotnet format` | Compilerwarnungen, Code-Regeln und Formatierung | Im SDK kostenlos | Im SDK kostenlos |
 | NuGet Audit | Bekannte Schwachstellen direkter und transitiver Pakete | Kostenlos | Kostenlos |
 | Dependabot | Verwundbare Pakete und Update-Pull-Requests für NuGet/GitHub Actions | Basisfunktionen kostenlos | Basisfunktionen kostenlos |
-| SonarQube Cloud (früher SonarCloud) | Fehlerverdacht, Wartbarkeit, Duplikate und Sicherheitsbefunde | Kostenlose Analyse; zusätzlicher OSS-Tarif für passende Open-Source-Projekte | Kostenloser Tarif bis 50.000 Zeilen privaten Codes pro Organisation; laut Tarifdokumentation maximal fünf Mitglieder |
+| SonarQube Cloud | Fehlerverdacht, Wartbarkeit, Duplikate und Sicherheitsbefunde | Kostenlose Analyse; zusätzlicher OSS-Tarif für passende Open-Source-Projekte | Kostenloser Tarif bis 50.000 Zeilen privaten Codes pro Organisation; laut Tarifdokumentation maximal fünf Mitglieder |
 | GitHub CodeQL | Sicherheitsprobleme durch statische Analyse, unter anderem für C# und JavaScript | Kostenlos | GitHub Code Security erforderlich; keine allgemein kostenlose Option |
 | GitHub Secret Scanning / Push Protection | Erkannte Zugangsdaten in Commits bzw. beim Push | Kostenlose Funktionen verfügbar | Zusätzlicher Tarif erforderlich; nutze für einen kostenlosen Einstieg etwa die Gitleaks-CLI |
 | Gitleaks-CLI | Verdächtige Zugangsdaten in Dateien und Git-Historie | Kostenlos, MIT-Lizenz | Kostenlos, MIT-Lizenz |

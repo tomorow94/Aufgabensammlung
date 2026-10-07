@@ -28,7 +28,7 @@ Ein Integrationstest muss nicht die gesamte reale Infrastruktur verwenden. Die m
 3. Verwende `Microsoft.AspNetCore.Mvc.Testing` und `WebApplicationFactory<Program>` für HTTP-Tests.
 4. Stelle jeder Testmethode einen eigenen Host und Datenbestand bereit. Tests dürfen weder eine feste Reihenfolge noch gemeinsame statische Listen voraussetzen.
 5. Prüfe CRUD, HTTP-Status, JSON-Inhalt und Location-Header; „nicht leer“ oder „Status erfolgreich“ allein reicht nicht.
-6. Sichere die frühere ID-Kollision ab: einen älteren Kontakt löschen, einen neuen hinzufügen, IDs vergleichen.
+6. Prüfe die eindeutige ID-Vergabe: einen Kontakt löschen, einen neuen hinzufügen und sicherstellen, dass alle vorhandenen Kontakte unterschiedliche IDs haben.
 
 ## Vorbereitung für dein eigenes Projekt
 

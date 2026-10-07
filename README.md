@@ -9,7 +9,7 @@ Jede Aufgabe nennt **Status, Voraussetzungen, Intention, prüfbare Lernziele und
 ## Technischer Stand und Einstieg
 
 - **.NET 10 LTS SDK** für alle C#-Projekte: [Download](https://dotnet.microsoft.com/en-us/download/dotnet/10.0).
-- **Visual Studio 2026 (18.0+)** mit passenden C#/.NET-Workloads oder Visual Studio Code mit C#-Unterstützung. Visual Studio 2022 ist für diesen .NET-10-Stand nicht die passende Zielumgebung. [Kompatibilität](https://learn.microsoft.com/en-us/dotnet/core/install/windows).
+- **Visual Studio 2026 (18.0+)** mit passenden C#/.NET-Workloads oder Visual Studio Code mit C#-Unterstützung. [Kompatibilität](https://learn.microsoft.com/en-us/dotnet/core/install/windows).
 - Git; GitHub Desktop ist optional. Git wird ab Stufe 3 regelmäßig verwendet.
 - Ab Stufe 5: SQL Server Express als Datenbank-Engine und SSMS als getrenntes Verwaltungswerkzeug.
 - Für HTTP-Tests: Postman oder ein REST-Client. Für das lokale Container-Deployment: Docker mit Linux-Containern.
@@ -25,7 +25,7 @@ Ab Stufe 3 hat ein Kontakt dieselben Felder: **Id, Name, Age, Gender, PhoneNumbe
 
 **Konsole → JSON-Datei → SQL Server/ADO.NET → EF Core → REST-API → Webseite**.
 
-Datenbank und Anwendung vergeben IDs; ein API-Client liefert keine ID für neue Kontakte. Spiele und Algorithmen bleiben eigenständige Übungen. Die API muss deshalb nicht jede frühere Konsolenfunktion als HTTP-Endpunkt nachbilden.
+Datenbank und Anwendung vergeben IDs; ein API-Client liefert keine ID für neue Kontakte. Spiele und Algorithmen sind eigenständige Übungen; das Abschlussprojekt entwickelt die Kontaktverwaltung weiter.
 
 Der Lernfaden umfasst auch die Arbeitsweise: **Eingaben prüfen → Methoden und Debugging → Objekte und Refactoring → Zustands- und Geschäftsregeln → Datenhaltung → HTTP und Tests → Webseite → CI und Bereitstellung**. Spiele festigen Zustandsänderungen und Kapselung; Sortieren verbindet Sammlungen mit nachvollziehbaren Messungen. Danach setzt du die Arbeit am gleichen Adressbuch fort.
 
@@ -42,7 +42,7 @@ Die [Debugging-Arbeitsweise](./Referenzen/Debugging.md) wird in Stufe 2, A01 pra
 
 ## Aufgaben und empfohlene Reihenfolge
 
-Bonus-Aufgaben stehen direkt bei der passenden Stufe. Bearbeite sie erst nach ihren Voraussetzungen und kehre anschließend zum angegebenen Pflichtschritt zurück. Du kannst alle Bonus-Aufgaben auslassen; die Aufgabennummern bleiben erhalten.
+Bonus-Aufgaben stehen direkt bei der passenden Stufe. Bearbeite sie erst nach ihren Voraussetzungen und kehre anschließend zum angegebenen Pflichtschritt zurück. Du kannst alle Bonus-Aufgaben auslassen.
 
 ### 🟢 Grundlagen
 

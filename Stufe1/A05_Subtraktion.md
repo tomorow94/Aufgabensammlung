@@ -17,7 +17,7 @@
 
 ## Ziel und Voraussetzungen
 
-Nach Addition und Zahlenvergleich berechnest du eine Differenz. Neu ist die **Eingabeprüfung mit `TryParse`**: `abc` soll das Programm nicht mehr zum Absturz bringen. Erstelle eine C#-Konsolenanwendung mit .NET 10 und ersetze den Inhalt von `Program.cs`.
+Nach Addition und Zahlenvergleich berechnest du eine Differenz. Neu ist die **Eingabeprüfung mit `TryParse`**: Bei ungültigem Text wie `abc` zeigt das Programm eine Meldung an und beendet die Berechnung. Erstelle eine C#-Konsolenanwendung mit .NET 10 und ersetze den Inhalt von `Program.cs`.
 
 ## Anforderungen
 

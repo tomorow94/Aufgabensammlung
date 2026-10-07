@@ -28,7 +28,7 @@ Bisher wurden einzelne Programme als eigenständige Konsolenanwendungen geschrie
 
 ### **Warum wechseln wir jetzt auf Englisch im Code?**
 - **Standard in der Softwareentwicklung:** Viele professionelle Softwareprojekte verwenden Englisch für Bezeichner und Kommentare, um internationale Zusammenarbeit zu erleichtern.
-- **Vermeidung von Codierungsproblemen:** C# erlaubt Unicode-Bezeichner, auch Umlaute. Englische Namen sind hier eine Teamkonvention, keine Einschränkung der Sprache.
+- **Einheitliche Benennung:** Englische Bezeichner und Kommentare dienen im Menüprojekt als gemeinsame Teamkonvention.
 - **Bessere Lesbarkeit für andere Entwickler:** Falls das Projekt später öffentlich gemacht oder mit anderen Entwicklern geteilt wird, ist ein englischer Code allgemein verständlicher.
 
 ### **Versionsverwaltung mit GitHub**
@@ -74,7 +74,7 @@ In dieser Aufgabe entwickelst du eine **strukturierte Konsolenanwendung**, die a
 
 ## Beispielhafter Lösungsansatz
 
-Da wir ab Stufe 3 nicht mehr alle Details über das Projekt wissen, geben wir hier nur eine **mögliche Lösungsskizze** für die Umsetzung.
+Die folgende **Lösungsskizze** zeigt die Aufteilung in Menü, Programmklassen und Einstiegspunkt. Passe die eingebundenen Programme und deren Aufrufe an dein eigenes Projekt an.
 
 ## Gestufte Hinweise
 

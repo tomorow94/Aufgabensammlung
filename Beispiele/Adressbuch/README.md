@@ -53,7 +53,7 @@ Webseite: `http://localhost:5000`. SQL Server speichert in einem benannten Volum
 
 ## Qualitätschecks und Paketpflege
 
-Die [Bonus-Aufgabe](../../Stufe6/A06_Qualitaetschecks_Bonus.md) zeigt kostenlose Analysen und CI-Vorlagen. NuGet Audit hat bei der Prüfung zwei indirekte Abhängigkeiten gemeldet: [Microsoft.OpenApi](https://github.com/advisories/GHSA-v5pm-xwqc-g5wc) und [SQLitePCLRaw.lib.e_sqlite3](https://github.com/advisories/GHSA-2m69-gcr7-jv3q). Deshalb referenziert die API ausdrücklich `Microsoft.OpenApi` 2.7.5 und das Testprojekt `SQLitePCLRaw.bundle_e_sqlite3` 2.1.13. So werden korrigierte Versionen aufgelöst, ohne die EF-/ASP.NET-Hauptversion zu wechseln.
+Die [Bonus-Aufgabe](../../Stufe6/A06_Qualitaetschecks_Bonus.md) zeigt kostenlose Analysen und CI-Vorlagen. Die API referenziert ausdrücklich `Microsoft.OpenApi` 2.7.5 und das Testprojekt `SQLitePCLRaw.bundle_e_sqlite3` 2.1.13, um Versionen mit Korrekturen für die bekannten Schwachstellen in [Microsoft.OpenApi](https://github.com/advisories/GHSA-v5pm-xwqc-g5wc) und [SQLitePCLRaw.lib.e_sqlite3](https://github.com/advisories/GHSA-2m69-gcr7-jv3q) aufzulösen. Diese zusätzlichen Paketverweise ergänzen die EF-/ASP.NET-Pakete des Referenzprojekts.
 
 Prüfe bei späteren Updates, ob die übergeordneten Pakete die Korrekturen bereits selbst anfordern. Erst dann kannst du die zusätzlichen Referenzen entfernen; Audit und Tests müssen weiterhin erfolgreich sein.
 

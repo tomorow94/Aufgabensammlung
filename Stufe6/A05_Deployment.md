@@ -82,9 +82,9 @@ Prüfe erst den Datenbank-Healthcheck, dann den Migrationsdienst und die App; Ko
 - [.env.example](../Beispiele/Adressbuch/.env.example): lokale Konfigurationsvorlage.
 - [Migrationen](../Beispiele/Adressbuch/Data/Migrations/): initiales Schema für frische Datenbanken.
 
-Das Dockerfile führt `dotnet publish` selbst aus. Es erwartet keinen vorher manuell erzeugten `publish`-Ordner. Der letzte Container enthält das Publish-Ergebnis einschließlich `wwwroot`; ein zusätzlicher nginx-Container ist für diese kleine Anwendung nicht erforderlich.
+Das Dockerfile führt `dotnet publish` beim Build aus. Der letzte Container enthält das Publish-Ergebnis einschließlich `wwwroot` und liefert API und Webseite gemeinsam aus.
 
-Die Migration verwendet dieselben Kontaktfelder wie SQL, EF und API. Bereits manuell angelegte Tabellen aus Stufe 5 werden nicht erneut durch die Initialmigration erstellt. Das Compose-Beispiel startet dafür eine eigene frische Datenbank; siehe die Erklärung zur Baseline in Stufe 5.
+Die Migration verwendet dieselben Kontaktfelder wie SQL, EF und API. Das Compose-Beispiel startet eine eigene frische Datenbank, deren Schema vollständig durch Migrationen verwaltet wird.
 
 </details>
 

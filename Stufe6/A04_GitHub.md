@@ -17,7 +17,7 @@
 
 ## Ziel und Voraussetzungen
 
-Dein Menüprojekt wird seit Stufe 3 mit Git verwaltet. Erweitere **dieses Repository**, statt es erneut zu initialisieren oder eine zweite Versionsgeschichte anzulegen. Jetzt ergänzt du Dokumentation, Branches, Reviews und automatisierte Prüfungen.
+Dein Menüprojekt wird seit Stufe 3 mit Git verwaltet. Ergänze **in diesem Repository** Dokumentation, Branches, Reviews und automatisierte Prüfungen.
 
 ## Anforderungen
 
@@ -26,7 +26,7 @@ Dein Menüprojekt wird seit Stufe 3 mit Git verwaltet. Erweitere **dieses Reposi
 3. Beschreibe in der README Modell, Startbefehle, Datenbankvorbereitung, Tests und API-Endpunkte.
 4. Plane eine Erweiterung als Issue mit überprüfbaren Akzeptanzkriterien.
 5. Erstelle einen Branch, implementiere die Änderung und eröffne einen Pull Request. Prüfe Diff und Tests vor dem Zusammenführen.
-6. Führe Build und Tests über GitHub Actions aus. JavaScript ohne npm-Projekt benötigt kein erfundenes `npm test`.
+6. Führe Build und Tests über GitHub Actions aus und passe die Projektpfade an dein Repository an.
 
 ## Typischer Ablauf im bestehenden Repository
 

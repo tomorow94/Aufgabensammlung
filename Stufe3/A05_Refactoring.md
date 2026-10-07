@@ -17,7 +17,7 @@
 
 ## Aufgabe und Voraussetzungen
 
-Du hast ein funktionierendes Menü und ein Adressbuch mit JSON-Speicherung. Nun verbesserst du die innere Struktur, während das beobachtbare Verhalten gleich bleibt. Dies nennt man **Refactoring**. Du arbeitest an deinem bestehenden Repository; ein neues Adressbuch oder ein neues Framework ist nicht nötig.
+Du hast ein funktionierendes Menü und ein Adressbuch mit JSON-Speicherung. Nun verbesserst du die innere Struktur, während das beobachtbare Verhalten gleich bleibt. Dies nennt man **Refactoring**. Überarbeite dafür den vorhandenen Code in deinem bestehenden Repository.
 
 ## Anforderungen
 

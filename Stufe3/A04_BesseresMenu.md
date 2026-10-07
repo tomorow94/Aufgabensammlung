@@ -27,7 +27,7 @@ Du hast Klassen und Objekte kennengelernt. Jetzt beschreibst du mit einer **Schn
 4. `0` beendet das Menü. Ungültiger Text beendet es nicht.
 5. Ein Unterprogramm kehrt durch das Ende seiner `Start()`-Methode oder `return` ins aufrufende Menü zurück.
 
-Eine Liste entdeckt Klassen **nicht automatisch**. Die explizite Registrierung ist in dieser Aufgabe Absicht. Reflection ist eine spätere Vertiefung. Tastenkürzel und Exceptions zur Navigation sind für diesen Lernschritt unnötig.
+Registriere die Programmobjekte ausdrücklich in der Liste. Das Menü zeigt diese Einträge an und ruft ihre `Start()`-Methoden auf. Die automatische Entdeckung von Implementierungen mit Reflection steht unter „Bonus“.
 
 ## Gestufte Hinweise
 

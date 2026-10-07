@@ -25,7 +25,7 @@ Nach Methoden und Stoppuhr vergleichst du Sammlungen. Beginne mit wenigen Eintr�
 | `HashSet<T>` | eindeutige Werte, keine zugesicherte Sortierung | Zugehörigkeit, Duplikate entfernen |
 | `Dictionary<TKey,TValue>` | eindeutige Schlüssel, zugeordnete Werte | Stadt → Land |
 
-`List.Contains` durchsucht die Liste linear, O(n). Das gilt auch für eine sortierte Liste; `BinarySearch` ist eine andere Methode. HashSet-Suche ist bei geeigneter Hash-Verteilung durchschnittlich O(1); Kollisionen werden behandelt, sie müssen nicht vollständig fehlen. Eine Liste eignet sich auch für große Datenmengen, wenn Reihenfolge oder Indexzugriff gebraucht werden.
+`List.Contains` durchsucht die Liste linear, O(n). Das gilt auch für eine sortierte Liste; `BinarySearch` ist eine andere Methode. HashSet-Suche ist bei geeigneter Hash-Verteilung durchschnittlich O(1); Kollisionen werden intern behandelt. Eine Liste eignet sich auch für große Datenmengen, wenn Reihenfolge oder Indexzugriff gebraucht werden.
 
 ## Anforderungen
 

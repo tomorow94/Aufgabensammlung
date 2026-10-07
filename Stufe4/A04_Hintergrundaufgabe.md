@@ -17,7 +17,7 @@
 
 ## Ziel und Voraussetzungen
 
-Zwei Spieler ziehen bei Tic-Tac-Toe nacheinander; dafür sind keine zusätzlichen Threads nötig. Untersuche Nebenläufigkeit stattdessen an einer **längeren CPU-Berechnung**, während die Oberfläche Fortschritt zeigt und eine Abbruchmöglichkeit anbietet.
+Untersuche Nebenläufigkeit an einer **längeren CPU-Berechnung**, während die Oberfläche Fortschritt zeigt und eine Abbruchmöglichkeit anbietet.
 
 Diese Aufgabe ist optional. Du brauchst Methoden, Primzahlprüfung und Verständnis für gemeinsam genutzte Zustände. Ein Thread ist ein Ausführungsstrang; `Task` beschreibt eine Arbeit, die etwa auf einem Threadpool-Thread laufen kann. `await` wartet, ohne den wartenden Thread blockieren zu müssen. `async` allein verlagert keine CPU-Arbeit in den Hintergrund.
 
