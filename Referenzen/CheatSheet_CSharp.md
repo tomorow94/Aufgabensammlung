@@ -2,40 +2,50 @@
 
 ## Inhaltsverzeichnis
 
-- [Grundstruktur eines Programms](#grundstruktur-eines-programms)
-- [Variablen & Datentypen](#variablen--datentypen)
-- [Operatoren](#operatoren)
-- [Ganzzahl- und Gleitkommadivision](#ganzzahl--und-gleitkommadivision)
-- [Konsole](#konsole)
-- [Nullwerte](#nullwerte)
-- [Sichere Zahleneingabe](#sichere-zahleneingabe)
-- [Zeichenketten](#zeichenketten)
-- [if / else](#if--else)
-- [switch](#switch)
-- [for](#for)
-- [while](#while)
-- [foreach](#foreach)
-- [break & continue](#break--continue)
-- [Methoden](#methoden)
-- [Arrays](#arrays)
-- [List<T>](#listt)
-- [Dictionary<TKey, TValue>](#dictionarytkey-tvalue)
-- [HashSet<T>](#hashsett)
-- [Klassen, Konstruktoren & Eigenschaften](#klassen-konstruktoren--eigenschaften)
-- [Objekte erstellen](#objekte-erstellen)
-- [Schnittstellen](#schnittstellen)
-- [Enums](#enums)
-- [Enums einlesen](#enums-einlesen)
-- [Dateipfade](#dateipfade)
-- [Dateien lesen & schreiben](#dateien-lesen--schreiben)
-- [JSON](#json)
-- [Fehlerbehandlung](#fehlerbehandlung)
-- [Zeitmessung](#zeitmessung)
-- [LINQ](#linq)
-- [async / await](#async--await)
-- [xUnit](#xunit)
+- [Grundlagen](#grundlagen)
+  - [Grundstruktur eines Programms](#grundstruktur-eines-programms)
+  - [Variablen & Datentypen](#variablen--datentypen)
+  - [Operatoren](#operatoren)
+  - [Ganzzahl- und Gleitkommadivision](#ganzzahl--und-gleitkommadivision)
+- [Eingaben und Texte](#eingaben-und-texte)
+  - [Konsole](#konsole)
+  - [Nullwerte](#nullwerte)
+  - [Sichere Zahleneingabe](#sichere-zahleneingabe)
+  - [Zeichenketten](#zeichenketten)
+- [Kontrollfluss und Methoden](#kontrollfluss-und-methoden)
+  - [if / else](#if--else)
+  - [switch](#switch)
+  - [for](#for)
+  - [while](#while)
+  - [foreach](#foreach)
+  - [break & continue](#break--continue)
+  - [Methoden](#methoden)
+- [Sammlungen und LINQ](#sammlungen-und-linq)
+  - [Arrays](#arrays)
+  - [List<T>](#listt)
+  - [Dictionary<TKey, TValue>](#dictionarytkey-tvalue)
+  - [HashSet<T>](#hashsett)
+  - [LINQ](#linq)
+- [Objektorientierung](#objektorientierung)
+  - [Klassen, Konstruktoren & Eigenschaften](#klassen-konstruktoren--eigenschaften)
+  - [Objekte erstellen](#objekte-erstellen)
+  - [Schnittstellen](#schnittstellen)
+  - [Enums](#enums)
+  - [Enums einlesen](#enums-einlesen)
+- [Dateien und Datenformate](#dateien-und-datenformate)
+  - [Dateipfade](#dateipfade)
+  - [Dateien lesen & schreiben](#dateien-lesen--schreiben)
+  - [JSON](#json)
+- [Fehler und Tests](#fehler-und-tests)
+  - [Fehlerbehandlung](#fehlerbehandlung)
+  - [xUnit](#xunit)
+- [Zeitmessung und Asynchronität](#zeitmessung-und-asynchronität)
+  - [Zeitmessung](#zeitmessung)
+  - [async / await](#async--await)
 
-## Grundstruktur eines Programms
+## Grundlagen
+
+### Grundstruktur eines Programms
 
 ```csharp
 using System;
@@ -49,7 +59,7 @@ class Program
 }
 ```
 
-## Variablen & Datentypen
+### Variablen & Datentypen
 
 ```csharp
 int zahl = 42;
@@ -60,7 +70,7 @@ bool istAktiv = true;
 char buchstabe = 'A';
 ```
 
-## Operatoren
+### Operatoren
 
 ```csharp
 int a = 7;
@@ -73,7 +83,7 @@ bool mindestensEinerPositiv = a > 0 || b > 0;
 bool nichtGleich = !gleich;
 ```
 
-## Ganzzahl- und Gleitkommadivision
+### Ganzzahl- und Gleitkommadivision
 
 ```csharp
 int ganzzahlig = 7 / 2;
@@ -82,7 +92,9 @@ double umgewandelt = (double)7 / 2;
 Console.WriteLine($"{ganzzahlig}; {gleitkomma}; {umgewandelt}");
 ```
 
-## Konsole
+## Eingaben und Texte
+
+### Konsole
 
 ```csharp
 Console.Write("Name: ");
@@ -90,7 +102,7 @@ string? eingabe = Console.ReadLine();
 Console.WriteLine($"Eingabe: {eingabe}");
 ```
 
-## Nullwerte
+### Nullwerte
 
 ```csharp
 string? text = Console.ReadLine();
@@ -102,7 +114,7 @@ if (text is not null)
 }
 ```
 
-## Sichere Zahleneingabe
+### Sichere Zahleneingabe
 
 ```csharp
 if (int.TryParse(Console.ReadLine(), out int zahl))
@@ -115,7 +127,7 @@ else
 }
 ```
 
-## Zeichenketten
+### Zeichenketten
 
 ```csharp
 string text = "  Hallo Welt  ";
@@ -126,7 +138,9 @@ string[] woerter = bereinigt.Split(' ');
 Console.WriteLine($"{bereinigt}: {bereinigt.Length}");
 ```
 
-## if / else
+## Kontrollfluss und Methoden
+
+### if / else
 
 ```csharp
 int zahl = 12;
@@ -140,7 +154,7 @@ else
 }
 ```
 
-## switch
+### switch
 
 ```csharp
 string tag = "Montag";
@@ -155,7 +169,7 @@ switch (tag)
 }
 ```
 
-## for
+### for
 
 ```csharp
 for (int i = 0; i < 5; i++)
@@ -164,7 +178,7 @@ for (int i = 0; i < 5; i++)
 }
 ```
 
-## while
+### while
 
 ```csharp
 int i = 0;
@@ -175,7 +189,7 @@ while (i < 5)
 }
 ```
 
-## foreach
+### foreach
 
 ```csharp
 string[] namen = { "Anna", "Ben", "Clara" };
@@ -185,7 +199,7 @@ foreach (string name in namen)
 }
 ```
 
-## break & continue
+### break & continue
 
 ```csharp
 for (int i = 0; i < 10; i++)
@@ -196,7 +210,7 @@ for (int i = 0; i < 10; i++)
 }
 ```
 
-## Methoden
+### Methoden
 
 ```csharp
 static int Addiere(int a, int b)
@@ -210,7 +224,9 @@ static void ZeigeNachricht(string text)
 }
 ```
 
-## Arrays
+## Sammlungen und LINQ
+
+### Arrays
 
 ```csharp
 int[] zahlen = { 1, 2, 3, 4 };
@@ -219,7 +235,7 @@ int anzahl = zahlen.Length;
 Console.WriteLine(zahlen[0]);
 ```
 
-## List<T>
+### List<T>
 
 ```csharp
 using System.Collections.Generic;
@@ -232,7 +248,7 @@ int anzahl = namen.Count;
 Console.WriteLine(namen[0]);
 ```
 
-## Dictionary<TKey, TValue>
+### Dictionary<TKey, TValue>
 
 ```csharp
 using System.Collections.Generic;
@@ -246,7 +262,7 @@ if (punkte.TryGetValue("Alice", out int wert))
 bool entfernt = punkte.Remove("Alice");
 ```
 
-## HashSet<T>
+### HashSet<T>
 
 ```csharp
 using System.Collections.Generic;
@@ -258,7 +274,22 @@ bool entfernt = zahlen.Remove(1);
 int anzahl = zahlen.Count;
 ```
 
-## Klassen, Konstruktoren & Eigenschaften
+### LINQ
+
+```csharp
+using System.Linq;
+
+string[] namen = { "Clara", "Anna", "Ben" };
+var sortiert = namen.OrderBy(name => name).ToList();
+var gefiltert = namen.Where(name => name.Length > 3).ToList();
+var grossgeschrieben = namen.Select(name => name.ToUpperInvariant()).ToArray();
+bool vorhanden = namen.Any(name => name.StartsWith("A"));
+string? ersterTreffer = namen.FirstOrDefault(name => name.StartsWith("A"));
+```
+
+## Objektorientierung
+
+### Klassen, Konstruktoren & Eigenschaften
 
 ```csharp
 class Product
@@ -279,7 +310,7 @@ class Product
 }
 ```
 
-## Objekte erstellen
+### Objekte erstellen
 
 ```csharp
 Product product = new Product("Stift", 1.50m);
@@ -287,7 +318,7 @@ product.Price = 2.00m;
 Console.WriteLine($"{product.Name}: {product.Price}");
 ```
 
-## Schnittstellen
+### Schnittstellen
 
 ```csharp
 interface ILabel
@@ -301,7 +332,7 @@ class Label : ILabel
 }
 ```
 
-## Enums
+### Enums
 
 ```csharp
 enum WorkStatus
@@ -312,7 +343,7 @@ enum WorkStatus
 }
 ```
 
-## Enums einlesen
+### Enums einlesen
 
 ```csharp
 string? text = Console.ReadLine();
@@ -323,7 +354,9 @@ if (Enum.TryParse<WorkStatus>(text, true, out var status)
 }
 ```
 
-## Dateipfade
+## Dateien und Datenformate
+
+### Dateipfade
 
 ```csharp
 using System.IO;
@@ -333,7 +366,7 @@ string pfad = Path.Combine(ordner, "notiz.txt");
 Console.WriteLine(Path.GetFullPath(pfad));
 ```
 
-## Dateien lesen & schreiben
+### Dateien lesen & schreiben
 
 ```csharp
 using System.IO;
@@ -348,7 +381,7 @@ if (File.Exists(pfad))
 }
 ```
 
-## JSON
+### JSON
 
 ```csharp
 using System.Text.Json;
@@ -359,7 +392,9 @@ string[]? geladen = JsonSerializer.Deserialize<string[]>(json);
 Console.WriteLine(json);
 ```
 
-## Fehlerbehandlung
+## Fehler und Tests
+
+### Fehlerbehandlung
 
 ```csharp
 try
@@ -372,45 +407,7 @@ catch (FormatException)
 }
 ```
 
-## Zeitmessung
-
-```csharp
-using System.Diagnostics;
-
-int[] zahlen = { 4, 1, 3, 2 };
-var stopwatch = Stopwatch.StartNew();
-Array.Sort(zahlen);
-stopwatch.Stop();
-Console.WriteLine($"Dauer: {stopwatch.Elapsed.TotalMilliseconds:F3} ms");
-```
-
-## LINQ
-
-```csharp
-using System.Linq;
-
-string[] namen = { "Clara", "Anna", "Ben" };
-var sortiert = namen.OrderBy(name => name).ToList();
-var gefiltert = namen.Where(name => name.Length > 3).ToList();
-var grossgeschrieben = namen.Select(name => name.ToUpperInvariant()).ToArray();
-bool vorhanden = namen.Any(name => name.StartsWith("A"));
-string? ersterTreffer = namen.FirstOrDefault(name => name.StartsWith("A"));
-```
-
-## async / await
-
-```csharp
-using System.IO;
-using System.Threading.Tasks;
-
-static async Task<string> LeseTextAsync(string pfad)
-{
-    string text = await File.ReadAllTextAsync(pfad);
-    return text;
-}
-```
-
-## xUnit
+### xUnit
 
 ```csharp
 using Xunit;
@@ -430,5 +427,32 @@ public class MathTests
     {
         Assert.Equal(expected, Math.Abs(input));
     }
+}
+```
+
+## Zeitmessung und Asynchronität
+
+### Zeitmessung
+
+```csharp
+using System.Diagnostics;
+
+int[] zahlen = { 4, 1, 3, 2 };
+var stopwatch = Stopwatch.StartNew();
+Array.Sort(zahlen);
+stopwatch.Stop();
+Console.WriteLine($"Dauer: {stopwatch.Elapsed.TotalMilliseconds:F3} ms");
+```
+
+### async / await
+
+```csharp
+using System.IO;
+using System.Threading.Tasks;
+
+static async Task<string> LeseTextAsync(string pfad)
+{
+    string text = await File.ReadAllTextAsync(pfad);
+    return text;
 }
 ```
